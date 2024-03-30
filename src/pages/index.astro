@@ -1,0 +1,10 @@
+---
+import Base from "../layouts/Base.astro";
+import HeroSection from "../components/HeroSection";
+import PlanSummary from "../components/PlanSummary";
+import { navigation, siteData } from "../consts";
+---
+<Base {navigation} {siteData}>
+  <HeroSection {...siteData} />
+  <PlanSummary/>
+</Base>

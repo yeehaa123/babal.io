@@ -1,0 +1,14 @@
+---
+import Base from "../layouts/Base.astro";
+import PostsIndex from "../components/PostsIndex";
+import { navigation, siteData } from "../consts";
+import { getCollection } from 'astro:content';
+
+const posts  = (await getCollection('blog')).sort(
+	(a, b) => b.data.published_on.valueOf() - a.data.published_on.valueOf()
+);
+---
+
+<Base {navigation} {siteData}>
+  <PostsIndex {posts}/>
+</Base>
