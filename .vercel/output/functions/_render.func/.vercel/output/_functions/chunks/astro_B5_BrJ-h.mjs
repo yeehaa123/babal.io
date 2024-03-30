@@ -2330,8 +2330,243 @@ cssesc.options = {
 
 cssesc.version = '3.0.0';
 
-"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_".split("").reduce((v, c) => (v[c.charCodeAt(0)] = c, v), []);
-"-0123456789_".split("").reduce((v, c) => (v[c.charCodeAt(0)] = c, v), []);
+var cssesc_1 = cssesc;
+
+const cssesc$1 = /*@__PURE__*/getDefaultExportFromCjs(cssesc_1);
+
+const EASE_IN_OUT_QUART = "cubic-bezier(0.76, 0, 0.24, 1)";
+function slide({
+  duration
+} = {}) {
+  return {
+    forwards: {
+      old: [
+        {
+          name: "astroFadeOut",
+          duration: duration ?? "90ms",
+          easing: EASE_IN_OUT_QUART,
+          fillMode: "both"
+        },
+        {
+          name: "astroSlideToLeft",
+          duration: duration ?? "220ms",
+          easing: EASE_IN_OUT_QUART,
+          fillMode: "both"
+        }
+      ],
+      new: [
+        {
+          name: "astroFadeIn",
+          duration: duration ?? "210ms",
+          easing: EASE_IN_OUT_QUART,
+          delay: duration ? void 0 : "30ms",
+          fillMode: "both"
+        },
+        {
+          name: "astroSlideFromRight",
+          duration: duration ?? "220ms",
+          easing: EASE_IN_OUT_QUART,
+          fillMode: "both"
+        }
+      ]
+    },
+    backwards: {
+      old: [{ name: "astroFadeOut" }, { name: "astroSlideToRight" }],
+      new: [{ name: "astroFadeIn" }, { name: "astroSlideFromLeft" }]
+    }
+  };
+}
+function fade({
+  duration
+} = {}) {
+  const anim = {
+    old: {
+      name: "astroFadeOut",
+      duration: duration ?? 180,
+      easing: EASE_IN_OUT_QUART,
+      fillMode: "both"
+    },
+    new: {
+      name: "astroFadeIn",
+      duration: duration ?? 180,
+      easing: EASE_IN_OUT_QUART,
+      fillMode: "both"
+    }
+  };
+  return {
+    forwards: anim,
+    backwards: anim
+  };
+}
+
+const transitionNameMap = /* @__PURE__ */ new WeakMap();
+function incrementTransitionNumber(result) {
+  let num = 1;
+  if (transitionNameMap.has(result)) {
+    num = transitionNameMap.get(result) + 1;
+  }
+  transitionNameMap.set(result, num);
+  return num;
+}
+function createTransitionScope(result, hash) {
+  const num = incrementTransitionNumber(result);
+  return `astro-${hash}-${num}`;
+}
+const getAnimations = (name) => {
+  if (name === "fade")
+    return fade();
+  if (name === "slide")
+    return slide();
+  if (typeof name === "object")
+    return name;
+};
+const addPairs = (animations, stylesheet) => {
+  for (const [direction, images] of Object.entries(animations)) {
+    for (const [image, rules] of Object.entries(images)) {
+      stylesheet.addAnimationPair(direction, image, rules);
+    }
+  }
+};
+const reEncodeValidChars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_".split("").reduce((v, c) => (v[c.charCodeAt(0)] = c, v), []);
+const reEncodeInValidStart = "-0123456789_".split("").reduce((v, c) => (v[c.charCodeAt(0)] = c, v), []);
+function reEncode(s) {
+  let result = "";
+  let codepoint;
+  for (let i = 0; i < s.length; i += (codepoint ?? 0) > 65535 ? 2 : 1) {
+    codepoint = s.codePointAt(i);
+    if (codepoint !== void 0) {
+      result += codepoint < 128 ? codepoint === 95 ? "__" : reEncodeValidChars[codepoint] ?? "_" + codepoint.toString(16).padStart(2, "0") : String.fromCodePoint(codepoint);
+    }
+  }
+  return reEncodeInValidStart[result.codePointAt(0) ?? 0] ? "_" + result : result;
+}
+function renderTransition(result, hash, animationName, transitionName) {
+  if (typeof (transitionName ?? "") !== "string") {
+    throw new Error(`Invalid transition name {${transitionName}}`);
+  }
+  if (!animationName)
+    animationName = "fade";
+  const scope = createTransitionScope(result, hash);
+  const name = transitionName ? cssesc$1(reEncode(transitionName), { isIdentifier: true }) : scope;
+  const sheet = new ViewTransitionStyleSheet(scope, name);
+  const animations = getAnimations(animationName);
+  if (animations) {
+    addPairs(animations, sheet);
+  } else if (animationName === "none") {
+    sheet.addFallback("old", "animation: none; mix-blend-mode: normal;");
+    sheet.addModern("old", "animation: none; opacity: 0; mix-blend-mode: normal;");
+    sheet.addAnimationRaw("new", "animation: none; mix-blend-mode: normal;");
+    sheet.addModern("group", "animation: none");
+  }
+  result._metadata.extraHead.push(markHTMLString(`<style>${sheet.toString()}</style>`));
+  return scope;
+}
+class ViewTransitionStyleSheet {
+  constructor(scope, name) {
+    this.scope = scope;
+    this.name = name;
+  }
+  modern = [];
+  fallback = [];
+  toString() {
+    const { scope, name } = this;
+    const [modern, fallback] = [this.modern, this.fallback].map((rules) => rules.join(""));
+    return [
+      `[data-astro-transition-scope="${scope}"] { view-transition-name: ${name}; }`,
+      this.layer(modern),
+      fallback
+    ].join("");
+  }
+  layer(cssText) {
+    return cssText ? `@layer astro { ${cssText} }` : "";
+  }
+  addRule(target, cssText) {
+    this[target].push(cssText);
+  }
+  addAnimationRaw(image, animation) {
+    this.addModern(image, animation);
+    this.addFallback(image, animation);
+  }
+  addModern(image, animation) {
+    const { name } = this;
+    this.addRule("modern", `::view-transition-${image}(${name}) { ${animation} }`);
+  }
+  addFallback(image, animation) {
+    const { scope } = this;
+    this.addRule(
+      "fallback",
+      // Two selectors here, the second in case there is an animation on the root.
+      `[data-astro-transition-fallback="${image}"] [data-astro-transition-scope="${scope}"],
+			[data-astro-transition-fallback="${image}"][data-astro-transition-scope="${scope}"] { ${animation} }`
+    );
+  }
+  addAnimationPair(direction, image, rules) {
+    const { scope, name } = this;
+    const animation = stringifyAnimation(rules);
+    const prefix = direction === "backwards" ? `[data-astro-transition=back]` : direction === "forwards" ? "" : `[data-astro-transition=${direction}]`;
+    this.addRule("modern", `${prefix}::view-transition-${image}(${name}) { ${animation} }`);
+    this.addRule(
+      "fallback",
+      `${prefix}[data-astro-transition-fallback="${image}"] [data-astro-transition-scope="${scope}"],
+			${prefix}[data-astro-transition-fallback="${image}"][data-astro-transition-scope="${scope}"] { ${animation} }`
+    );
+  }
+}
+function addAnimationProperty(builder, prop, value) {
+  let arr = builder[prop];
+  if (Array.isArray(arr)) {
+    arr.push(value.toString());
+  } else {
+    builder[prop] = [value.toString()];
+  }
+}
+function animationBuilder() {
+  return {
+    toString() {
+      let out = "";
+      for (let k in this) {
+        let value = this[k];
+        if (Array.isArray(value)) {
+          out += `
+	${k}: ${value.join(", ")};`;
+        }
+      }
+      return out;
+    }
+  };
+}
+function stringifyAnimation(anim) {
+  if (Array.isArray(anim)) {
+    return stringifyAnimations(anim);
+  } else {
+    return stringifyAnimations([anim]);
+  }
+}
+function stringifyAnimations(anims) {
+  const builder = animationBuilder();
+  for (const anim of anims) {
+    if (anim.duration) {
+      addAnimationProperty(builder, "animation-duration", toTimeValue(anim.duration));
+    }
+    if (anim.easing) {
+      addAnimationProperty(builder, "animation-timing-function", anim.easing);
+    }
+    if (anim.direction) {
+      addAnimationProperty(builder, "animation-direction", anim.direction);
+    }
+    if (anim.delay) {
+      addAnimationProperty(builder, "animation-delay", anim.delay);
+    }
+    if (anim.fillMode) {
+      addAnimationProperty(builder, "animation-fill-mode", anim.fillMode);
+    }
+    addAnimationProperty(builder, "animation-name", anim.name);
+  }
+  return builder.toString();
+}
+function toTimeValue(num) {
+  return typeof num === "number" ? num + "ms" : num;
+}
 
 function __astro_tag_component__(Component, rendererName) {
   if (!Component)
@@ -2437,4 +2672,4 @@ function createVNode(type, props) {
   return vnode;
 }
 
-export { renderPage as $, AstroError as A, GetStaticPathsExpectedParams as B, GetStaticPathsInvalidRouteParam as C, DEFAULT_404_COMPONENT as D, ExpectedImage as E, FailedToFetchRemoteImageDimensions as F, GetStaticPathsRequired as G, PrerenderDynamicEndpointPathCollide as H, IncompatibleDescriptorOptions as I, ReservedSlotName as J, renderSlotToString as K, LocalImageUsedWrongly as L, MissingImageDimension as M, NoMatchingStaticPathFound as N, renderJSX as O, PageNumberParamNotFound as P, chunkToString as Q, ResponseSentError as R, LocalsNotAnObject as S, clientLocalsSymbol as T, UnsupportedImageFormat as U, clientAddressSymbol as V, ClientAddressNotAvailable as W, StaticClientAddressNotAvailable as X, ASTRO_VERSION as Y, responseSentSymbol as Z, AstroResponseHeadersReassigned as _, UnsupportedImageConversion as a, renderEndpoint as a0, REROUTABLE_STATUS_CODES as a1, commonjsGlobal as a2, AstroJSX as a3, createVNode as a4, bold as a5, red as a6, yellow as a7, dim as a8, blue as a9, __astro_tag_component__ as aa, Fragment as ab, MissingSharp as b, InvalidImageService as c, ExpectedImageOptions as d, createAstro as e, createComponent as f, getDefaultExportFromCjs as g, ImageMissingAlt as h, addAttribute as i, renderComponent as j, renderHead as k, renderSlot as l, maybeRenderHead as m, UnknownContentCollectionError as n, renderUniqueStylesheet as o, renderScriptElement as p, createHeadAndContent as q, renderTemplate as r, spreadAttributes as s, MiddlewareNoDataOrNextCalled as t, unescapeHTML as u, MiddlewareNotAResponse as v, ROUTE_TYPE_HEADER as w, REROUTE_DIRECTIVE_HEADER as x, InvalidGetStaticPathsReturn as y, InvalidGetStaticPathsEntry as z };
+export { AstroResponseHeadersReassigned as $, AstroError as A, InvalidGetStaticPathsEntry as B, GetStaticPathsExpectedParams as C, GetStaticPathsInvalidRouteParam as D, ExpectedImage as E, FailedToFetchRemoteImageDimensions as F, GetStaticPathsRequired as G, DEFAULT_404_COMPONENT as H, IncompatibleDescriptorOptions as I, PrerenderDynamicEndpointPathCollide as J, ReservedSlotName as K, LocalImageUsedWrongly as L, MissingImageDimension as M, NoMatchingStaticPathFound as N, renderSlotToString as O, PageNumberParamNotFound as P, renderJSX as Q, ResponseSentError as R, chunkToString as S, LocalsNotAnObject as T, UnsupportedImageFormat as U, clientLocalsSymbol as V, clientAddressSymbol as W, ClientAddressNotAvailable as X, StaticClientAddressNotAvailable as Y, ASTRO_VERSION as Z, responseSentSymbol as _, UnsupportedImageConversion as a, renderPage as a0, renderEndpoint as a1, REROUTABLE_STATUS_CODES as a2, commonjsGlobal as a3, AstroJSX as a4, createVNode as a5, bold as a6, red as a7, yellow as a8, dim as a9, blue as aa, __astro_tag_component__ as ab, Fragment as ac, MissingSharp as b, InvalidImageService as c, ExpectedImageOptions as d, createAstro as e, createComponent as f, getDefaultExportFromCjs as g, ImageMissingAlt as h, addAttribute as i, renderComponent as j, renderHead as k, renderSlot as l, maybeRenderHead as m, UnknownContentCollectionError as n, renderUniqueStylesheet as o, renderScriptElement as p, createHeadAndContent as q, renderTemplate as r, spreadAttributes as s, renderTransition as t, unescapeHTML as u, MiddlewareNoDataOrNextCalled as v, MiddlewareNotAResponse as w, ROUTE_TYPE_HEADER as x, REROUTE_DIRECTIVE_HEADER as y, InvalidGetStaticPathsReturn as z };

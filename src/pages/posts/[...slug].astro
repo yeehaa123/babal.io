@@ -2,8 +2,6 @@
 import Base from "../../layouts/Base.astro";
 import { getCollection } from 'astro:content';
 import { navigation, siteData } from "../../consts";
-import MarkdownPostLayout from '../../layouts/MarkdownPostLayout.astro';
-import PostDetail from "../../components/PostDetail";
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection('blog');
