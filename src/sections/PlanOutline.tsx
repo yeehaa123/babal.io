@@ -13,7 +13,7 @@ export default function PlanOutline({ steps, problem }: Props) {
         <div className="mx-auto max-w-2xl lg:text-center">
           <h2 className="text-base font-semibold leading-7 text-indigo-600">Ecosystem Architecture</h2>
           <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Grow your business, not your time size
+            Grow your business. Not your team size.
           </p>
           <p className="mt-6 text-lg leading-8 text-gray-600">
             {problem}
