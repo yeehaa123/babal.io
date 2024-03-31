@@ -1,11 +1,13 @@
 import Banner from "../components/Banner"
 import Actions from "../components/Actions"
+import type { CTA } from "../sections/CTA"
+
 
 interface Props {
   tagline: string;
   byline: string;
   message?: string;
-  cta: string;
+  cta: CTA;
 }
 
 export default function HeroSection({ tagline, byline, message, cta }: Props) {
@@ -21,7 +23,7 @@ export default function HeroSection({ tagline, byline, message, cta }: Props) {
             <p className="mt-6 text-lg leading-8 text-gray-600">
               {byline}
             </p>
-            <Actions cta={cta} />
+            <Actions action={cta.action} />
           </div>
         </div>
       </div>

@@ -10,7 +10,7 @@ import { navigation, siteData } from "../consts";
 ---
 <Base {navigation} {siteData}>
   <HeroSection {...siteData} />
-  <PlanOutline/>
-  <CTA cta={siteData.cta} />
+  <PlanOutline problem={siteData.problem} steps={siteData.steps}/>
+  <CTA {...siteData.cta} />
   <Cases cases={siteData.cases} />
 </Base>
