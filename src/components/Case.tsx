@@ -1,10 +1,10 @@
-interface Props {
+export type Case = {
   imageUrl: string,
   href: string
   title: string
 };
 
-export default function Example({ imageUrl, href, title }: Props) {
+export default function Example({ imageUrl, href, title }: Case) {
   return (
     <article
       className="relative isolate flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-900 px-8 pb-8 pt-80 sm:pt-48 lg:pt-80"

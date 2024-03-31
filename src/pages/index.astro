@@ -6,10 +6,11 @@ import CTA from "../sections/CTA";
 import Cases from "../sections/Cases";
 
 import { navigation, siteData } from "../consts";
+
 ---
 <Base {navigation} {siteData}>
   <HeroSection {...siteData} />
   <PlanOutline/>
-  <CTA />
-  <Cases />
+  <CTA cta={siteData.cta} />
+  <Cases cases={siteData.cases} />
 </Base>
