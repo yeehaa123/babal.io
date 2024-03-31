@@ -1,5 +1,5 @@
 import { renderers } from './renderers.mjs';
-import { l as levels, g as getEventPrefix, L as Logger, A as AstroIntegrationLogger, manifest } from './manifest_BqCafxLy.mjs';
+import { l as levels, g as getEventPrefix, L as Logger, A as AstroIntegrationLogger, manifest } from './manifest_DIOpkQmA.mjs';
 import { A as AstroError, R as ResponseSentError, v as MiddlewareNoDataOrNextCalled, w as MiddlewareNotAResponse, x as ROUTE_TYPE_HEADER, y as REROUTE_DIRECTIVE_HEADER, G as GetStaticPathsRequired, z as InvalidGetStaticPathsReturn, B as InvalidGetStaticPathsEntry, C as GetStaticPathsExpectedParams, D as GetStaticPathsInvalidRouteParam, P as PageNumberParamNotFound, H as DEFAULT_404_COMPONENT, N as NoMatchingStaticPathFound, J as PrerenderDynamicEndpointPathCollide, K as ReservedSlotName, O as renderSlotToString, Q as renderJSX, S as chunkToString, T as LocalsNotAnObject, V as clientLocalsSymbol, W as clientAddressSymbol$1, X as ClientAddressNotAvailable, Y as StaticClientAddressNotAvailable, Z as ASTRO_VERSION, _ as responseSentSymbol$1, $ as AstroResponseHeadersReassigned, a0 as renderPage, a1 as renderEndpoint, a2 as REROUTABLE_STATUS_CODES, a3 as commonjsGlobal } from './chunks/astro_B5_BrJ-h.mjs';
 import { e as appendForwardSlash, j as joinPaths, t as trimSlashes, f as fileExtension, s as slash$1, p as prependForwardSlash, g as removeTrailingForwardSlash, h as collapseDuplicateSlashes } from './chunks/astro/assets-service_BnrKtDSE.mjs';
 import require$$1 from 'os';
@@ -9004,10 +9004,10 @@ const createExports = (manifest, { middlewareSecret }) => {
 };
 
 const _page0 = () => import('./chunks/generic_DAYDAk_y.mjs');
-const _page1 = () => import('./chunks/about_ClHL5u_3.mjs');
-const _page2 = () => import('./chunks/posts_C-1fMElQ.mjs');
-const _page3 = () => import('./chunks/_.._JmqwSRMR.mjs');
-const _page4 = () => import('./chunks/index_Cj8LoxdW.mjs');
+const _page1 = () => import('./chunks/about_Bpr4iMeC.mjs');
+const _page2 = () => import('./chunks/posts_9MSFcQth.mjs');
+const _page3 = () => import('./chunks/_.._D67kUeBp.mjs');
+const _page4 = () => import('./chunks/index_nz5vTxQW.mjs');
 const pageMap = new Map([
     ["node_modules/.pnpm/astro@4.5.10_typescript@5.4.3/node_modules/astro/dist/assets/endpoint/generic.js", _page0],
     ["src/pages/about.astro", _page1],
@@ -9022,7 +9022,7 @@ const _manifest = Object.assign(manifest, {
     middleware: onRequest
 });
 const _args = {
-    "middlewareSecret": "5e14cb84-4198-4db4-a347-922de98b8d8a"
+    "middlewareSecret": "c9338ec2-6aea-432a-9635-c81b585c1f97"
 };
 const _exports = createExports(_manifest, _args);
 const __astrojsSsrVirtualEntry = _exports.default;

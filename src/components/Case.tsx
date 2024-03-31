@@ -1,5 +1,5 @@
 export type Case = {
-  imageUrl: string,
+  imageUrl: string
   href: string
   title: string
 };
