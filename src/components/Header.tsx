@@ -11,7 +11,7 @@ export default function Header({ navigation }: Props) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   return (
     <header className="absolute inset-x-0 top-0 z-50">
-      <NavBar navigation={navigation} setMobileMenuOpen={setMobileMenuOpen} />
+      <NavBar navigation={navigation} setMobileMenuOpen={setMobileMenuOpen} mobileMenuOpen={mobileMenuOpen} />
       <SideBar navigation={navigation} mobileMenuOpen={mobileMenuOpen}
         setMobileMenuOpen={setMobileMenuOpen} />
     </header>

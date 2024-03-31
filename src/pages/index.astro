@@ -1,10 +1,15 @@
 ---
 import Base from "../layouts/Base.astro";
-import HeroSection from "../components/HeroSection";
-import PlanSummary from "../components/PlanSummary";
+import HeroSection from "../sections/Hero";
+import PlanOutline from "../sections/PlanOutline";
+import CTA from "../sections/CTA";
+import Cases from "../sections/Cases";
+
 import { navigation, siteData } from "../consts";
 ---
 <Base {navigation} {siteData}>
   <HeroSection {...siteData} />
-  <PlanSummary/>
+  <PlanOutline/>
+  <CTA />
+  <Cases />
 </Base>
