@@ -2,19 +2,21 @@
 import BaseHead from "../components/BaseHead.astro";
 import Footer from "../sections/Footer.astro";
 import Logo from "../components/Logo.astro";
-import Header from "../sections/Header.svelte"
+import Header from "../sections/Header.astro"
 
 const { navigation, siteData } = Astro.props;
 ---
 <html lang="en">
-	<head>
+  <head>
     <BaseHead {...siteData} />
-	</head>
-	<body>
-    <Header {navigation} client:load >
-      <Logo slot="logo" />
-    </Header>
+  </head>
+  <body>
+    <header class="bg-white">
+      <Header {navigation} >
+        <Logo slot="logo" />
+      </Header>
+    </header>
     <slot/>
     <Footer {navigation} />
-	</body>
+  </body>
 </html>

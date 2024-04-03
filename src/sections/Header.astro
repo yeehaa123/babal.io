@@ -1,5 +1,17 @@
+---
+import SideBar from "../components/SideBar.svelte";
+import MenuButton from "../components/MenuButton.svelte";
+import NavBar from "../components/NavBar.svelte";
+const { navigation } = Astro.props;
+---
 <header class="bg-white">
-  <slot name="navbar"/>
-  <slot name="sidebar"/>
+  <NavBar {navigation} client:load>
+    <slot name="logo" slot="logo" />
+    <MenuButton slot="menubutton" client:load/>
+  </NavBar>
+  <SideBar {navigation} client:load>
+    <slot name="logo" slot="logo" />
+    <MenuButton slot="menubutton" client:load/>
+  </SideBar>
 </header>
 

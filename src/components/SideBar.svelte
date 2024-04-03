@@ -1,7 +1,7 @@
 <script lang="ts">
-  export let isSideBarOpen;
-  $: isOpen = isSideBarOpen ? "visible" : "hidden";
-  export let navigation: Record<"name"| "href", string>[] = [];
+import { sideBarState } from "../stores/index";
+$: isOpen = $sideBarState ? "visible" : "hidden";
+export let navigation: Record<"name"| "href", string>[] = [];
 </script>
 
 <div class={`${isOpen} lg:hidden`} role="dialog" aria-modal="true">
