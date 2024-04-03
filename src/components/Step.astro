@@ -1,0 +1,27 @@
+---
+import { LockClosedIcon } from '@heroicons/react/20/solid'
+
+export type Step = {
+  name: string;
+  description: string;
+}
+
+const href = '#';
+const {name, description} = Astro.props;
+const Icon = LockClosedIcon;
+---
+
+<div class="flex flex-col">
+  <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900">
+    <Icon className="h-5 w-5 flex-none text-indigo-600" aria-hidden="true" />
+    {name}
+  </dt>
+  <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600">
+    <p class="flex-auto">{description}</p>
+    <p class="mt-6">
+      <a href={href} class="text-sm font-semibold leading-6 text-indigo-600">
+        Learn more <span aria-hidden="true">→</span>
+      </a>
+    </p>
+  </dd>
+</div>

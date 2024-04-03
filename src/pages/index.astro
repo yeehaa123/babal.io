@@ -1,12 +1,11 @@
 ---
 import Base from "../layouts/Base.astro";
-import HeroSection from "../sections/Hero";
-import PlanOutline from "../sections/PlanOutline";
-import CTA from "../sections/CTA";
-import Cases from "../sections/Cases";
+import HeroSection from "../sections/Hero.astro";
+import PlanOutline from "../sections/PlanOutline.astro";
+import CTA from "../sections/CTA.astro";
+import Cases from "../sections/Cases.astro";
 
 import { navigation, siteData } from "../consts";
-
 ---
 <Base {navigation} {siteData}>
   <HeroSection {...siteData} />
