@@ -3,6 +3,7 @@ import BaseHead from "../components/BaseHead.astro";
 import Footer from "../sections/Footer.astro";
 import Logo from "../components/Logo.astro";
 import Header from "../sections/Header.astro"
+import MenuButton from "../components/MenuButton.svelte";
 
 const { navigation, siteData } = Astro.props;
 ---
@@ -11,11 +12,10 @@ const { navigation, siteData } = Astro.props;
     <BaseHead {...siteData} />
   </head>
   <body>
-    <header class="bg-white">
-      <Header {navigation} >
-        <Logo slot="logo" />
-      </Header>
-    </header>
+    <Header {navigation} >
+      <Logo slot="logo" />
+      <MenuButton slot="menu-button" client:load/>
+    </Header>
     <slot/>
     <Footer {navigation} />
   </body>

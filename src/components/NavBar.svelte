@@ -7,7 +7,7 @@
       <slot name="logo" />
   </div>
   <div class="flex lg:hidden">
-    <slot name="menubutton"/>
+    <slot name="menu-button"/>
   </div>
   <div class="hidden lg:flex lg:gap-x-12">
     {#each navigation as navItem}
