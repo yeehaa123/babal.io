@@ -1,9 +1,10 @@
 ---
-export type Case = {
-  imageUrl: string
-  href: string
-  title: string
-};
+interface Props {
+  title: string;
+  href: string;
+  imageUrl: string;
+}
+
 const { imageUrl, href, title } = Astro.props;
 ---
 <article

@@ -1,15 +1,22 @@
 ---
-import SideBar from "../components/SideBar.svelte";
-import NavBar from "../components/NavBar.svelte";
+import type { NavItem } from "../types";
+
+import SideBar from "../components/SideBar.astro";
+import NavBar from "../components/NavBar.astro";
+
+interface Props {
+  navigation: NavItem[]
+}
+
 const { navigation } = Astro.props;
 ---
 <header class="bg-white">
-  <NavBar {navigation} client:load>
+  <NavBar {navigation}>
     <slot name="logo" slot="logo" />
     <slot name="menu-button" slot="menu-button" />
   </NavBar>
-  <SideBar {navigation} client:load>
+  <SideBar {navigation}>
     <slot name="logo" slot="logo" />
     <slot name="menu-button" slot="menu-button" />
-  </SideBar>
+  </SideBar >
 </header>

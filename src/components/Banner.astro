@@ -1,9 +1,12 @@
 ---
-const { message} = Astro.props;
+interface Props  {
+  message: string | undefined;
+}
+const { message } = Astro.props;
 const isVisible = message ? "visible" : "hidden";
 ---
 <div class="hidden sm:mb-8 sm:flex sm:justify-center" >
-  <div class={`${isVisible} relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20`}>
+  <div class:list={[isVisible, "relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20"]}>
     {message}{' '}
     <a href="#" class="font-semibold text-indigo-600">
       <span class="absolute inset-0" aria-hidden="true" />

@@ -1,4 +1,10 @@
 ---
+import Link from "../components/NavLink.astro";
+
+interface Props {
+  action: string
+}
+
 const { action } = Astro.props;
 ---
 <div class="mt-10 flex items-center justify-center gap-x-6">
@@ -8,7 +14,7 @@ const { action } = Astro.props;
   >
     {action}
   </a>
-  <a href="#" class="text-sm font-semibold leading-6 text-gray-900">
+  <Link href="#" >
     Learn more <span aria-hidden="true">→</span>
-  </a>
+  </Link>
 </div>

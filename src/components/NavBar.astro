@@ -1,0 +1,25 @@
+---
+import type { NavItem } from "../types";
+
+import Link from "../components/NavLink.astro";
+
+interface Props {
+  navigation: NavItem[];
+}
+const { navigation } = Astro.props;
+---
+
+<nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+  <div class="flex lg:flex-1">
+      <slot name="logo" />
+  </div>
+  <div class="flex lg:hidden">
+    <slot name="menu-button"/>
+  </div>
+  <div class="hidden lg:flex lg:gap-x-12">
+    {navigation.map(({href,name}: NavItem) => (<Link href={href}>{name}</Link>))}
+  </div>
+  <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+    <Link href="/login">Log in <span aria-hidden="true">&rarr;</span></Link>
+  </div>
+</nav>

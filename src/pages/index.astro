@@ -5,11 +5,14 @@ import PlanOutline from "../sections/PlanOutline.astro";
 import CTA from "../sections/CTA.astro";
 import Cases from "../sections/Cases.astro";
 
+import { getCollection } from 'astro:content';
+
+const cases  = (await getCollection('cases'))
 import { navigation, siteData } from "../consts";
 ---
 <Base {navigation} {siteData}>
   <HeroSection {...siteData} />
-  <PlanOutline problem={siteData.problem} steps={siteData.steps}/>
+  <PlanOutline {...siteData.process} />
   <CTA {...siteData.cta} />
-  <Cases cases={siteData.cases} />
+  <Cases {...siteData.work} {cases} />
 </Base>

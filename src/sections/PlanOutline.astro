@@ -1,8 +1,15 @@
 ---
-import type { Step } from "../components/Step.astro";
+import type { Step } from "../types";
+
 import StepComponent from "../components/Step.astro";
 
-const { problem, steps } = Astro.props;
+interface Props {
+ problem: string;
+ payoff: string;
+ steps: Step[]
+}
+
+const { problem, payoff, steps } = Astro.props;
 ---
 
 <div class="bg-white py-24 sm:py-32">
@@ -10,7 +17,7 @@ const { problem, steps } = Astro.props;
     <div class="mx-auto max-w-2xl lg:text-center">
       <h2 class="text-base font-semibold leading-7 text-indigo-600">Ecosystem Architecture</h2>
       <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-        Grow your business. Not your team size.
+      { payoff }
       </p>
       <p class="mt-6 text-lg leading-8 text-gray-600">
         {problem}
@@ -18,8 +25,8 @@ const { problem, steps } = Astro.props;
     </div>
     <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
       <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
-        {steps.map((step: Step) => (
-        <StepComponent {...step} />
+        {steps.map(step => (
+        <StepComponent {...step} href="about"/>
         ))}
       </dl>
     </div>

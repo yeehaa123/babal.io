@@ -1,15 +1,22 @@
 ---
-type NavItem = Record<"name"| "href", string>;
+import type { NavItem } from "../types";
+
+import Link from "../components/NavLink.astro";
+
+interface Props {
+  navigation: NavItem[]
+}
+
 const { navigation } = Astro.props;
 ---
 <footer class="bg-white">
   <div class="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
     <nav class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12" aria-label="Footer">
-      {navigation.map((item:NavItem) => (
+      {navigation.map(item => (
         <div class="pb-6">
-        <a href={item.href} class="text-sm leading-6 text-gray-600 hover:text-gray-900">
+        <Link href={item.href} class="font-normal text-gray-600 hover:text-gray-900">
           {item.name}
-        </a>
+        </Link>
         </div>
       ))}
     </nav>

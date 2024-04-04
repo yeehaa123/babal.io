@@ -1,0 +1,13 @@
+---
+interface Props {
+  href: string;
+  class?: string;
+}
+const { href, class: className} = Astro.props;
+import { twMerge } from 'tailwind-merge'
+const linkStyles = "text-sm font-semibold leading-6 text-gray-900"
+---
+
+<a href={`/${href}`} class={twMerge(linkStyles, className)}>
+<slot/>
+</a>

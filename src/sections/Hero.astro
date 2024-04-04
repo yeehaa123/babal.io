@@ -2,6 +2,15 @@
 import Banner from "../components/Banner.astro"
 import Actions from "../components/Actions.astro"
 
+interface Props  {
+  message?: string;
+  tagline: string;
+  byline: string;
+  cta: {
+    action: string
+  }
+}
+
 const { message , tagline, byline, cta } = Astro.props;
 ---
 
