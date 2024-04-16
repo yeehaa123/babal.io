@@ -1,0 +1,29 @@
+---
+import Card from "./Card.astro";
+
+type Checkpoint = {
+  task: string
+}
+
+interface Props {
+  goal: string,
+  description: string,
+  checkpoints: Checkpoint[]
+}
+
+const { goal, description, checkpoints } = Astro.props;
+---
+<Card>
+  <Fragment slot="header">
+    <h1>{goal}</h1>
+    <p>{description}</p>
+  </Fragment>
+  <Fragment>
+  <ul>{checkpoints.map(cp => (
+    <li>{cp.task}</li>
+    ))}</ul>
+  </Fragment>
+  <Fragment slot="footer">
+    <button>Hello</button>
+  </Fragment>
+</Card>

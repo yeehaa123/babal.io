@@ -1,17 +1,22 @@
 ---
 import Base from "../../layouts/Base.astro";
-import { getCollection } from 'astro:content';
+import CourseCard from "../../components/CourseCard.astro";
+import { getCollection, getEntry, getEntry} from 'astro:content';
 import { navigation, siteData } from "../../consts";
 
 export async function getStaticPaths() {
   const cases = await getCollection('cases');
-  return cases.map(entry => ({
-    params: { slug: entry.slug }, props: { entry },
-  }));
+  const promises = cases.map(async entry => {
+    const courseId = entry.data.course;
+    const course = await getEntry('courses', courseId);
+    return {
+      params: { slug: entry.slug }, props: { entry, course },
+    }});
+  return await Promise.all(promises);
 }
 
-const { entry } = Astro.props;
-const { title, description } = entry.data;
+const { entry, course } = Astro.props;
+const { title, description, stakeholders } = entry.data;
 const { Content } = await entry.render();
 ---
 <Base {navigation} {siteData}>
@@ -29,7 +34,9 @@ const { Content } = await entry.render();
     prose-a:no-underline prose-a:text-secondary-dark hover:prose-a:text-secondary-light
     " transition:name="content" transition:animate="slide">
     <h1>{title}</h1>
-    <p>{description}</p>
-    <Content />
+    <p>{ description }</p>
+    { stakeholders.map(stakeholder => <p>{stakeholder}</p>) }
+    <CourseCard {...course.data}/>
+    <Content/>
   </article>
 </Base>

@@ -1,11 +1,24 @@
 import { defineCollection, z } from 'astro:content';
 
+const courses = defineCollection({
+  type: 'data',
+  schema: z.object({
+    goal: z.string(),
+    description: z.string(),
+    checkpoints: z.array(z.object({
+      task: z.string()
+    }))
+  }),
+});
+
 const cases = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
     description: z.string(),
     imageUrl: z.string(),
+    course: z.string().optional(),
+    stakeholders: z.array(z.string())
   }),
 });
 
@@ -18,4 +31,4 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { cases, blog };
+export const collections = { cases, blog, courses };
