@@ -1,9 +1,20 @@
 ---
+import { Label } from "@/components/ui/label"
+import { Checkbox } from "@/components/ui/checkbox"
+
 export interface Checkpoint {
   task: string,
   href: string
 }
 
-const { task, href } = Astro.props;
+const { task, href, index } = Astro.props;
+
 ---
-<li><a {href}>{task}</a></li>
+<li class="flex align-middle bg-gray-50 p-3 my-3 flex items-center space-x-2">
+  <Checkbox className="bg-white" id={`cp-${index}`}/>
+  <Label htmlFor={`cp-${index}`}>
+    <a href={href} target="_blank" >
+      {task}
+    </a>
+  </Label>
+</li>

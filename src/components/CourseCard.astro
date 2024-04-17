@@ -7,9 +7,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+
+import Avatar from '@/components/Avatar';
+
+import { Separator } from "@/components/ui/separator"
+
+
 import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { Checkbox } from "@/components/ui/checkbox"
+import Checkpoint from "@/components/Checkpoint.astro";
+
+
 
 type Checkpoint = {
   task: string,
@@ -19,23 +26,27 @@ type Checkpoint = {
 interface Props {
   goal: string,
   description: string,
-  checkpoints: Checkpoint[]
+  checkpoints: Checkpoint[],
+  curator: string
 }
 
-const { goal, description, checkpoints } = Astro.props;
+const { goal, description, checkpoints, curator } = Astro.props;
 ---
-<Card className="w-[350px]">
+<Card className="w-[360px]">
   <CardHeader>
-    <CardTitle>{goal}</CardTitle>
+    <CardTitle className="my-4">{goal}</CardTitle>
+    <Separator />
+    <Avatar curator={curator}/>
+    <Separator />
     <CardDescription>{description}</CardDescription>
   </CardHeader>
-  <CardContent className="grid gap-4">
-
-    <ul>{checkpoints.map((cp, index) => (
-      <li class="flex items-center space-x-2 space-y-2">
-      <Checkbox id={`cp-${index}`}/><Label htmlFor={`cp-${index}`}>{cp.task}</Label>
-      </li>
-      ))}</ul>
+  <CardContent>
+    <ul>
+      {checkpoints.map((cp, index) => (
+      <Checkpoint {...cp} index={index} />
+      ))
+      }
+    </ul>
   </CardContent>
   <CardFooter>
     <Button className="w-full">
