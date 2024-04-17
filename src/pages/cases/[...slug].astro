@@ -1,14 +1,19 @@
 ---
 import Base from "../../layouts/Base.astro";
 import CourseCard from "../../components/CourseCard.astro";
-import { getCollection, getEntry, getEntry} from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import { navigation, siteData } from "../../consts";
+import slugify from "slugify";
+
 
 export async function getStaticPaths() {
   const cases = await getCollection('cases');
   const promises = cases.map(async entry => {
-    const courseId = entry.data.course;
+    const courseId = slugify(entry.data.course);
     const course = await getEntry('courses', courseId);
+    if(course === undefined) {
+      throw new Error("Course is required");    // or: return Astro.redirect('/');
+    }
     return {
       params: { slug: entry.slug }, props: { entry, course },
     }});
@@ -20,6 +25,7 @@ const { title, description, stakeholders } = entry.data;
 const { Content } = await entry.render();
 ---
 <Base {navigation} {siteData}>
+  <CourseCard {...course.data}/>
   <article class="py-32 prose container overflow-hidden px-10 lg:px-0 lg:max-w-4xl mx-auto
     prose-base md:prose-lg lg:prose-xl
     prose-lead:font-serif prose-lead:text-black dark:prose-lead:text-white
@@ -36,7 +42,6 @@ const { Content } = await entry.render();
     <h1>{title}</h1>
     <p>{ description }</p>
     { stakeholders.map(stakeholder => <p>{stakeholder}</p>) }
-    <CourseCard {...course.data}/>
     <Content/>
   </article>
 </Base>

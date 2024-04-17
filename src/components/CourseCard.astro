@@ -1,8 +1,19 @@
 ---
-import Card from "./Card.astro";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Label } from "@/components/ui/label"
+import { Checkbox } from "@/components/ui/checkbox"
 
 type Checkpoint = {
-  task: string
+  task: string,
+  href: string
 }
 
 interface Props {
@@ -13,17 +24,22 @@ interface Props {
 
 const { goal, description, checkpoints } = Astro.props;
 ---
-<Card>
-  <Fragment slot="header">
-    <h1>{goal}</h1>
-    <p>{description}</p>
-  </Fragment>
-  <Fragment>
-  <ul>{checkpoints.map(cp => (
-    <li>{cp.task}</li>
-    ))}</ul>
-  </Fragment>
-  <Fragment slot="footer">
-    <button>Hello</button>
-  </Fragment>
+<Card className="w-[350px]">
+  <CardHeader>
+    <CardTitle>{goal}</CardTitle>
+    <CardDescription>{description}</CardDescription>
+  </CardHeader>
+  <CardContent className="grid gap-4">
+
+    <ul>{checkpoints.map((cp, index) => (
+      <li class="flex items-center space-x-2 space-y-2">
+      <Checkbox id={`cp-${index}`}/><Label htmlFor={`cp-${index}`}>{cp.task}</Label>
+      </li>
+      ))}</ul>
+  </CardContent>
+  <CardFooter>
+    <Button className="w-full">
+      Edit
+    </Button>
+  </CardFooter>
 </Card>

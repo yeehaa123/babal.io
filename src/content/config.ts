@@ -4,9 +4,11 @@ const courses = defineCollection({
   type: 'data',
   schema: z.object({
     goal: z.string(),
+    curator: z.string(),
     description: z.string(),
     checkpoints: z.array(z.object({
-      task: z.string()
+      task: z.string(),
+      href: z.string()
     }))
   }),
 });
@@ -17,7 +19,7 @@ const cases = defineCollection({
     title: z.string(),
     description: z.string(),
     imageUrl: z.string(),
-    course: z.string().optional(),
+    course: z.string(),
     stakeholders: z.array(z.string())
   }),
 });

@@ -9,7 +9,9 @@ import svelte from "@astrojs/svelte";
 // https://astro.build/config
 export default defineConfig({
   site: 'https://example.com',
-  integrations: [react(), tailwind(), mdx(), svelte()],
+  integrations: [react(), tailwind({
+    applyBaseStyles: false,
+  }), mdx(), svelte()],
   output: "hybrid",
   adapter: vercel()
 });

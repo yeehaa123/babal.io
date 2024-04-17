@@ -1,0 +1,9 @@
+---
+export interface Checkpoint {
+  task: string,
+  href: string
+}
+
+const { task, href } = Astro.props;
+---
+<li><a {href}>{task}</a></li>
