@@ -8,12 +8,12 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-import Avatar from '@/components/Avatar';
-
-import { Separator } from "@/components/ui/separator"
+import Avatar from '@/components/Curator';
 
 
-import { Button } from "@/components/ui/button"
+import { Share1Icon, CopyIcon, BookmarkIcon, BookmarkFilledIcon} from '@radix-ui/react-icons'
+
+
 import Checkpoint from "@/components/Checkpoint.astro";
 
 
@@ -33,11 +33,13 @@ interface Props {
 const { goal, description, checkpoints, curator } = Astro.props;
 ---
 <Card className="w-[360px]">
-  <CardHeader>
-    <CardTitle className="my-4">{goal}</CardTitle>
-    <Separator />
+  <CardHeader className="space-y-4">
+    <CardTitle className="flex w-full justify-end space-x-5 ">
+    {goal}
+      <BookmarkIcon className="h-8 w-8 text-gray-500" />
+    </CardTitle>
+
     <Avatar curator={curator}/>
-    <Separator />
     <CardDescription>{description}</CardDescription>
   </CardHeader>
   <CardContent>
@@ -48,9 +50,10 @@ const { goal, description, checkpoints, curator } = Astro.props;
       }
     </ul>
   </CardContent>
-  <CardFooter>
-    <Button className="w-full">
-      Edit
-    </Button>
+  <CardFooter className="flex-col">
+    <div class="flex w-full justify-end space-x-5 ">
+      <CopyIcon className="h-4 w-4 text-gray-500" />
+      <Share1Icon className="h-4 w-4 text-gray-500" />
+    </div>
   </CardFooter>
 </Card>
