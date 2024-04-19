@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import {
   Card,
   CardContent,
@@ -6,8 +8,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-
 import Curator from '@/components/Curator';
+
+import SignInOverlay from "@/components/SignInOverlay";
 
 
 import { Share1Icon, CopyIcon, BookmarkIcon } from '@radix-ui/react-icons'
@@ -41,15 +44,22 @@ interface Props {
   curator?: Curator | undefined
 }
 
+
 export default function CourseCard({ course, curator }: Props) {
   const { goal, description, curator: name, checkpoints } = course
+  const [isOverlayVisible, setOverlayVisible] = useState(false);
+
+  function toggleOverlay() {
+    return setOverlayVisible(c => !c)
+  }
 
   return (
-    <Card className="w-auto max-w-[380px]">
+    <Card className="relative w-auto max-w-[380px] select-none">
+      <SignInOverlay isOverlayVisible={isOverlayVisible} toggleOverlay={toggleOverlay} />
       <CardHeader className="space-y-4">
-        <CardTitle className="flex w-full justify-end space-x-5 ">
+        <CardTitle className="flex w-full justify-between space-x-5 ">
           {goal}
-          <BookmarkIcon className="h-8 w-8 text-gray-500" />
+          <BookmarkIcon onClick={toggleOverlay} className="h-8 w-8 text-gray-500" />
         </CardTitle>
 
         <Curator name={name} socials={curator && curator.socials} />
@@ -65,11 +75,10 @@ export default function CourseCard({ course, curator }: Props) {
       </CardContent>
       <CardFooter className="flex-col">
         <div className="flex w-full justify-end space-x-5 ">
-          <CopyIcon className="h-4 w-4 text-gray-500" />
+          <CopyIcon onClick={toggleOverlay} className="h-4 w-4 text-gray-500" />
           <Share1Icon className="h-4 w-4 text-gray-500" />
         </div>
       </CardFooter>
     </Card>
   )
 }
-
