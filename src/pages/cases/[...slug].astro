@@ -1,8 +1,8 @@
 ---
-import Base from "../../layouts/Base.astro";
-import CourseCard from "../../components/CourseCard.astro";
+import Base from "@/layouts/Base.astro";
+import CourseCard from "@/components/CourseCard";
 import { getCollection, getEntry } from 'astro:content';
-import { navigation, siteData } from "../../consts";
+import { navigation, siteData } from "@/consts";
 import slugify from "slugify";
 
 
@@ -25,12 +25,10 @@ const { title, description, stakeholders } = entry.data;
 const { Content } = await entry.render();
 ---
 <Base {navigation} {siteData}>
-  <div class="flex space-x-4 m-4">
-    <CourseCard {...course.data}/>
-    <CourseCard {...course.data}/>
-    <CourseCard {...course.data}/>
-    <CourseCard {...course.data}/>
-    <CourseCard {...course.data}/>
+  <div class="bg-white py-24 sm:py-32">
+    <div class="flex gap-x-4 mx-auto max-w-7xl px-6 lg:px-8">
+    {[1,2,3].map(index => <CourseCard key={index} {...course.data} client:load />)}
+  </div>
   </div>
   <article class="py-32 prose container overflow-hidden px-10 lg:px-0 lg:max-w-4xl mx-auto
     prose-base md:prose-lg lg:prose-xl

@@ -1,0 +1,21 @@
+---
+import Base from "@/layouts/Base.astro";
+import CourseCard from "../../components/CourseCard";
+import { navigation, siteData } from "@/consts";
+import { getCollection } from 'astro:content';
+
+const courses  = (await getCollection('courses'))
+
+---
+
+<Base {navigation} {siteData}>
+  <div class="bg-white py-24 sm:py-32">
+    <div class="flex space-x-4 mx-auto max-w-7xl px-6 lg:px-8">
+      {courses.map(course => 
+      (<CourseCard {...course.data}/>
+      <CourseCard {...course.data} client:load/>
+      <CourseCard {...course.data}/>)
+      )}
+    </div>
+  </div>
+</Base>
