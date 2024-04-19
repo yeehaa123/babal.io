@@ -29,7 +29,7 @@ interface Props {
 
 export default function CourseCard({ goal, description, checkpoints, curator }: Props) {
   return (
-    <Card className="w-[360px]">
+    <Card className="w-auto max-w-[380px]">
       <CardHeader className="space-y-4">
         <CardTitle className="flex w-full justify-end space-x-5 ">
           {goal}

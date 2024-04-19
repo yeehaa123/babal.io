@@ -1,6 +1,7 @@
 export const navigation = [
   { name: 'Blog', href: 'posts' },
   { name: 'About', href: 'about' },
+  { name: 'Courses', href: 'offcourse' },
 ]
 
 export const siteData = {
