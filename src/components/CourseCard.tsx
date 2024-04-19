@@ -38,7 +38,7 @@ interface Course {
 
 interface Props {
   course: Course,
-  curator: Curator | undefined
+  curator?: Curator | undefined
 }
 
 export default function CourseCard({ course, curator }: Props) {
