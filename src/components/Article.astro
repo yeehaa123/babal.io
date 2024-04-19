@@ -1,4 +1,7 @@
-<article class="prose container overflow-hidden mx-auto
+---
+const { class: className } = Astro.props;
+---
+<article class:list={[`prose container 
   prose-base md:prose-lg lg:prose-xl
   prose-lead:font-serif prose-lead:text-black dark:prose-lead:text-white
   prose-lead:first-letter:text-3xl
@@ -10,6 +13,6 @@
   prose-blockquote:font-normal prose-blockquote:not-italic
   prose-blockquote:border-secondary
   prose-a:no-underline prose-a:text-secondary-dark hover:prose-a:text-secondary-light
-  " transition:name="content" transition:animate="slide">
+  `, className]} >
   <slot/>
 </article>

@@ -1,5 +1,15 @@
 import { defineCollection, z } from 'astro:content';
 
+const people = defineCollection({
+  type: 'data',
+  schema: z.object({
+    alias: z.string(),
+    socials: z.object({
+      linkedin: z.string()
+    })
+  }),
+});
+
 const courses = defineCollection({
   type: 'data',
   schema: z.object({
@@ -33,4 +43,4 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { cases, blog, courses };
+export const collections = { cases, blog, courses, people };

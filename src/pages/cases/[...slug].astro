@@ -15,13 +15,17 @@ export async function getStaticPaths() {
     if(course === undefined) {
       throw new Error("Course is required");    // or: return Astro.redirect('/');
     }
+
+    const curatorId = course.data.curator.toLowerCase();
+    const curator = await getEntry('people', curatorId);
+
     return {
-      params: { slug: entry.slug }, props: { entry, course },
+      params: { slug: entry.slug }, props: { entry, course, curator: curator && curator.data},
     }});
   return await Promise.all(promises);
 }
 
-const { entry, course } = Astro.props;
+const { entry, course, curator } = Astro.props;
 const { title, description } = entry.data;
 // const { Content } = await entry.render();
 ---
@@ -38,7 +42,7 @@ const { title, description } = entry.data;
 
       </Article>
       <div class="relative overflow-hidden lg:max-w-lg flex justify-center my-12 lg:m-0 lg:justify-start">
-        <CourseCard {...course.data} />
+        <CourseCard course={course.data} curator={curator}/>
       </div>
     </div>
   </div>

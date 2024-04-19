@@ -8,14 +8,19 @@ import {
   CardDescription,
 } from "@/components/ui/card"
 
+type Socials = {
+  linkedin?: string,
+}
+
 interface Props {
-  curator: string;
+  name: string;
+  socials: Socials | undefined;
 }
 
 import { GitHubLogoIcon, LinkedInLogoIcon, InstagramLogoIcon } from '@radix-ui/react-icons'
 
 
-export default function AvatarStack({ curator }: Props) {
+export default function AvatarStack({ name, socials }: Props) {
   return (
     <div className="flex align-middle py-4 items-center justify-between">
       <div className="flex items-center space-x-3">
@@ -23,15 +28,15 @@ export default function AvatarStack({ curator }: Props) {
           <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
           <AvatarFallback>YH</AvatarFallback>
         </Avatar>
-        <CardDescription>{curator}</CardDescription>
+        <CardDescription>{name}</CardDescription>
       </div>
 
-
-      <div className="flex items-center space-x-3">
-        <GitHubLogoIcon className="h-6 w-6" />
-        <LinkedInLogoIcon className="h-6 w-6" />
-        <InstagramLogoIcon className="h-6 w-6" />
-      </div>
+      {socials &&
+        <div className="flex items-center space-x-3">
+          <GitHubLogoIcon className="h-6 w-6" />
+          <LinkedInLogoIcon className="h-6 w-6" />
+          <InstagramLogoIcon className="h-6 w-6" />
+        </div>}
     </div>
   )
 }

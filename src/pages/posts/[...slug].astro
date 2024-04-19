@@ -1,5 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
+import Article from "@/components/Article.astro";
 import { getCollection } from 'astro:content';
 import { navigation, siteData } from "../../consts";
 
@@ -14,19 +15,7 @@ const { entry } = Astro.props;
 const { Content } = await entry.render();
 ---
 <Base {navigation} {siteData}>
-  <article class="py-32 prose container overflow-hidden px-10 lg:px-0 lg:max-w-4xl mx-auto
-    prose-base md:prose-lg lg:prose-xl
-    prose-lead:font-serif prose-lead:text-black dark:prose-lead:text-white
-    prose-lead:first-letter:text-3xl
-    prose-lead:md:first-letter:text-4xl
-    prose-lead:lg:first-letter:text-5xl
-    prose-lead:prose-lg md:prose-lead:prose-xl lg:prose-lead:prose-2xl
-    dark:prose-invert
-    md:prose-h1:text-6xl prose-h1:text-5xl
-    prose-blockquote:font-normal prose-blockquote:not-italic
-    prose-blockquote:border-secondary
-    prose-a:no-underline prose-a:text-secondary-dark hover:prose-a:text-secondary-light
-    " transition:name="content" transition:animate="slide">
+  <Article class="py-32 lg:max-w-4xl mx-auto">
   <Content />
-  </article>
+  </Article>
 </Base>

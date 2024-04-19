@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-import Avatar from '@/components/Curator';
+import Curator from '@/components/Curator';
 
 
 import { Share1Icon, CopyIcon, BookmarkIcon } from '@radix-ui/react-icons'
@@ -20,14 +20,30 @@ type Checkpoint = {
   href: string
 }
 
-interface Props {
+type Socials = {
+  linkedin?: string,
+}
+
+type Curator = {
+  alias: string,
+  socials: Socials
+}
+
+interface Course {
   goal: string,
   description: string,
   checkpoints: Checkpoint[],
-  curator: string
+  curator: string,
 }
 
-export default function CourseCard({ goal, description, checkpoints, curator }: Props) {
+interface Props {
+  course: Course,
+  curator: Curator | undefined
+}
+
+export default function CourseCard({ course, curator }: Props) {
+  const { goal, description, curator: name, checkpoints } = course
+
   return (
     <Card className="w-auto max-w-[380px]">
       <CardHeader className="space-y-4">
@@ -36,7 +52,7 @@ export default function CourseCard({ goal, description, checkpoints, curator }: 
           <BookmarkIcon className="h-8 w-8 text-gray-500" />
         </CardTitle>
 
-        <Avatar curator={curator} />
+        <Curator name={name} socials={curator && curator.socials} />
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
