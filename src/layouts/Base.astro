@@ -4,7 +4,6 @@ import Footer from "../sections/Footer.astro";
 import Logo from "../components/Logo.astro";
 import Header from "../sections/Header.astro"
 import MenuButton from "../components/MenuButton";
-import  SpeedInsights  from "@vercel/speed-insights/astro"
 
 
 const { navigation, siteData } = Astro.props;
@@ -19,7 +18,6 @@ const { navigation, siteData } = Astro.props;
       <MenuButton slot="menu-button" client:load/>
     </Header>
     <slot/>
-    <SpeedInsights/>
     <Footer {navigation} />
   </body>
 </html>
