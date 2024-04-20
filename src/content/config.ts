@@ -19,7 +19,8 @@ const courses = defineCollection({
     checkpoints: z.array(z.object({
       task: z.string(),
       href: z.string()
-    }))
+    })),
+    habitat: z.string().optional(),
   }),
 });
 

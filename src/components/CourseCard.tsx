@@ -13,7 +13,7 @@ import Curator from '@/components/Curator';
 import SignInOverlay from "@/components/SignInOverlay";
 
 
-import { Share1Icon, CopyIcon, BookmarkIcon } from '@radix-ui/react-icons'
+import { Share1Icon, CopyIcon, BookmarkIcon, Crosshair1Icon } from '@radix-ui/react-icons'
 
 
 import Checkpoint from "@/components/Checkpoint";
@@ -37,6 +37,7 @@ interface Course {
   description: string,
   checkpoints: Checkpoint[],
   curator: string,
+  habitat?: string
 }
 
 interface Props {
@@ -46,7 +47,7 @@ interface Props {
 
 
 export default function CourseCard({ course, curator }: Props) {
-  const { goal, description, curator: name, checkpoints } = course
+  const { goal, description, habitat, curator: name, checkpoints } = course
   const [isOverlayVisible, setOverlayVisible] = useState(false);
 
   function toggleOverlay() {
@@ -66,7 +67,7 @@ export default function CourseCard({ course, curator }: Props) {
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
-        <ul>
+        <ul className="flex flex-col gap-2">
           {checkpoints.map((cp, index) => (
             <Checkpoint key={index} {...cp} index={index} />
           ))
@@ -74,11 +75,16 @@ export default function CourseCard({ course, curator }: Props) {
         </ul>
       </CardContent>
       <CardFooter className="flex-col">
-        <div className="flex w-full justify-end space-x-5 ">
-          <CopyIcon onClick={toggleOverlay} className="h-4 w-4 text-gray-500" />
-          <Share1Icon className="h-4 w-4 text-gray-500" />
+        <div className="flex w-full justify-between">
+          <a href={habitat} className={habitat ? "visible" : "invisible"}>
+            <Crosshair1Icon className="h-4 w-4 text-gray-500" />
+          </a>
+          <div className="flex space-x-5 ">
+            <CopyIcon onClick={toggleOverlay} className="h-4 w-4 text-gray-500" />
+            <Share1Icon className="h-4 w-4 text-gray-500" />
+          </div>
         </div>
       </CardFooter>
-    </Card>
+    </Card >
   )
 }

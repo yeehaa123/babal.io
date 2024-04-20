@@ -9,7 +9,7 @@ export interface Props {
 
 export default function Checkpoint({ task, href, index }: Props) {
   return (
-    <li className="group flex align-middle bg-gray-50 hover:bg-gray-900 hover:text-white p-3 my-3 flex items-center space-x-2">
+    <li className="group flex align-middle bg-gray-100 hover:bg-gray-900 hover:text-white p-3 flex items-center space-x-2">
       <Checkbox className="bg-white" id={`cp-${index}`} onClick={() => console.log(task)} />
       <Label htmlFor={`cp-${index}`}>
         <a href={href} target="_blank" >
