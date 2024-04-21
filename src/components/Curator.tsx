@@ -20,7 +20,7 @@ interface Props {
 import { GitHubLogoIcon, LinkedInLogoIcon, InstagramLogoIcon } from '@radix-ui/react-icons'
 
 
-export default function Cutator({ name, socials }: Props) {
+export default function Curator({ name, socials }: Props) {
   return (
     <div className="flex align-middle py-4 items-center justify-between">
       <div className="flex items-center space-x-3">

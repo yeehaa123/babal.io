@@ -1,36 +1,59 @@
 ---
 import Base from "@/layouts/Base.astro";
 import Article from "@/components/Article.astro";
-import { db, People } from 'astro:db';
+import { db,Socials, Courses, Checkpoints, eq } from 'astro:db';
 import CourseCard from "@/components/CourseCard";
-import { getCollection, getEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
 import { navigation, siteData } from "@/consts";
 
-export async function getStaticPaths() {
-  async function getCourseData(courseId: string) {
-    const courses= await getCollection('courses');
-    const course = courses.find((c) => c.data.habitat === courseId);
+type Course = CollectionEntry<'courses'>['data'] | undefined
+type Curator = CollectionEntry<'people'>['data'] | undefined
 
-    if(!course) {
-      return { course }
+export async function getStaticPaths() {
+  async function getCourseData(postId: string) {
+    const result = await db.select()
+      .from(Courses)
+      .where(eq(Courses.habitat, postId))
+      .innerJoin(Checkpoints, eq(Courses.id, Checkpoints.courseId))
+      .leftJoin(Socials, eq(Courses.curator, Socials.alias))
+
+    if (result.length === 0) {
+      return { course: undefined, curator: undefined}
     }
 
-    const curatorId = course.data.curator.toLowerCase();
-    const curator = await getEntry('people', curatorId);
-    const people = await db.select().from(People);
-    console.log(people);
+    return result.reduce<{ course: Course, curator: Curator }>(
+      (acc, row) => {
+
+        if(!acc.course){
+          const { habitat, ...course} = row.Courses;
+          acc.course = {...course, habitat: habitat ? habitat : undefined, checkpoints: []}
+        }
+
+        if(acc.course && acc.course.checkpoints){
+          acc.course.checkpoints = [...acc.course.checkpoints, row.Checkpoints] 
+        }
 
 
-    return { course: course?.data, curator: curator?.data }
+        if(row.Socials){
+          const { alias, ...socials } = row.Socials;
+          acc.curator = { alias: alias || row.Courses.curator, socials }
+        }
+        return acc;
+      },
+      { course: undefined, curator: undefined }
+    );
   }
 
   const cases = await getCollection('cases');
 
   const promises = cases.map(async entry => {
     const { course, curator } = await getCourseData(`/cases/${entry.slug}`);
+    console.log(course, curator);
     return {
       params: { slug: entry.slug }, props: { entry, course, curator},
     }});
+
   return await Promise.all(promises);
 }
 
