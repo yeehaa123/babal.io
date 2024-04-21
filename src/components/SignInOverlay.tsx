@@ -10,20 +10,20 @@ import {
 
 
 interface Props {
-  isOverlayVisible: boolean,
-  toggleOverlay: () => void
+  isVisible: boolean,
+  toggle: () => void
 }
 
 
-export default function SignInOverlay({ isOverlayVisible, toggleOverlay }: Props) {
+export default function SignInOverlay({ isVisible, toggle }: Props) {
   return (
     <div
-      onClick={toggleOverlay}
+      onClick={toggle}
       className={cn("absolute top-0 h-full w-full flex justify-center items-center", {
-        "bg-white/95": isOverlayVisible,
-        "opacity-0": !isOverlayVisible,
-        "pointer-events-none": !isOverlayVisible,
-        "z-10": isOverlayVisible
+        "bg-white/95": isVisible,
+        "opacity-0": !isVisible,
+        "pointer-events-none": !isVisible,
+        "z-10": isVisible
       })}>
       <CardContent className="space-y-4">
         <CardTitle className="flex w-full space-x-5 ">

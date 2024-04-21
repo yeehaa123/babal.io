@@ -5,14 +5,13 @@ import { navigation, siteData } from "@/consts";
 import { getCollection } from 'astro:content';
 
 const courses  = (await getCollection('courses'))
-
 ---
 
 <Base {navigation} {siteData}>
   <div class="bg-white py-24 sm:py-32">
     <div class="flex flex-col lg:flex-row lg:gap-x-5 gap-y-5 mx-auto max-w-7xl px-6 lg:px-8">
       {courses.map(course => 
-      (<CourseCard course={course.data} />)
+      (<CourseCard course={course.data} client:load />)
       )}
     </div>
   </div>
