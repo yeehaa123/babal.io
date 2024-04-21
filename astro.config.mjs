@@ -4,13 +4,14 @@ import tailwind from "@astrojs/tailwind";
 import mdx from "@astrojs/mdx";
 import vercel from "@astrojs/vercel/serverless";
 
+import db from "@astrojs/db";
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://example.com',
   integrations: [react(), tailwind({
     applyBaseStyles: false
-  }), mdx()],
+  }), mdx(), db()],
   output: "hybrid",
   adapter: vercel()
 });

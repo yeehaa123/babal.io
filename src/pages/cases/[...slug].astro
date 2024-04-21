@@ -1,6 +1,7 @@
 ---
 import Base from "@/layouts/Base.astro";
 import Article from "@/components/Article.astro";
+import { db, People } from 'astro:db';
 import CourseCard from "@/components/CourseCard";
 import { getCollection, getEntry } from 'astro:content';
 import { navigation, siteData } from "@/consts";
@@ -16,6 +17,9 @@ export async function getStaticPaths() {
 
     const curatorId = course.data.curator.toLowerCase();
     const curator = await getEntry('people', curatorId);
+    const people = await db.select().from(People);
+    console.log(people);
+
 
     return { course: course?.data, curator: curator?.data }
   }
