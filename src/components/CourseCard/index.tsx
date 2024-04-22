@@ -13,15 +13,21 @@ import CardHeader from "./CourseCardHeader"
 import CardFooter from "./CourseCardFooter"
 import CardContent from "./CourseCardContent"
 
-interface Props {
-  course: Course,
-}
 
-export default function CourseCard({ course }: Props) {
-  const { goal, description, habitat, curator, checkpoints } = course
-  const { isOverlayVisible, closeOverlay, isBookmarked, toggleBookmark,
-    setBookmark } = useCardStore();
-
+export default function CourseCard({
+  goal,
+  description,
+  habitat,
+  curator,
+  checkpoints
+}: Course) {
+  const {
+    isOverlayVisible,
+    isBookmarked,
+    closeOverlay,
+    toggleBookmark,
+    setBookmark
+  } = useCardStore();
   return (
     <Card className="relative w-auto max-w-[380px] select-none">
       <SignInOverlay isVisible={isOverlayVisible} toggle={closeOverlay} />
