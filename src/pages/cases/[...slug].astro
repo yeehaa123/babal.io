@@ -1,55 +1,15 @@
 ---
 import Base from "@/layouts/Base.astro";
 import Article from "@/components/Article.astro";
-import { db,Socials, Courses, Checkpoints, eq } from 'astro:db';
 import CourseCard from "@/components/CourseCard";
 import { getCollection } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
+import { getCourseByHabitat } from "@/helpers";
 import { navigation, siteData } from "@/consts";
 
-type Course = CollectionEntry<'courses'>['data'] | undefined
-type Curator = CollectionEntry<'people'>['data'] | undefined
-
 export async function getStaticPaths() {
-  async function getCourseData(postId: string) {
-    const result = await db.select()
-      .from(Courses)
-      .where(eq(Courses.habitat, postId))
-      .innerJoin(Checkpoints, eq(Courses.id, Checkpoints.courseId))
-      .leftJoin(Socials, eq(Courses.curator, Socials.alias))
-
-    if (result.length === 0) {
-      return { course: undefined, curator: undefined}
-    }
-
-    return result.reduce<{ course: Course, curator: Curator }>(
-      (acc, row) => {
-
-        if(!acc.course){
-          const { habitat, ...course} = row.Courses;
-          acc.course = {...course, habitat: habitat ? habitat : undefined, checkpoints: []}
-        }
-
-        if(acc.course && acc.course.checkpoints){
-          acc.course.checkpoints = [...acc.course.checkpoints, row.Checkpoints] 
-        }
-
-
-        if(row.Socials){
-          const { alias, ...socials } = row.Socials;
-          acc.curator = { alias: alias || row.Courses.curator, socials }
-        }
-        return acc;
-      },
-      { course: undefined, curator: undefined }
-    );
-  }
-
   const cases = await getCollection('cases');
-
   const promises = cases.map(async entry => {
-    const { course, curator } = await getCourseData(`/cases/${entry.slug}`);
-    console.log(course, curator);
+    const { course, curator } = await getCourseByHabitat(`/cases/${entry.slug}`);
     return {
       params: { slug: entry.slug }, props: { entry, course, curator},
     }});
@@ -61,7 +21,6 @@ const { entry, course, curator } = Astro.props;
 const { title, description } = entry.data;
 const { Content } = await entry.render();
 ---
-
 <Base {navigation} {siteData}>
   <div class="bg-white py-24 sm:py-32 mx-auto max-w-7xl">
     <div class="mx-auto grid max-w-2xl grid-cols-1 items-start gap-x-16 sm:gap-y-24 lg:mx-0 lg:max-w-none lg:grid-cols-[70%_30%]">
