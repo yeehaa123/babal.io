@@ -13,14 +13,14 @@ type Socials = {
 }
 
 interface Props {
-  name: string;
+  alias: string;
   socials: Socials | undefined;
 }
 
 import { GitHubLogoIcon, LinkedInLogoIcon, InstagramLogoIcon } from '@radix-ui/react-icons'
 
 
-export default function Curator({ name, socials }: Props) {
+export default function Curator({ alias, socials }: Props) {
   return (
     <div className="flex align-middle py-4 items-center justify-between">
       <div className="flex items-center space-x-3">
@@ -28,7 +28,7 @@ export default function Curator({ name, socials }: Props) {
           <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
           <AvatarFallback>YH</AvatarFallback>
         </Avatar>
-        <CardDescription>{name}</CardDescription>
+        <CardDescription>{alias}</CardDescription>
       </div>
 
       {socials &&

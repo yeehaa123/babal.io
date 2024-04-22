@@ -1,4 +1,7 @@
-import type { CollectionEntry } from 'astro:content';
+import type {
+  Course
+} from "@/types";
+
 
 import {
   Card,
@@ -11,20 +14,19 @@ import CardFooter from "./CourseCardFooter"
 import CardContent from "./CourseCardContent"
 
 interface Props {
-  course: CollectionEntry<'courses'>['data'],
-  curator?: CollectionEntry<'people'>['data'] | undefined
+  course: Course,
 }
 
-export default function CourseCard({ course, curator }: Props) {
-  const { goal, description, habitat, curator: name, checkpoints } = course
+export default function CourseCard({ course }: Props) {
+  const { goal, description, habitat, curator, checkpoints } = course
   const { isOverlayVisible, closeOverlay, isBookmarked, toggleBookmark,
     setBookmark } = useCardStore();
 
   return (
     <Card className="relative w-auto max-w-[380px] select-none">
       <SignInOverlay isVisible={isOverlayVisible} toggle={closeOverlay} />
-      <CardHeader goal={goal} description={description} name={name}
-        curator={curator} isBookmarked={isBookmarked} toggleBookmark={toggleBookmark} />
+      <CardHeader goal={goal} description={description} curator={curator}
+        isBookmarked={isBookmarked} toggleBookmark={toggleBookmark} />
       <CardContent checkpoints={checkpoints} toggleComplete={setBookmark} />
       <CardFooter habitat={habitat} cloneCourse={setBookmark} />
     </Card >

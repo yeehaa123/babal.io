@@ -16,11 +16,11 @@ type Curator = {
 }
 
 import Curator from '@/components/Curator';
+
 interface Props {
   goal: string,
   description: string,
-  name: string,
-  curator?: Curator | undefined,
+  curator: Curator,
   isBookmarked: boolean,
   toggleBookmark: () => void
 }
@@ -28,7 +28,8 @@ interface Props {
 import { BookmarkIcon, BookmarkFilledIcon } from '@radix-ui/react-icons'
 
 export default function CourseCard({ goal, description,
-  curator, name, isBookmarked, toggleBookmark }: Props) {
+  curator, isBookmarked, toggleBookmark }: Props) {
+  const { alias, socials } = curator;
   return (
     <CardHeader className="space-y-4">
       <CardTitle className="flex w-full justify-between space-x-5 ">
@@ -39,7 +40,7 @@ export default function CourseCard({ goal, description,
           <BookmarkIcon onClick={toggleBookmark} className={
             cn("h-8 w-8 text-gray-500")} />}
       </CardTitle>
-      <Curator name={name} socials={curator && curator.socials} />
+      <Curator alias={alias} socials={socials} />
       <CardDescription>{description}</CardDescription>
     </CardHeader>
   )

@@ -23,5 +23,21 @@ export type CheckpointsResult = {
   href: string
 }
 
+export type Curator = {
+  alias: string;
+  socials: {
+    linkedin?: string
+  }
+}
 
 
+export type Course = {
+  goal: string,
+  description: string,
+  curator: Curator,
+  habitat?: string | undefined,
+  checkpoints: {
+    task: string,
+    href: string
+  }[]
+}
