@@ -30,8 +30,8 @@ export type Curator = {
   }
 }
 
-
 export type Course = {
+  id: string,
   goal: string,
   description: string,
   curator: Curator,

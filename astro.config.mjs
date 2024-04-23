@@ -8,7 +8,7 @@ import db from "@astrojs/db";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://example.com',
+  site: 'https://babal.io',
   integrations: [react(), tailwind({
     applyBaseStyles: false
   }), mdx(), db()],

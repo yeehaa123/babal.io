@@ -21,6 +21,7 @@ export function processCourseResults(result: {
           curator = { alias, ...socials }
         }
         acc.set(id, {
+          id,
           curator,
           ...course,
           habitat: habitat ? habitat : undefined,

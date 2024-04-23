@@ -15,20 +15,33 @@ type Curator = {
   socials: Socials
 }
 
+import CardMeta from "./CardMeta"
+
 import Curator from '@/components/Curator';
 
 interface Props {
+  id: string,
   goal: string,
   description: string,
   curator: Curator,
   isBookmarked: boolean,
+  metaVisible: boolean,
+  toggleMetaVisible: () => void,
   toggleBookmark: () => void
 }
 
 import { BookmarkIcon, BookmarkFilledIcon } from '@radix-ui/react-icons'
 
-export default function CourseCard({ goal, description,
-  curator, isBookmarked, toggleBookmark }: Props) {
+export default function CourseCardHeader({
+  goal,
+  id,
+  description,
+  curator,
+  isBookmarked,
+  metaVisible,
+  toggleMetaVisible,
+  toggleBookmark
+}: Props) {
   const { alias, socials } = curator;
   return (
     <CardHeader className="space-y-4">
@@ -41,7 +54,9 @@ export default function CourseCard({ goal, description,
             cn("h-8 w-8 text-gray-500")} />}
       </CardTitle>
       <Curator alias={alias} socials={socials} />
-      <CardDescription>{description}</CardDescription>
+      {metaVisible
+        ? <CardMeta onClick={toggleMetaVisible} id={id} />
+        : <CardDescription onClick={toggleMetaVisible}>{description} </CardDescription>}
     </CardHeader>
   )
 }

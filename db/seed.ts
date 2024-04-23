@@ -1,5 +1,6 @@
 import { db, People, Socials, Courses, Checkpoints } from 'astro:db';
 import { getCollection } from 'astro:content';
+import crypto from 'crypto'
 
 
 async function prepPeople() {
@@ -13,14 +14,15 @@ async function prepPeople() {
 async function prepCourses() {
   const rawCourses = await getCollection('courses');
   const courses = rawCourses
-    .map(({ id, data }) => {
+    .map(({ data }) => {
+      const id = crypto.randomUUID();
       const { habitat, ...rest } = data;
       return { id, habitat: habitat || null, ...rest }
     });
 
-  const checkpoints = rawCourses
-    .flatMap(({ id, data }) => {
-      return data.checkpoints.flatMap(checkpoint => {
+  const checkpoints = courses
+    .flatMap(({ id, checkpoints }) => {
+      return checkpoints.flatMap(checkpoint => {
         return { courseId: id, ...checkpoint }
       })
     })
