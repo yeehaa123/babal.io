@@ -3,17 +3,17 @@ import { BookmarkIcon, BookmarkFilledIcon } from '@radix-ui/react-icons'
 type Props = {
   isBookmarked: boolean,
   isBookmarkable: boolean,
-  toggle: () => void
+  onClick: () => void
 }
 
 export default function Bookmark({
   isBookmarked,
-  toggle,
+  onClick,
   isBookmarkable
 }: Props) {
   const Icon = isBookmarked
     ? BookmarkFilledIcon
     : BookmarkIcon
-  return <Icon onClick={toggle} className={
+  return <Icon onClick={onClick} className={
     cn("h-8 w-8 text-gray-500 invisible", { "visible": isBookmarkable })} />
 }

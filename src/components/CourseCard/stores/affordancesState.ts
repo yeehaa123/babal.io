@@ -8,7 +8,9 @@ export const $affordancesState = computed($roleState, (
   const isBookmarkable = role === RoleTypes.LEARNER || role === RoleTypes.COLLECTOR;
   const isCheckable = role === RoleTypes.LEARNER;
   const isEditable = role === RoleTypes.COLLECTOR || role === RoleTypes.CURATOR;
+  const isAuthenticable = role === RoleTypes.GUEST;
   return {
+    isAuthenticable,
     isBookmarkable,
     isCheckable,
     isClonable,

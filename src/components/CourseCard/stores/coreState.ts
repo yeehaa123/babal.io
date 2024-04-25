@@ -1,6 +1,4 @@
 import { map } from 'nanostores';
-import type { Course } from "@/types";
-import { setAuthenticated } from "@/stores/authState";
 
 export enum OverlayModes {
   AUTH = "AUTH",
@@ -23,22 +21,3 @@ export const $coreState = map<CourseCardState>({
   isMetaVisible: false
 })
 
-export const setBookmarked = (isBookmarked: boolean) => $coreState.setKey('isBookmarked', !isBookmarked)
-
-export const setMetaVisible = (isMetaVisible: boolean) => $coreState.setKey('isMetaVisible', isMetaVisible);
-
-export const setOverlayMode = (mode: OverlayModes) => $coreState.setKey("overlayMode", mode);
-
-export const authenticate = () => {
-  return setOverlayMode(OverlayModes.AUTH);
-};
-
-export function updateCourse(course: Course) {
-  const { alias } = course.curator;
-  $coreState.setKey('alias', alias);
-}
-
-export const closeOverlay = () => {
-  setAuthenticated({ userName: "Yeehaa" });
-  setOverlayMode(OverlayModes.NONE);
-}

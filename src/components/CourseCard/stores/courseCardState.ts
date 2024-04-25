@@ -1,15 +1,21 @@
 import { computed } from 'nanostores';
 import {
   $coreState,
-  authenticate,
-  closeOverlay,
   OverlayModes,
-  updateCourse,
-  setBookmarked,
-  setOverlayMode,
-  setMetaVisible
 } from "./coreState";
+import {
+  authenticate,
+  signIn,
+  signOut,
+  updateCourse,
+  editCourse,
+  cloneCourse,
+  setBookmarked,
+  setMetaVisible
+} from "./actions"
+
 import { $affordancesState } from "./affordancesState"
+
 
 export const $courseCardState = computed([$coreState, $affordancesState], (
   {
@@ -18,6 +24,7 @@ export const $courseCardState = computed([$coreState, $affordancesState], (
     isBookmarked,
   },
   {
+    isAuthenticable,
     isClonable,
     isEditable,
     isCheckable,
@@ -25,36 +32,32 @@ export const $courseCardState = computed([$coreState, $affordancesState], (
   }) => {
 
   function toggleBookmark() {
-    return isBookmarkable ? setBookmarked(isBookmarked) : authenticate();
+    setBookmarked(!isBookmarked)
   }
 
   function toggleComplete() {
-    return isCheckable ? setBookmarked(isBookmarked) : authenticate();
-  }
-
-  function editCourse() {
-    return isEditable && setOverlayMode(OverlayModes.EDIT);
-  }
-
-  function cloneCourse() {
-    return isClonable && setOverlayMode(OverlayModes.CLONE);
+    setBookmarked(!isBookmarked)
   }
 
   const toggleMetaVisible = () => setMetaVisible(!isMetaVisible);
 
   return {
-    overlayMode,
+    isAuthenticable,
     isMetaVisible,
     isBookmarked,
     isBookmarkable,
+    isCheckable,
     isClonable,
     isEditable,
+    overlayMode,
     toggleMetaVisible,
     toggleBookmark,
     toggleComplete,
     editCourse,
     cloneCourse,
-    closeOverlay
+    signIn,
+    authenticate,
+    signOut
   };
 });
 
