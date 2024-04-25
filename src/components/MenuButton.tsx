@@ -1,9 +1,7 @@
-import { useSideBar } from "@/containers/SideBar";
+import { useAppState } from "@/stores/appState";
 
 export default function MenuButton() {
-  const { isSideBarOpen, toggleSideBar } = useSideBar();
-
-
+  const { isSideBarOpen, toggleSideBar } = useAppState();
   return (
     <button
       type="button"

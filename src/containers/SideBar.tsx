@@ -1,20 +1,12 @@
 import { cn } from "@/lib/utils"
-import { create } from 'zustand';
+import { useAppState } from "@/stores/appState.ts";
 
-interface SideBarState {
-  isSideBarOpen: boolean,
-  toggleSideBar: () => void
-}
 
-export const useSideBar = create<SideBarState>()(set => ({
-  isSideBarOpen: false,
-  toggleSideBar: () => set((state) => ({ isSideBarOpen: !state.isSideBarOpen }))
-}));
-
-export default function MenuButton({ children }: { children: React.ReactNode }) {
-  const { isSideBarOpen } = useSideBar();
+export default function SideBar({ children }: { children: React.ReactNode }) {
+  const { isSideBarOpen, userName } = useAppState();
   return (
     <div className={cn("lg:hidden", { "visible": isSideBarOpen, "hidden": !isSideBarOpen })} role="dialog" aria-modal="true">
+      <h1>{userName}</h1>
       {children}
     </div>)
 }

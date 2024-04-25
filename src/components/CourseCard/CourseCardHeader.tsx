@@ -1,23 +1,13 @@
-import { cn } from "@/lib/utils"
-
 import {
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
 
-type Socials = {
-  linkedin?: string,
-}
-
-type Curator = {
-  alias: string,
-  socials: Socials
-}
-
 import CardMeta from "./CardMeta"
-
-import Curator from '@/components/Curator';
+import Bookmark from "./BookmarkIcon";
+import CuratorSection from '@/components/Curator';
+import type { Curator } from '@/types';
 
 interface Props {
   id: string,
@@ -25,12 +15,11 @@ interface Props {
   description: string,
   curator: Curator,
   isBookmarked: boolean,
-  metaVisible: boolean,
+  isBookmarkable: boolean,
+  isMetaVisible: boolean,
   toggleMetaVisible: () => void,
   toggleBookmark: () => void
 }
-
-import { BookmarkIcon, BookmarkFilledIcon } from '@radix-ui/react-icons'
 
 export default function CourseCardHeader({
   goal,
@@ -38,7 +27,8 @@ export default function CourseCardHeader({
   description,
   curator,
   isBookmarked,
-  metaVisible,
+  isBookmarkable,
+  isMetaVisible,
   toggleMetaVisible,
   toggleBookmark
 }: Props) {
@@ -47,16 +37,14 @@ export default function CourseCardHeader({
     <CardHeader className="space-y-4">
       <CardTitle className="flex w-full justify-between space-x-5 ">
         {goal}
-        {isBookmarked ?
-          <BookmarkFilledIcon onClick={toggleBookmark} className={
-            cn("h-8 w-8 text-gray-500")} /> :
-          <BookmarkIcon onClick={toggleBookmark} className={
-            cn("h-8 w-8 text-gray-500")} />}
+        <Bookmark toggle={toggleBookmark}
+          isBookmarked={isBookmarked}
+          isBookmarkable={isBookmarkable} />
       </CardTitle>
-      <Curator alias={alias} socials={socials} />
-      {metaVisible
+      <CuratorSection alias={alias} socials={socials} />
+      {isMetaVisible
         ? <CardMeta onClick={toggleMetaVisible} id={id} />
-        : <CardDescription onClick={toggleMetaVisible}>{description} </CardDescription>}
+        : <CardDescription onClick={toggleMetaVisible}>{description}</CardDescription>}
     </CardHeader>
   )
 }
