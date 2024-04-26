@@ -1,7 +1,6 @@
 import { computed } from 'nanostores';
 import {
   $coreState,
-  OverlayModes,
 } from "./coreState";
 import {
   addNotes,
@@ -23,14 +22,8 @@ export const $courseCardState = computed([$coreState, $affordancesState], (
     isMetaVisible,
     isBookmarked,
   },
-  {
-    isAuthenticable,
-    isClonable,
-    isNotable,
-    isEditable,
-    isCheckable,
-    isBookmarkable
-  }) => {
+  affordances,
+) => {
 
   function toggleBookmark() {
     setBookmarked(!isBookmarked)
@@ -42,17 +35,7 @@ export const $courseCardState = computed([$coreState, $affordancesState], (
 
   const toggleMetaVisible = () => setMetaVisible(!isMetaVisible);
 
-  return {
-    isAuthenticable,
-    isMetaVisible,
-    isBookmarked,
-    isBookmarkable,
-    isNotable,
-    isCheckable,
-    isClonable,
-    isEditable,
-    overlayMode,
-    addNotes,
+  const actions = {
     toggleMetaVisible,
     toggleBookmark,
     toggleComplete,
@@ -60,8 +43,17 @@ export const $courseCardState = computed([$coreState, $affordancesState], (
     cloneCourse,
     signIn,
     authenticate,
+    addNotes,
     signOut
+  }
+
+  return {
+    affordances,
+    actions,
+    isMetaVisible,
+    isBookmarked,
+    overlayMode,
   };
 });
 
-export { updateCourse, OverlayModes };
+export { updateCourse };

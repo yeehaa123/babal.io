@@ -1,0 +1,75 @@
+import type { Actions, Affordances, Course } from "./types";
+import {
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+  CardContent,
+} from "@/components/ui/card"
+import BookmarkIcon from "./BookmarkIcon";
+import Checkpoint from "@/components/Checkpoint";
+import CardMeta from "./CardMeta"
+import Toolbar from "./Toolbar"
+import CuratorSection from '@/components/Curator';
+
+
+type Props = {
+  course: Course,
+  actions: Actions,
+  affordances: Affordances,
+  isBookmarked: boolean,
+  isMetaVisible: boolean
+}
+
+export default function CourseCard({
+  course,
+  actions,
+  affordances,
+  isBookmarked,
+  isMetaVisible
+}: Props) {
+  const {
+    id,
+    goal,
+    curator,
+    checkpoints,
+    description,
+    habitat } = course;
+  const {
+    isCheckable,
+    isBookmarkable,
+  } = affordances;
+
+  const {
+    toggleBookmark,
+    toggleComplete,
+    toggleMetaVisible,
+  } = actions;
+  return (
+    <>
+      <CardHeader className="space-y-4">
+        <CardTitle className="flex w-full justify-between space-x-5 ">
+          {goal}
+          <BookmarkIcon onClick={toggleBookmark}
+            isBookmarked={isBookmarked}
+            isBookmarkable={isBookmarkable} />
+        </CardTitle>
+        <CuratorSection {...curator} />
+        {isMetaVisible
+          ? <CardMeta onClick={toggleMetaVisible} id={id} />
+          : <CardDescription onClick={toggleMetaVisible}>{description}</CardDescription>}
+      </CardHeader>
+      <CardContent>
+        <ul className="flex flex-col gap-2">
+          {checkpoints.map((cp, index) => (
+            <Checkpoint toggleCheck={toggleComplete}
+              isCheckable={isCheckable} key={index} {...cp} index={index} />))
+          }
+        </ul>
+      </CardContent>
+      <CardFooter className="flex flex-col gap-y-4">
+        <Toolbar affordances={affordances} actions={actions} habitat={habitat} />
+      </CardFooter>
+    </ >
+  )
+}

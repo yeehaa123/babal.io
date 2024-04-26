@@ -1,6 +1,7 @@
-import { $coreState, OverlayModes } from "./coreState"
+import { OverlayModes } from "../types";
+import type { Course } from "../types";
+import { $coreState, } from "./coreState"
 import { setAuthenticated } from "@/stores/authState";
-import type { Course } from "@/types";
 
 export function setBookmarked(isBookmarked: boolean) {
   $coreState.setKey('isBookmarked', isBookmarked)
@@ -24,8 +25,8 @@ export function signIn() {
   return setOverlayMode(OverlayModes.AUTH);
 };
 
-export function authenticate({ userName }: { userName: string }) {
-  setAuthenticated({ userName });
+export function authenticate() {
+  setAuthenticated({ userName: "YEEHAA" });
   setOverlayMode(OverlayModes.NONE);
 }
 

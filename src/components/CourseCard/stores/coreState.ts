@@ -1,12 +1,6 @@
 import { map } from 'nanostores';
+import { OverlayModes } from "../types";
 
-export enum OverlayModes {
-  AUTH = "AUTH",
-  EDIT = "EDIT",
-  NONE = "NONE",
-  NOTE = "NOTE",
-  CLONE = "CLONE"
-}
 
 type CourseCardState = {
   alias: string | undefined,

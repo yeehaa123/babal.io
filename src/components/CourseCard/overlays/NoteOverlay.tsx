@@ -27,7 +27,7 @@ import { Textarea } from "@/components/ui/textarea"
 import type { Overlay } from "./index";
 
 const formSchema = z.object({
-  note: z.string().min(2).max(500),
+  note: z.string().min(10).max(500),
 })
 
 export default function NoteOverlay({ onCancel, onConfirm }: Overlay) {
