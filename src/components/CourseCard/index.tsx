@@ -6,6 +6,7 @@ import {
   ExitIcon,
   Share1Icon,
   CopyIcon,
+  Pencil1Icon,
   Pencil2Icon,
   Crosshair1Icon,
 } from '@radix-ui/react-icons'
@@ -57,7 +58,7 @@ export default function CourseCard(course: Course) {
   const { alias, socials } = curator;
   return (
     <Card className="relative w-auto max-w-[380px] select-none">
-      <CardOverlay close={() => authenticate({ userName: "Yehaa" })} overlayMode={overlayMode} />
+      <CardOverlay close={() => authenticate({ userName: "Yeehaa" })} overlayMode={overlayMode} />
       <CardHeader className="space-y-4">
         <CardTitle className="flex w-full justify-between space-x-5 ">
           {goal}
@@ -85,6 +86,8 @@ export default function CourseCard(course: Course) {
               className={cn("h-4 w-4 text-gray-500", { "hidden": !isAuthenticable })} />
             <ExitIcon onClick={signOut}
               className={cn("h-4 w-4 text-gray-500", { "hidden": isAuthenticable })} />
+            <Pencil1Icon onClick={editCourse}
+              className={cn("h-4 w-4 text-gray-500", { "hidden": !isEditable })} />
             <Pencil2Icon onClick={addNotes}
               className={cn("h-4 w-4 text-gray-500", { "hidden": !isNotable })} />
             <CopyIcon onClick={cloneCourse}
