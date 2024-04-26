@@ -4,6 +4,7 @@ export enum OverlayModes {
   AUTH = "AUTH",
   EDIT = "EDIT",
   NONE = "NONE",
+  NOTE = "NOTE",
   CLONE = "CLONE"
 }
 
@@ -16,7 +17,7 @@ type CourseCardState = {
 
 export const $coreState = map<CourseCardState>({
   alias: undefined,
-  overlayMode: OverlayModes.NONE,
+  overlayMode: OverlayModes.NOTE,
   isBookmarked: false,
   isMetaVisible: false
 })

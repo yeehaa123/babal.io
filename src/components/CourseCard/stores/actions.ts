@@ -37,6 +37,10 @@ export function editCourse() {
   setOverlayMode(OverlayModes.EDIT);
 }
 
+export function addNotes() {
+  setOverlayMode(OverlayModes.NOTE);
+}
+
 export function cloneCourse() {
   return setOverlayMode(OverlayModes.CLONE);
 }

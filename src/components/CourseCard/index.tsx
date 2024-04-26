@@ -38,11 +38,13 @@ export default function CourseCard(course: Course) {
     isAuthenticable,
     isCheckable,
     isClonable,
+    isNotable,
     isEditable,
     isBookmarked,
     isBookmarkable,
     isMetaVisible,
     overlayMode,
+    addNotes,
     editCourse,
     cloneCourse,
     toggleBookmark,
@@ -55,7 +57,7 @@ export default function CourseCard(course: Course) {
   const { alias, socials } = curator;
   return (
     <Card className="relative w-auto max-w-[380px] select-none">
-      <CardOverlay close={() => authenticate({ userName: "Yeehaa" })} overlayMode={overlayMode} />
+      <CardOverlay close={() => authenticate({ userName: "Yehaa" })} overlayMode={overlayMode} />
       <CardHeader className="space-y-4">
         <CardTitle className="flex w-full justify-between space-x-5 ">
           {goal}
@@ -83,8 +85,8 @@ export default function CourseCard(course: Course) {
               className={cn("h-4 w-4 text-gray-500", { "hidden": !isAuthenticable })} />
             <ExitIcon onClick={signOut}
               className={cn("h-4 w-4 text-gray-500", { "hidden": isAuthenticable })} />
-            <Pencil2Icon onClick={editCourse}
-              className={cn("h-4 w-4 text-gray-500", { "hidden": !isEditable })} />
+            <Pencil2Icon onClick={addNotes}
+              className={cn("h-4 w-4 text-gray-500", { "hidden": !isNotable })} />
             <CopyIcon onClick={cloneCourse}
               className={cn("h-4 w-4 text-gray-500", { "hidden": !isClonable })} />
           </div>

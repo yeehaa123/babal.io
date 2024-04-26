@@ -4,6 +4,7 @@ import {
   OverlayModes,
 } from "./coreState";
 import {
+  addNotes,
   authenticate,
   signIn,
   signOut,
@@ -16,7 +17,6 @@ import {
 
 import { $affordancesState } from "./affordancesState"
 
-
 export const $courseCardState = computed([$coreState, $affordancesState], (
   {
     overlayMode,
@@ -26,6 +26,7 @@ export const $courseCardState = computed([$coreState, $affordancesState], (
   {
     isAuthenticable,
     isClonable,
+    isNotable,
     isEditable,
     isCheckable,
     isBookmarkable
@@ -46,10 +47,12 @@ export const $courseCardState = computed([$coreState, $affordancesState], (
     isMetaVisible,
     isBookmarked,
     isBookmarkable,
+    isNotable,
     isCheckable,
     isClonable,
     isEditable,
     overlayMode,
+    addNotes,
     toggleMetaVisible,
     toggleBookmark,
     toggleComplete,
