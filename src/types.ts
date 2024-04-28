@@ -5,19 +5,19 @@ export type Step = {
   description: string;
 }
 
-export type CoursesResult = {
+export type CoursesDBResult = {
   habitat: string | null,
   description: string,
   goal: string,
   curator: string
 }
 
-export type SocialsResult = {
+export type SocialsDBResult = {
   alias: string,
   linkedin: string | null
 }
 
-export type CheckpointsResult = {
+export type CheckpointsDBResult = {
   goal: string,
   task: string,
   href: string
@@ -34,6 +34,17 @@ export type Course = {
   goal: string,
   description: string,
   curator: Curator,
+  habitat?: string | undefined,
+  checkpoints: {
+    task: string,
+    href: string
+  }[]
+}
+
+export type RawCourse = {
+  goal: string,
+  description: string,
+  curator: string,
   habitat?: string | undefined,
   checkpoints: {
     task: string,

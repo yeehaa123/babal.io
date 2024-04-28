@@ -1,14 +1,14 @@
 import type {
   Course,
-  CoursesResult,
-  SocialsResult,
-  CheckpointsResult
+  CoursesDBResult,
+  SocialsDBResult,
+  CheckpointsDBResult
 } from "@/types";
 
 export function processCourseResults(result: {
-  Courses: CoursesResult,
-  Socials: SocialsResult | null,
-  Checkpoints: CheckpointsResult
+  Courses: CoursesDBResult,
+  Socials: SocialsDBResult | null,
+  Checkpoints: CheckpointsDBResult
 }[]) {
   return result.reduce<Map<string, Course>>(
     (acc, row) => {

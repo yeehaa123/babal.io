@@ -10,10 +10,3 @@ export async function readDir<T>(dirName: string) {
   }
   return output;
 }
-
-export type Curator = {
-  alias: string;
-  socials: {
-    linkedin?: string
-  }
-}

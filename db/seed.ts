@@ -1,43 +1,35 @@
 import { db, People, Socials, Courses, Checkpoints } from 'astro:db';
 import { readDir } from "./helpers"
-import type { Curator, CheckpointsResult, CoursesResult } from "@/types"
+import type { RawCourse, Curator, } from "@/types"
 
-export type RawCourse = {
-  goal: string,
-  description: string,
-  curator: string,
-  habitat?: string | undefined,
-  checkpoints: {
-    task: string,
-    href: string
-  }[]
-}
-async function prepPeople() {
-  const rawPeople = await readDir<Curator>('./src/content/people');
-  const people = rawPeople.map(p => ({ alias: p.alias }));
-  const socials = rawPeople.map(p => ({ alias: p.alias, ...p.socials }));
-  return { people, socials }
+async function prepPeople(rawPeople: Curator[]) {
+  return rawPeople.map(p => ({ alias: p.alias }));
 }
 
-async function prepCourses(courses: RawCourse[]): Promise<CoursesResult[]> {
+async function prepSocials(rawPeople: Curator[]) {
+  return rawPeople.map(p => ({ alias: p.alias, ...p.socials }));
+}
+
+async function prepCourses(courses: RawCourse[]) {
   return courses.map((course) => {
-    const { habitat, checkpoints, ...rest } = course;
+    const { habitat, ...rest } = course;
     return { habitat: habitat || null, ...rest }
   });
 }
 
-async function prepCheckpoints(courses: RawCourse[]): Promise<CheckpointsResult[]> {
+async function prepCheckpoints(courses: RawCourse[]) {
   return courses.flatMap(({ goal, checkpoints }) => {
     return checkpoints.map((checkpoint) => {
       return { goal, ...checkpoint }
     })
   })
 }
-//
-//
+
 export default async function() {
-  const { people, socials } = await prepPeople();
   const rawCourses = await readDir<RawCourse>('./src/content/courses');
+  const rawPeople = await readDir<Curator>('./src/content/people');
+  const people = await prepPeople(rawPeople);
+  const socials = await prepSocials(rawPeople);
   const courses = await prepCourses(rawCourses);
   const checkpoints = await prepCheckpoints(rawCourses);
   await db.insert(People).values(people);
