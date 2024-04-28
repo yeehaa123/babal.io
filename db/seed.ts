@@ -1,23 +1,48 @@
 import { db, People, Socials, Courses, Checkpoints } from 'astro:db';
-import { getCollection } from 'astro:content';
-import crypto from 'crypto'
 
+import slugify from '@sindresorhus/slugify';
 
 async function prepPeople() {
-  const rawPeople = await getCollection('people');
-  const people = rawPeople.map(p => ({ alias: p.data.alias }));
-  const socials = rawPeople.map(p => ({ alias: p.data.alias, ...p.data.socials }));
+  const rawPeople = [{
+    alias: "Yeehaa", socials: {
+      linkedin: "https://www.linkedin.com/in/yeehaa/"
+    }
+  }];
+  const people = rawPeople.map(p => ({ alias: p.alias }));
+  const socials = rawPeople.map(p => ({ alias: p.alias, ...p.socials }));
   return { people, socials }
 }
 
 
 async function prepCourses() {
-  const rawCourses = await getCollection('courses');
+  const rawCourses = [{
+    goal: "Engineer breakthroughs",
+    curator: "Yeehaa",
+    habitat: "/cases/engineering-breakthrough-moments",
+    description: "At critical moments, scaling requires outside help.But asking for help is difficult if you do not know what you need.This course helps you figure it out.",
+    checkpoints: [
+      {
+        task: "Discover your personal strengths",
+        href: "https://80000hours.org/articles/personal-strengths/"
+      },
+      {
+        task: "Embrace your weaknesses",
+        href: "https://maven.com/articles/identifying-greatest-weakness",
+      },
+      {
+        task: "Do a SWOT analysis of your startup",
+        href: "https://fullscale.io/blog/swot-analysis-for-startups/"
+      },
+      {
+        task: "Formulate your critical ask",
+        href: "https://www.42workspace.com/guide/superconnectors-in-rotterdam/"
+      }]
+  }]
   const courses = rawCourses
-    .map(({ data }) => {
-      const id = crypto.randomUUID();
-      const { habitat, ...rest } = data;
-      return { id, habitat: habitat || null, ...rest }
+    .map((course) => {
+      const { habitat, goal, ...rest } = course;
+      const id = slugify(goal);
+      return { id, goal, habitat: habitat || null, ...rest }
     });
 
   const checkpoints = courses
