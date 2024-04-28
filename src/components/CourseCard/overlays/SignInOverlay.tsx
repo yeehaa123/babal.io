@@ -1,13 +1,9 @@
-import {
-  CardTitle,
-} from "@/components/ui/card"
-
 import type { Overlay } from "./index";
+import OverlayChrome from "./OverlayChrome"
 
-export default function SignInOverlay({ }: Overlay) {
+export default function SignInOverlay({ onCancel }: Overlay) {
   return (
-    <CardTitle className="flex w-full space-x-5 ">
-      Sign In
-    </CardTitle>
+    <OverlayChrome title="Sign in" onCancel={onCancel}>
+    </OverlayChrome >
   )
 }

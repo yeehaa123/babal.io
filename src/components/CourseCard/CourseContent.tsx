@@ -42,6 +42,7 @@ export default function CourseCard({
 
   const {
     toggleBookmark,
+    showCheckpoint,
     toggleComplete,
     toggleMetaVisible,
   } = actions;
@@ -63,6 +64,7 @@ export default function CourseCard({
         <ul className="flex flex-col gap-2">
           {checkpoints.map((cp, index) => (
             <Checkpoint toggleCheck={toggleComplete}
+              showCheckpoint={showCheckpoint}
               isCheckable={isCheckable} key={index} {...cp} index={index} />))
           }
         </ul>

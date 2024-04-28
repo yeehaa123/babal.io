@@ -11,7 +11,7 @@ type CourseCardState = {
 
 export const $coreState = map<CourseCardState>({
   alias: undefined,
-  overlayMode: OverlayModes.NOTE,
+  overlayMode: OverlayModes.NONE,
   isBookmarked: false,
   isMetaVisible: false
 })

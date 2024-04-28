@@ -13,6 +13,7 @@ export type Actions = {
   signIn: () => void,
   signOut: () => void,
   editCourse: () => void,
+  showCheckpoint: () => void,
   addNotes: () => void,
   cloneCourse: () => void;
   toggleBookmark: () => void,
@@ -27,5 +28,6 @@ export enum OverlayModes {
   EDIT = "EDIT",
   NONE = "NONE",
   NOTE = "NOTE",
+  CHECKPOINT = "CHECKPOINT",
   CLONE = "CLONE"
 }

@@ -8,16 +8,15 @@ export interface Props {
   index: number,
   isCheckable: boolean,
   toggleCheck: () => void
+  showCheckpoint: () => void
 }
 
-export default function Checkpoint({ task, href, index, toggleCheck, isCheckable }: Props) {
+export default function Checkpoint({ task, index, toggleCheck, showCheckpoint, isCheckable }: Props) {
   return (
     <li className="group flex align-middle bg-gray-100 hover:bg-gray-900 hover:text-white p-3 flex items-center space-x-2">
       <Checkbox className={cn("bg-white", { "invisible": !isCheckable })} id={`cp-${index}`} onClick={() => toggleCheck()} />
       <Label htmlFor={`cp-${index}`}>
-        <a href={href} target="_blank" >
-          {task}
-        </a>
+        <button onClick={showCheckpoint}>{task}</button>
       </Label>
     </li>
   )

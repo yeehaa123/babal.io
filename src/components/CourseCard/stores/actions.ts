@@ -34,6 +34,11 @@ export function signOut() {
   setAuthenticated({ userName: undefined });
 };
 
+export function showCheckpoint() {
+  return setOverlayMode(OverlayModes.CHECKPOINT);
+};
+
+
 export function editCourse() {
   setOverlayMode(OverlayModes.EDIT);
 }

@@ -1,80 +1,26 @@
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-
-import {
-  CardHeader,
-  CardContent,
-  CardFooter,
-  CardTitle,
-} from "@/components/ui/card"
-
-import { Button } from "@/components/ui/button"
-
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-
-import { Textarea } from "@/components/ui/textarea"
-
-
 import type { Overlay } from "./index";
+import { useState } from "react";
+import OverlayChrome from "./OverlayChrome"
+import NoteForm from "../forms/NoteForm";
 
-const formSchema = z.object({
-  note: z.string().min(10).max(500),
-})
+const notess = ["OMG this is awesome", "I need more of this", "Please Don't Stop"];
 
-export default function NoteOverlay({ onCancel, onConfirm }: Overlay) {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      note: "",
-    },
-  })
+export default function NoteOverlay({ onCancel }: Overlay) {
+  const [notes, setNotes] = useState(notess);
+  const formId = "note"
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    return onConfirm(values);
+  const onConfirm = ({ note }: any) => {
+    setNotes(n => [note, ...n]);
   }
 
-  return <>
-    <CardHeader>
-      <CardTitle className="flex">
-        NOTE
-      </CardTitle>
-    </CardHeader>
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 flex flex-col justify-between grow">
-        <CardContent className="space-y-4 grow flex flex-col justify-center">
-          <FormField
-            control={form.control}
-            name="note"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Note</FormLabel>
-                <FormControl>
-                  <Textarea placeholder="leave your notes here"
-                    className="resize-none"
-                    {...field} />
-                </FormControl>
-                <FormDescription>
-                  This is your public display name.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </CardContent>
-        <CardFooter className="flex w-full justify-between gap-x-2">
-          <Button type="submit" className="w-full">Submit</Button>
-          <Button onClick={onCancel} className="w-full">Cancel</Button>
-        </CardFooter>
-      </form>
-    </Form >
-  </>
+  return (
+    <OverlayChrome title="Add Note" formId={formId} onCancel={onCancel}>
+      <div className="grow max-h-[200px]">
+        {notes.map((note, index) => (
+          <p key={index}>{note}</p>
+        ))}
+      </div>
+      <NoteForm onConfirm={onConfirm} />
+    </OverlayChrome>
+  )
 }
