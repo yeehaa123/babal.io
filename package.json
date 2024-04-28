@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "start": "astro dev",
     "check": "astro check",
-    "build": "astro check && astro build --remote && astro db execute db/seed.ts --remote",
+    "seed:":"astro db execute db/seed.ts --remote",
+    "build": "astro check && astro build --remote",
     "preview": "astro preview",
     "astro": "astro"
   },

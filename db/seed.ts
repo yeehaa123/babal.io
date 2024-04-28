@@ -3,11 +3,13 @@ import { db, People, Socials, Courses, Checkpoints } from 'astro:db';
 import slugify from '@sindresorhus/slugify';
 
 async function prepPeople() {
-  const rawPeople = [{
-    alias: "Yeehaa", socials: {
-      linkedin: "https://www.linkedin.com/in/yeehaa/"
-    }
-  }];
+  const rawPeople =
+    [{
+      alias: "Yeehaa",
+      socials: {
+        linkedin: "https://www.linkedin.com/in/yeehaa/"
+      }
+    }];
   const people = rawPeople.map(p => ({ alias: p.alias }));
   const socials = rawPeople.map(p => ({ alias: p.alias, ...p.socials }));
   return { people, socials }
@@ -56,6 +58,7 @@ async function prepCourses() {
 
 export default async function() {
   const { people, socials } = await prepPeople();
+  console.log(people);
   const { courses, checkpoints } = await prepCourses();
 
   await db.insert(People).values(people);
