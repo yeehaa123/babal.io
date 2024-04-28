@@ -2,20 +2,19 @@ import { defineDb, defineTable, column } from 'astro:db';
 
 const Courses = defineTable({
   columns: {
-    id: column.text({ primaryKey: true }),
-    goal: column.text(),
+    goal: column.text({ primaryKey: true }),
     curator: column.text(),
     description: column.text(),
     habitat: column.text({ optional: true }),
   },
   indexes: [
-    { on: ["habitat", "id"], unique: true },
+    { on: ["goal", "habitat"], unique: true },
   ]
 });
 
 const Checkpoints = defineTable({
   columns: {
-    courseId: column.text({ references: () => Courses.columns.id }),
+    goal: column.text({ references: () => Courses.columns.goal }),
     task: column.text({ primaryKey: true }),
     href: column.text(),
   }
@@ -30,12 +29,12 @@ const People = defineTable({
 const Socials = defineTable({
   columns: {
     alias: column.text({ references: () => People.columns.alias }),
-    linkedin: column.text({ primaryKey: true })
+    linkedin: column.text({ optional: true })
   }
 })
 
 export default defineDb({
-  tables: { People, Socials, Courses, Checkpoints },
+  tables: { Courses, Checkpoints, People, Socials },
 })
 
 

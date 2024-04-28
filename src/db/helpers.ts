@@ -12,16 +12,16 @@ export function processCourseResults(result: {
 }[]) {
   return result.reduce<Map<string, Course>>(
     (acc, row) => {
-      const { id, curator: name, habitat, ...course } = row.Courses;
+      const { goal, curator: name, habitat, ...course } = row.Courses;
       let curator = { alias: name, socials: {} };
-      const entry = acc.get(id);
+      const entry = acc.get(goal);
       if (!entry) {
         if (row.Socials) {
           let { alias, ...socials } = curator;
           curator = { alias, ...socials }
         }
-        acc.set(id, {
-          id,
+        acc.set(goal, {
+          goal,
           curator,
           ...course,
           habitat: habitat ? habitat : undefined,
@@ -30,7 +30,7 @@ export function processCourseResults(result: {
       }
       if (entry) {
         const { ...old } = entry;
-        acc.set(id, {
+        acc.set(goal, {
           ...old, checkpoints: [...old.checkpoints, row.Checkpoints]
         })
       }

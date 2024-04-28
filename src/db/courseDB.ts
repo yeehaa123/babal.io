@@ -4,9 +4,9 @@ import { processCourseResults } from "./helpers"
 export async function getCourseById(courseId: string) {
   const dbResult = await db.select()
     .from(Courses)
-    .where(eq(Courses.id, courseId))
+    .where(eq(Courses.goal, courseId))
     .leftJoin(Socials, eq(Courses.curator, Socials.alias))
-    .innerJoin(Checkpoints, eq(Courses.id, Checkpoints.courseId))
+    .innerJoin(Checkpoints, eq(Courses.goal, Checkpoints.goal))
 
   const result = processCourseResults(dbResult);
   return result.get(courseId);
@@ -16,7 +16,7 @@ export async function getCourses() {
   const dbResult = await db.select()
     .from(Courses)
     .leftJoin(Socials, eq(Courses.curator, Socials.alias))
-    .innerJoin(Checkpoints, eq(Courses.id, Checkpoints.courseId))
+    .innerJoin(Checkpoints, eq(Courses.goal, Checkpoints.goal))
 
   const courseMap = processCourseResults(dbResult);
   return Array.from(courseMap, ([_, c]) => c)
@@ -25,7 +25,7 @@ export async function getCourses() {
 
 export async function getCourseByHabitat(postId: string) {
   const index = await db.select({
-    courseId: Courses.id
+    courseId: Courses.goal
   }).from(Courses)
     .where(eq(Courses.habitat, postId))
   const courseId = index[0]?.courseId;

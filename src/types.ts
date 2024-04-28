@@ -6,7 +6,6 @@ export type Step = {
 }
 
 export type CoursesResult = {
-  id: string,
   habitat: string | null,
   description: string,
   goal: string,
@@ -15,10 +14,11 @@ export type CoursesResult = {
 
 export type SocialsResult = {
   alias: string,
-  linkedin: string,
+  linkedin: string | null
 }
 
 export type CheckpointsResult = {
+  goal: string,
   task: string,
   href: string
 }
@@ -31,7 +31,6 @@ export type Curator = {
 }
 
 export type Course = {
-  id: string,
   goal: string,
   description: string,
   curator: Curator,

@@ -4,6 +4,7 @@ import tailwind from "@astrojs/tailwind";
 import mdx from "@astrojs/mdx";
 import vercel from "@astrojs/vercel/serverless";
 
+
 import db from "@astrojs/db";
 
 // https://astro.build/config
@@ -13,5 +14,5 @@ export default defineConfig({
     applyBaseStyles: false
   }), mdx(), db()],
   output: "hybrid",
-  adapter: vercel()
+  adapter: vercel(),
 });

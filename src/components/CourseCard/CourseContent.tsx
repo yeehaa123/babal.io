@@ -29,7 +29,6 @@ export default function CourseCard({
   isMetaVisible
 }: Props) {
   const {
-    id,
     goal,
     curator,
     checkpoints,
@@ -57,7 +56,7 @@ export default function CourseCard({
         </CardTitle>
         <CuratorSection {...curator} />
         {isMetaVisible
-          ? <CardMeta onClick={toggleMetaVisible} id={id} />
+          ? <CardMeta onClick={toggleMetaVisible} id={goal} />
           : <CardDescription onClick={toggleMetaVisible}>{description}</CardDescription>}
       </CardHeader>
       <CardContent>
