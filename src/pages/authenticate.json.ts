@@ -3,9 +3,6 @@ export const prerender = false;
 import { authenticate } from "@/db/PeopleDB";
 import type { APIRoute } from 'astro';
 
-
-const people = (await authenticate('Yeehaa'))
-
 export const GET: APIRoute = () => {
   return new Response(
     JSON.stringify({}), {
@@ -17,7 +14,8 @@ export const GET: APIRoute = () => {
   );
 }
 
-export const Post: APIRoute = () => {
+export const Post: APIRoute = async () => {
+  const people = await authenticate('Yeehaa')
   return new Response(
     JSON.stringify(people), {
     status: 200,
