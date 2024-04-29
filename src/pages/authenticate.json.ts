@@ -1,8 +1,10 @@
 import { authenticate } from "@/db/PeopleDB";
+import type { APIRoute } from 'astro';
+
 
 const people = (await authenticate('Yeehaa'))
 
-export async function GET() {
+export const GET: APIRoute = () => {
   return new Response(
     JSON.stringify({}), {
     status: 200,
@@ -13,7 +15,7 @@ export async function GET() {
   );
 }
 
-export async function POST() {
+export const Post: APIRoute = () => {
   return new Response(
     JSON.stringify(people), {
     status: 200,
