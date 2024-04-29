@@ -14,7 +14,7 @@ export const GET: APIRoute = () => {
   );
 }
 
-export const Post: APIRoute = async () => {
+export const POST: APIRoute = async () => {
   const people = await authenticate('Yeehaa')
   return new Response(
     JSON.stringify(people), {
