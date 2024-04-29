@@ -1,3 +1,5 @@
+export const prerender = false;
+
 import { authenticate } from "@/db/PeopleDB";
 import type { APIRoute } from 'astro';
 
