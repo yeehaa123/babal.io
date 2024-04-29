@@ -10,7 +10,7 @@ import BookmarkIcon from "./BookmarkIcon";
 import Checkpoint from "@/components/Checkpoint";
 import CardMeta from "./CardMeta"
 import Toolbar from "./Toolbar"
-import CuratorSection from '@/components/Curator';
+import CuratorSection from './Curator';
 
 
 type Props = {

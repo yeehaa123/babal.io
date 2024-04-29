@@ -5,6 +5,7 @@ import {
 import {
   addNotes,
   authenticate,
+  hideOverlay,
   signIn,
   signOut,
   updateCourse,
@@ -44,6 +45,7 @@ export const $courseCardState = computed([$coreState, $affordancesState], (
     editCourse,
     cloneCourse,
     signIn,
+    hideOverlay,
     authenticate,
     addNotes,
     signOut

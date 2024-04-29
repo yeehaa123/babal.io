@@ -40,6 +40,7 @@ export default function CourseCard(course: Course) {
   } = useCardStore(course);
 
   const {
+    hideOverlay,
     authenticate
   } = actions;
   const isVisible = overlayMode !== OverlayModes.NONE;
@@ -50,8 +51,8 @@ export default function CourseCard(course: Course) {
     {isVisible
       ? <OverlayData
         overlayMode={overlayMode}
-        onCancel={authenticate}
-        onConfirm={console.log} />
+        onCancel={hideOverlay}
+        onConfirm={authenticate} />
       : <CourseContent
         isBookmarked={isBookmarked}
         isMetaVisible={isMetaVisible}

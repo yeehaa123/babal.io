@@ -17,10 +17,8 @@ export type SocialsDBResult = {
   linkedin: string | null
 }
 
-export type CheckpointsDBResult = {
-  goal: string,
-  task: string,
-  href: string
+export type peopleDBResult = {
+  alias: string,
 }
 
 export type Curator = {
@@ -30,16 +28,22 @@ export type Curator = {
   }
 }
 
+export type Checkpoint = {
+  goal: string,
+  task: string,
+  href: string
+}
+
+export type CheckpointsDBResult = Checkpoint
+
 export type Course = {
   goal: string,
   description: string,
   curator: Curator,
   habitat?: string | undefined,
-  checkpoints: {
-    task: string,
-    href: string
-  }[]
+  checkpoints: Checkpoint[]
 }
+
 
 export type RawCourse = {
   goal: string,

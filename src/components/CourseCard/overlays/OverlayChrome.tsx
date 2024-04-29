@@ -12,11 +12,11 @@ type Props = {
   title: string,
   formId?: string,
   onCancel: () => void,
-  onConfirm?: (v: any) => void,
+  onConfirm: (v: any) => void,
   children?: ReactNode,
 
 }
-export default function OverlayChrome({ onCancel, formId, children, title }: Props) {
+export default function OverlayChrome({ onCancel, onConfirm, formId, children, title }: Props) {
   return <>
     <CardHeader>
       <CardTitle className="flex">
@@ -27,7 +27,9 @@ export default function OverlayChrome({ onCancel, formId, children, title }: Pro
       {children}
     </CardContent >
     <CardFooter className="flex w-full justify-between gap-x-2">
-      <Button type="submit" form={formId} className="w-full">Submit</Button>
+      {formId
+        ? <Button type="submit" form={formId} className="w-full">Submit</Button>
+        : <Button onClick={onConfirm} form={formId} className="w-full">Submit</Button>}
       <Button onClick={onCancel} className="w-full">Cancel</Button>
     </CardFooter>
   </>
