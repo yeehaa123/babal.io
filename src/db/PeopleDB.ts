@@ -33,7 +33,6 @@ function processPeopleResults(result: {
         alias,
         socials
       })
-      console.log(acc);
       return acc;
     },
     new Map()

@@ -12,7 +12,7 @@ type Props = {
   title: string,
   formId?: string,
   onCancel: () => void,
-  onConfirm: (v: any) => void,
+  onConfirm?: (v: any) => void,
   children?: ReactNode,
 
 }
