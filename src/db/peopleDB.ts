@@ -10,6 +10,15 @@ export async function authenticate(userName: string) {
   return { userName: curator?.alias };
 }
 
+export async function getPeople() {
+  const dbResult = await db.select()
+    .from(People)
+    .innerJoin(Socials, eq(People.alias, Socials.alias))
+
+  const result = processPeopleResults(dbResult);
+  return Array.from(result, ([_, c]) => c)
+}
+
 export async function getPeopleByAlias(alias: string): Promise<Curator | undefined> {
   const dbResult = await db.select()
     .from(People)
@@ -19,6 +28,7 @@ export async function getPeopleByAlias(alias: string): Promise<Curator | undefin
   const result = processPeopleResults(dbResult);
   return result.get(alias);
 }
+
 
 function processPeopleResults(result: {
   People: peopleDBResult,

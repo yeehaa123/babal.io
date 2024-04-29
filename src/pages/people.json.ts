@@ -1,6 +1,6 @@
-import { getPeopleByAlias } from "@/db/PeopleDB";
+import { getPeople } from "@/db/peopleDB";
 
-const people = (await getPeopleByAlias('Yeehaa'))
+const people = await getPeople();
 
 export async function GET() {
   return new Response(
