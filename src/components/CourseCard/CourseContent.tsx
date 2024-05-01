@@ -33,7 +33,8 @@ export default function CourseCard({
     curator,
     checkpoints,
     description,
-    habitat } = course;
+    habitat
+  } = course;
   const {
     canCheckComplete,
     canBookmark,
