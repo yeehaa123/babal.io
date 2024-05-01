@@ -1,20 +1,20 @@
-import { OverlayModes } from "../types"
-import SignInOverlay from "./SignInOverlay";
-import CheckpointOverlay from "./CheckpointOverlay";
-import EditOverlay from "./EditOverlay";
-import MockOverlay from "./MockOverlay";
-import NoteOverlay from "./NoteOverlay";
-import CloneOverlay from "./CloneOverlay";
+import {
+  CardDescription,
+} from "@/components/ui/card"
+import OverlayChrome from "./OverlayChrome"
 
 export type Overlay = {
-  overlayMode: OverlayModes
+  title: string,
   onCancel: () => void,
-  onConfirm: (v: any) => void,
-
+  onConfirm: (v: any) => void | Promise<void>
 }
 
-
-export {
-  SignInOverlay, EditOverlay, CheckpointOverlay,
-  MockOverlay, NoteOverlay, CloneOverlay
+export default function Overlay({ title, onCancel, onConfirm }: Overlay) {
+  console.log(title);
+  return (<OverlayChrome title={title} onConfirm={onConfirm} onCancel={onCancel}>
+    <CardDescription>
+      {JSON.stringify({}, null, 2)}
+    </CardDescription>
+  </OverlayChrome >)
 }
+

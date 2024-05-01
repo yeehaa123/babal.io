@@ -1,13 +1,8 @@
-import {
-  CardTitle,
-} from "@/components/ui/card"
+import type { Overlay } from "./";
+import OverlayChrome from "./OverlayChrome"
 
-import type { Overlay } from "./index";
-
-export default function CloneOverlay({ }: Overlay) {
-  return <>
-    <CardTitle className="flex w-full space-x-5 ">
-      CLONE
-    </CardTitle>
-  </>
+export default function CloneOverlay({ onConfirm, onCancel }: Overlay) {
+  return (
+    <OverlayChrome title="Clone" onConfirm={onConfirm} onCancel={onCancel}>
+    </OverlayChrome >)
 }

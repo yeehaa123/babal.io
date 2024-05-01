@@ -1,5 +1,6 @@
-import type { Overlay } from "./index";
+import type { Overlay } from "./";
 import OverlayChrome from "./OverlayChrome"
+
 
 export default function SignInOverlay({ onConfirm, onCancel }: Overlay) {
   return (

@@ -1,13 +1,10 @@
-import {
-  CardTitle,
-} from "@/components/ui/card"
+import type { Overlay } from "./";
+import OverlayChrome from "./OverlayChrome"
 
-import type { Overlay } from "./index";
 
-export default function EditOverlay({ }: Overlay) {
-  return <>
-    <CardTitle className="flex w-full space-x-5 ">
-      EDIT
-    </CardTitle>
-  </>
+export default function EditOverlay({ onConfirm, onCancel }: Overlay) {
+  return (
+    <OverlayChrome title="Edit" onConfirm={onConfirm} onCancel={onCancel}>
+    </OverlayChrome >
+  )
 }

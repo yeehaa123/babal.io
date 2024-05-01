@@ -23,10 +23,10 @@ export default function Toolbar({
   affordances
 }: Props) {
   const {
-    isAuthenticable,
-    isEditable,
-    isNotable,
-    isClonable
+    canAuthenticate,
+    canEdit,
+    canTakeNotes,
+    canClone
   } = affordances;
   const {
     signIn,
@@ -39,15 +39,15 @@ export default function Toolbar({
     <div className="flex w-full justify-between">
       <div className="flex flex-start gap-x-4 ">
         <EnterIcon onClick={signIn}
-          className={cn("h-4 w-4 text-gray-500", { "hidden": !isAuthenticable })} />
+          className={cn("h-4 w-4 text-gray-500", { "hidden": !canAuthenticate })} />
         <ExitIcon onClick={signOut}
-          className={cn("h-4 w-4 text-gray-500", { "hidden": isAuthenticable })} />
+          className={cn("h-4 w-4 text-gray-500", { "hidden": canAuthenticate })} />
         <Pencil1Icon onClick={editCourse}
-          className={cn("h-4 w-4 text-gray-500", { "hidden": !isEditable })} />
+          className={cn("h-4 w-4 text-gray-500", { "hidden": !canEdit })} />
         <Pencil2Icon onClick={addNotes}
-          className={cn("h-4 w-4 text-gray-500", { "hidden": !isNotable })} />
+          className={cn("h-4 w-4 text-gray-500", { "hidden": !canTakeNotes })} />
         <CopyIcon onClick={cloneCourse}
-          className={cn("h-4 w-4 text-gray-500", { "hidden": !isClonable })} />
+          className={cn("h-4 w-4 text-gray-500", { "hidden": !canClone })} />
       </div>
       <div className="flex gap-x-4 ">
         <a href={habitat} className={cn("invisible", { "visible": habitat })}>

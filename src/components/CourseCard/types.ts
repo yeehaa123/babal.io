@@ -1,19 +1,19 @@
-import type { Course } from "@/types";
+import type { Course, Checkpoint } from "@/types";
 
 export type Affordances = {
-  isAuthenticable: boolean,
-  isEditable: boolean,
-  isNotable: boolean,
-  isClonable: boolean,
-  isCheckable: boolean,
-  isBookmarkable: boolean
+  canAuthenticate: boolean,
+  canEdit: boolean,
+  canTakeNotes: boolean,
+  canClone: boolean,
+  canCheckComplete: boolean,
+  canBookmark: boolean
 }
 
 export type Actions = {
   signIn: () => void,
   signOut: () => void,
   editCourse: () => void,
-  showCheckpoint: () => void,
+  showCheckpoint: (args: Checkpoint) => void,
   addNotes: () => void,
   cloneCourse: () => void;
   toggleBookmark: () => void,
@@ -21,13 +21,13 @@ export type Actions = {
   toggleMetaVisible: () => void
 }
 
-export type { Course }
+export type { Course, Checkpoint }
 
 export enum OverlayModes {
   AUTH = "AUTH",
   EDIT = "EDIT",
-  NONE = "NONE",
   NOTE = "NOTE",
   CHECKPOINT = "CHECKPOINT",
   CLONE = "CLONE"
 }
+

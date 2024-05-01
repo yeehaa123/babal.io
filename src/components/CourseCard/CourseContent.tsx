@@ -35,8 +35,8 @@ export default function CourseCard({
     description,
     habitat } = course;
   const {
-    isCheckable,
-    isBookmarkable,
+    canCheckComplete,
+    canBookmark,
   } = affordances;
 
   const {
@@ -52,7 +52,7 @@ export default function CourseCard({
           {goal}
           <BookmarkIcon onClick={toggleBookmark}
             isBookmarked={isBookmarked}
-            isBookmarkable={isBookmarkable} />
+            canBookmark={canBookmark} />
         </CardTitle>
         <CuratorSection {...curator} />
         {isMetaVisible
@@ -64,7 +64,7 @@ export default function CourseCard({
           {checkpoints.map((cp, index) => (
             <Checkpoint toggleCheck={toggleComplete}
               showCheckpoint={showCheckpoint}
-              isCheckable={isCheckable} key={index} {...cp} index={index} />))
+              canCheckComplete={canCheckComplete} key={index} {...cp} goal={goal} />))
           }
         </ul>
       </CardContent>

@@ -1,21 +1,26 @@
 import { computed } from 'nanostores';
-import { $roleState, RoleTypes } from "./roleState";
+import { RoleTypes } from "./roleState";
+import type { RoleStore } from "./roleState";
 
-export const $affordancesState = computed($roleState, (
-  role,
-) => {
-  const isClonable = role === RoleTypes.LEARNER;
-  const isBookmarkable = role === RoleTypes.LEARNER || role === RoleTypes.COLLECTOR;
-  const isCheckable = role === RoleTypes.LEARNER;
-  const isNotable = role === RoleTypes.COLLECTOR;
-  const isEditable = role === RoleTypes.CURATOR;
-  const isAuthenticable = role === RoleTypes.GUEST;
-  return {
-    isAuthenticable,
-    isBookmarkable,
-    isNotable,
-    isCheckable,
-    isClonable,
-    isEditable
-  }
-})
+const initiate = ($roleState: RoleStore) => {
+  return computed($roleState, (
+    role,
+  ) => {
+    const canClone = role === RoleTypes.LEARNER;
+    const canBookmark = role === RoleTypes.LEARNER || role === RoleTypes.COLLECTOR;
+    const canCheckComplete = role === RoleTypes.LEARNER;
+    const canTakeNotes = role === RoleTypes.COLLECTOR;
+    const canEdit = role === RoleTypes.CURATOR;
+    const canAuthenticate = role === RoleTypes.GUEST;
+    return {
+      canAuthenticate,
+      canBookmark,
+      canTakeNotes,
+      canCheckComplete,
+      canClone,
+      canEdit
+    }
+  })
+}
+
+export { initiate }

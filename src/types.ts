@@ -28,7 +28,7 @@ export type Curator = {
   }
 }
 
-export type Checkpoint = {
+export interface Checkpoint {
   goal: string,
   task: string,
   href: string
@@ -55,3 +55,4 @@ export type RawCourse = {
     href: string
   }[]
 }
+

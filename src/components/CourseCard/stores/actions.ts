@@ -1,56 +1,17 @@
-import { OverlayModes } from "../types";
-import type { Course } from "../types";
-import { $coreState, } from "./coreState"
-import { login, logout } from "@/stores/authState";
+import type { Checkpoint } from "@/types";
 
-export function setBookmarked(isBookmarked: boolean) {
-  $coreState.setKey('isBookmarked', isBookmarked)
-}
-
-export function setMetaVisible(isMetaVisible: boolean) {
-  $coreState.setKey('isMetaVisible', isMetaVisible);
-}
-
-
-export function setOverlayMode(mode: OverlayModes) {
-  $coreState.setKey("overlayMode", mode);
-}
-
-export function hideOverlay() {
-  $coreState.setKey("overlayMode", OverlayModes.NONE);
-}
-
-export function updateCourse(course: Course) {
-  const { alias } = course.curator;
-  $coreState.setKey('alias', alias);
-}
-
-export function signIn() {
-  return setOverlayMode(OverlayModes.AUTH);
+export function showCheckpoint(checkpoint: Checkpoint) {
+  console.log(checkpoint);
 };
-
-export async function authenticate() {
-  await login();
-  setOverlayMode(OverlayModes.NONE);
-}
-
-export function signOut() {
-  logout();
-};
-
-export function showCheckpoint() {
-  return setOverlayMode(OverlayModes.CHECKPOINT);
-};
-
 
 export function editCourse() {
-  setOverlayMode(OverlayModes.EDIT);
+  console.log("EDIT");
 }
 
 export function addNotes() {
-  setOverlayMode(OverlayModes.NOTE);
+  console.log("NOTE");
 }
 
 export function cloneCourse() {
-  return setOverlayMode(OverlayModes.CLONE);
+  console.log("CLONE");
 }
