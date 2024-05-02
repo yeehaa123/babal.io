@@ -31,7 +31,9 @@ export type Curator = {
 export interface Checkpoint {
   goal: string,
   task: string,
-  href: string
+  href: string,
+  description?: string | undefined,
+  isCompleted?: boolean | undefined,
 }
 
 export type CheckpointsDBResult = Checkpoint

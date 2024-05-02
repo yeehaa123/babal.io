@@ -14,10 +14,11 @@ import {
 import { $authState, login, logout } from "@/stores/authState";
 
 export default function CourseCard(course: Course) {
-  const authState = useStore($authState);
-  const { $state, actions: coreActions } = initiateCoreState({ course });
+  const authData = useStore($authState);
+  const { $state, actions: coreActions } = initiateCoreState({ course, authData });
+
   const state = useStore($state);
-  const role = determineRole({ state, authState });
+  const role = determineRole({ state, authData });
   const affordances = determineAffordances(role);
 
   const actions = bindActions({ login, logout, ...coreActions });
@@ -28,7 +29,7 @@ export default function CourseCard(course: Course) {
     min-h-[500px] h-full w-full flex flex-col justify-between">
     {state.overlayMode
       ? <Overlay
-        title={authState?.userName || state?.overlayMode}
+        title={authData?.userName || state?.overlayMode}
         checkpoint={state.checkpoint}
         onConfirm={authenticate}
         onCancel={signOut} />

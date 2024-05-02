@@ -3,10 +3,10 @@ import type { CoreState } from '../types';
 import type { AuthData } from '@/stores/authState';
 
 function determineRole({
-  authState,
+  authData,
   state
-}: { authState: AuthData, state: CoreState }) {
-  const userName = authState.userName;
+}: { authData: AuthData, state: CoreState }) {
+  const userName = authData.userName;
   const { course, isBookmarked } = state;
   const isAuthenticated = !!userName;
   const isCurator = !!(course?.curator && userName === course.curator.alias);

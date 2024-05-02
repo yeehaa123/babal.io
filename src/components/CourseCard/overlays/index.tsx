@@ -12,6 +12,7 @@ export type Overlay = {
 }
 
 export default function Overlay({ title, onCancel, onConfirm, checkpoint }: Overlay) {
+  console.log(checkpoint);
   return (<OverlayChrome title={title} onConfirm={onConfirm} onCancel={onCancel}>
     <CardDescription>
       {JSON.stringify(checkpoint, null, 2)}

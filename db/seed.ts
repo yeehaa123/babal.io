@@ -1,6 +1,11 @@
 import { db, People, Socials, Courses, Checkpoints } from 'astro:db';
 import { readDir } from "./helpers"
-import type { RawCourse, Curator, } from "@/types"
+import type { RawCourse, Curator, Checkpoint, } from "@/types"
+
+async function getDescription(cp: Checkpoint) {
+  const description = "The 80,000 Hours article details a method to identify personal strengths for career advancement. It encourages developing new skills beyond existing strengths. The method involves analyzing personal experiences, reflective questioning, and consulting established strength lists. Emphasis is placed on the importance of feedback and self-reflection for effectively identifying and using personal strengths."
+  return { ...cp, description }
+}
 
 async function prepPeople(rawPeople: Curator[]) {
   return rawPeople.map(p => ({ alias: p.alias }));
@@ -18,11 +23,13 @@ async function prepCourses(courses: RawCourse[]) {
 }
 
 async function prepCheckpoints(courses: RawCourse[]) {
-  return courses.flatMap(({ goal, checkpoints }) => {
+  const flatCheckpoints = courses.flatMap(({ goal, checkpoints }) => {
     return checkpoints.map((checkpoint) => {
       return { goal, ...checkpoint }
     })
   })
+  const promises = flatCheckpoints.map(getDescription);
+  return Promise.all(promises);
 }
 
 export default async function() {

@@ -41,6 +41,9 @@ export enum RoleTypes {
 export type CoreState = {
   overlayMode: OverlayModes | undefined,
   course: Course,
+  isAuthenticated: boolean,
+  learnData: boolean[] | undefined,
+  userName: string | undefined,
   checkpoint: Checkpoint | undefined,
   isBookmarked: boolean,
   isMetaVisible: boolean
