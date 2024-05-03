@@ -1,5 +1,4 @@
 import type { Course } from "@/types";
-import { Card } from "@/components/ui/card"
 import { useStore } from '@nanostores/react';
 import CourseContent from "./CourseContent";
 import Overlay from "./overlays"
@@ -24,25 +23,15 @@ export default function CourseCard(course: Course) {
   const actions = bindActions({ login, logout, ...coreActions });
 
   const { overlayMode, ...rest } = state;
-  if (overlayMode) {
-    return (
-      <Card className="relative w-auto max-w-[380px] select-none 
-    min-h-[500px] h-full w-full flex flex-col justify-between">
-        <Overlay
-          affordances={affordances}
-          actions={actions}
-          overlayMode={overlayMode}
-          {...rest} />
-      </Card>)
-  }
+  return overlayMode
+    ? <Overlay
+      affordances={affordances}
+      actions={actions}
+      overlayMode={overlayMode}
+      {...rest} />
 
-  return (
-    <Card className="relative w-auto max-w-[380px] select-none 
-    min-h-[500px] h-full w-full flex flex-col justify-between">
-      <CourseContent
-        affordances={affordances}
-        actions={actions}
-        {...state} />
-    </Card >
-  )
+    : <CourseContent
+      affordances={affordances}
+      actions={actions}
+      {...state} />
 }

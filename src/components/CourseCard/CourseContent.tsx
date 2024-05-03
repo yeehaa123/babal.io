@@ -1,4 +1,5 @@
 import type { Actions, Affordances, Course } from "./types";
+import CardChrome from "./CardChrome";
 import {
   CardDescription,
   CardHeader,
@@ -47,7 +48,7 @@ export default function CourseCard({
     toggleMetaVisible,
   } = actions;
   return (
-    <>
+    <CardChrome>
       <CardHeader className="space-y-4">
         <CardTitle className="flex w-full justify-between space-x-5 ">
           {goal}
@@ -72,6 +73,6 @@ export default function CourseCard({
       <CardFooter className="flex flex-col gap-y-4">
         <Toolbar affordances={affordances} actions={actions} habitat={habitat} />
       </CardFooter>
-    </ >
+    </CardChrome>
   )
 }

@@ -1,3 +1,4 @@
+import CardChrome from "../CardChrome";
 import {
   CardDescription,
   CardHeader,
@@ -31,7 +32,7 @@ function MockContent({ data }: any) {
 
 function determineOverlayState({ isAuthenticated, overlayMode, checkpoint, actions }: Props) {
   const { authenticate, signOut, hideCheckpoint } = actions;
-  const title = overlayMode || "DEFAULT";
+  const title = overlayMode;
   const onCancel = isAuthenticated ? signOut : hideCheckpoint;
   const onConfirm = authenticate;
   const canConfirm = overlayMode === OverlayModes.AUTH;
@@ -51,7 +52,7 @@ function determineOverlayState({ isAuthenticated, overlayMode, checkpoint, actio
 export default function Overlay(props: Props) {
   const { title, onCancel, onConfirm, canConfirm, formId, OverlayContent } = determineOverlayState(props)
   return (
-    <>
+    <CardChrome>
       <CardHeader>
         <CardTitle className="flex">
           {title}
@@ -65,7 +66,7 @@ export default function Overlay(props: Props) {
         {canConfirm && <Button onClick={onConfirm} className="w-full">Submit</Button>}
         <Button onClick={onCancel} className="w-full">Cancel</Button>
       </CardFooter>
-    </>
+    </CardChrome>
   )
 }
 
