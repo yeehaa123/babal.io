@@ -4,6 +4,7 @@ type CoreActions = {
   login: () => Promise<void>,
   logout: () => Promise<void>,
   selectCheckpoint: (task: string) => void,
+  unselectCheckpoint: () => void,
   setOverlayMode: (mode: OverlayModes) => void,
   hideOverlay: () => void,
 }
@@ -12,6 +13,7 @@ export default function initialize({
   login,
   hideOverlay,
   selectCheckpoint,
+  unselectCheckpoint,
   setOverlayMode,
   logout
 }: CoreActions) {
@@ -58,11 +60,18 @@ export default function initialize({
     setOverlayMode(OverlayModes.CHECKPOINT);
   };
 
+  function hideCheckpoint() {
+    unselectCheckpoint();
+    hideOverlay();
+  };
+
   return {
     authenticate,
     signOut,
     signIn,
     editCourse,
+    hideCheckpoint,
+    hideOverlay,
     addNotes,
     cloneCourse,
     toggleBookmark,

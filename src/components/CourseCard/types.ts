@@ -19,6 +19,8 @@ export type Actions = {
   toggleBookmark: () => void,
   toggleComplete: () => void,
   toggleMetaVisible: () => void
+  hideOverlay: () => void,
+  hideCheckpoint: () => void
   showCheckpoint: (task: string) => void
 }
 

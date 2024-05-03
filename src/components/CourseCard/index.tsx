@@ -22,21 +22,27 @@ export default function CourseCard(course: Course) {
   const affordances = determineAffordances(role);
 
   const actions = bindActions({ login, logout, ...coreActions });
-  const { authenticate, signOut } = actions;
 
-
-  return <Card className="relative w-auto max-w-[380px] select-none 
+  const { overlayMode, ...rest } = state;
+  if (overlayMode) {
+    return (
+      <Card className="relative w-auto max-w-[380px] select-none 
     min-h-[500px] h-full w-full flex flex-col justify-between">
-    {state.overlayMode
-      ? <Overlay
-        title={authData?.userName || state?.overlayMode}
-        checkpoint={state.checkpoint}
-        onConfirm={authenticate}
-        onCancel={signOut} />
-      : <CourseContent
+        <Overlay
+          affordances={affordances}
+          actions={actions}
+          overlayMode={overlayMode}
+          {...rest} />
+      </Card>)
+  }
+
+  return (
+    <Card className="relative w-auto max-w-[380px] select-none 
+    min-h-[500px] h-full w-full flex flex-col justify-between">
+      <CourseContent
         affordances={affordances}
         actions={actions}
         {...state} />
-    }
-  </Card >
+    </Card >
+  )
 }

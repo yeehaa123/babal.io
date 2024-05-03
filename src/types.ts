@@ -27,6 +27,12 @@ export type Curator = {
     linkedin?: string
   }
 }
+export interface CheckpointsDBResult {
+  goal: string,
+  task: string,
+  href: string,
+  description: string | null
+}
 
 export interface Checkpoint {
   goal: string,
@@ -36,7 +42,6 @@ export interface Checkpoint {
   isCompleted?: boolean | undefined,
 }
 
-export type CheckpointsDBResult = Checkpoint
 
 export type Course = {
   goal: string,

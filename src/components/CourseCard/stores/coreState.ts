@@ -43,9 +43,12 @@ export function initiate({ course, authData }: { course: Course, authData: AuthD
       $state.setKey("checkpoint", { ...checkpoint, isCompleted })
     }
   }
+  function unselectCheckpoint() {
+    $state.setKey("checkpoint", undefined);
+  }
 
 
-  const actions = { setOverlayMode, hideOverlay, selectCheckpoint };
+  const actions = { setOverlayMode, hideOverlay, selectCheckpoint, unselectCheckpoint };
 
   return { $state, actions };
 }

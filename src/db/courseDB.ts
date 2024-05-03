@@ -50,6 +50,11 @@ function processCourseResults(result: {
     (acc, row) => {
       const { goal, curator: name, habitat, ...course } = row.Courses;
       let curator = { alias: name, socials: {} };
+      const { description, ...cp } = row.Checkpoints;
+      const checkpoint = {
+        description: description ? description : undefined,
+        ...cp
+      }
       const entry = acc.get(goal);
       if (!entry) {
         if (row.Socials) {
@@ -61,13 +66,13 @@ function processCourseResults(result: {
           curator,
           ...course,
           habitat: habitat ? habitat : undefined,
-          checkpoints: [row.Checkpoints]
+          checkpoints: [checkpoint]
         })
       }
       if (entry) {
         const { ...old } = entry;
         acc.set(goal, {
-          ...old, checkpoints: [...old.checkpoints, row.Checkpoints]
+          ...old, checkpoints: [...old.checkpoints, checkpoint]
         })
       }
       return acc;

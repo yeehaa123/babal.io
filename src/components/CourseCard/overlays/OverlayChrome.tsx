@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import type { ReactNode } from "react"
 
 type Props = {
+  canConfirm: boolean,
   title: string,
   formId?: string,
   onCancel: () => void,
@@ -16,7 +17,7 @@ type Props = {
   children?: ReactNode,
 
 }
-export default function OverlayChrome({ onCancel, onConfirm, formId, children, title }: Props) {
+export default function OverlayChrome({ onCancel, canConfirm, onConfirm, formId, children, title }: Props) {
   return <>
     <CardHeader>
       <CardTitle className="flex">
@@ -27,9 +28,8 @@ export default function OverlayChrome({ onCancel, onConfirm, formId, children, t
       {children}
     </CardContent >
     <CardFooter className="flex w-full justify-between gap-x-2">
-      {formId
-        ? <Button type="submit" form={formId} className="w-full">Submit</Button>
-        : <Button onClick={onConfirm} form={formId} className="w-full">Submit</Button>}
+      {formId && <Button type="submit" form={formId} className="w-full">Submit</Button>}
+      {canConfirm && <Button onClick={onConfirm} className="w-full">Submit</Button>}
       <Button onClick={onCancel} className="w-full">Cancel</Button>
     </CardFooter>
   </>
