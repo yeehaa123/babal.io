@@ -1,15 +1,17 @@
 import {
   CardDescription,
 } from "@/components/ui/card"
-import type { Checkpoint } from "../types"
+import { determineOverlayState } from "./helpers";
+
+import type { Props } from "./index"
+import OverlayChrome from "./OverlayChrome";
 
 
-type Props = {
-  checkpoint: Checkpoint
-}
-
-export default function CheckpointOverlay({ checkpoint }: Props) {
-  return (<CardDescription>
-    {JSON.stringify(checkpoint, null, 2)}
-  </CardDescription>)
+export default function CheckpointOverlay(props: Props) {
+  const overlayState = determineOverlayState(props);
+  return <OverlayChrome {...overlayState}>
+    <CardDescription>
+      {JSON.stringify(props.checkpoint, null, 2)}
+    </CardDescription>
+  </OverlayChrome>
 }
