@@ -1,8 +1,14 @@
 import {
   CardDescription,
+  CardHeader,
+  CardContent,
+  CardFooter,
+  CardTitle,
 } from "@/components/ui/card"
-import OverlayChrome from "./OverlayChrome"
+
+import { Button } from "@/components/ui/button"
 import { OverlayModes } from "../types";
+import CheckpointOverlay from "./CheckpointOverlay";
 import type { Actions, Affordances, Checkpoint, Course } from "../types";
 
 type Props = {
@@ -29,24 +35,37 @@ function determineOverlayState({ isAuthenticated, overlayMode, checkpoint, actio
   const onCancel = isAuthenticated ? signOut : hideCheckpoint;
   const onConfirm = authenticate;
   const canConfirm = overlayMode === OverlayModes.AUTH;
+  const formId = undefined;
 
   const OverlayContent = {
     [OverlayModes.NOTE]: <MockContent data={{}} />,
     [OverlayModes.AUTH]: <MockContent data={{}} />,
     [OverlayModes.EDIT]: <MockContent data={{}} />,
     [OverlayModes.CLONE]: <MockContent data={{}} />,
-    [OverlayModes.CHECKPOINT]: <MockContent data={checkpoint} />,
+    [OverlayModes.CHECKPOINT]: <CheckpointOverlay checkpoint={checkpoint!} />,
   }[overlayMode]
 
-  return { title, onCancel, onConfirm, canConfirm, OverlayContent }
+  return { title, onCancel, onConfirm, formId, canConfirm, OverlayContent }
 }
 
 export default function Overlay(props: Props) {
-  const { title, onCancel, onConfirm, canConfirm, OverlayContent } = determineOverlayState(props)
+  const { title, onCancel, onConfirm, canConfirm, formId, OverlayContent } = determineOverlayState(props)
   return (
-    <OverlayChrome title={title} onCancel={onCancel} canConfirm={canConfirm} onConfirm={onConfirm}>
-      {OverlayContent}
-    </OverlayChrome >
+    <>
+      <CardHeader>
+        <CardTitle className="flex">
+          {title}
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4 grow flex flex-col justify-center">
+        {OverlayContent}
+      </CardContent >
+      <CardFooter className="flex w-full justify-between gap-x-2">
+        {formId && <Button type="submit" form={formId} className="w-full">Submit</Button>}
+        {canConfirm && <Button onClick={onConfirm} className="w-full">Submit</Button>}
+        <Button onClick={onCancel} className="w-full">Cancel</Button>
+      </CardFooter>
+    </>
   )
 }
 
