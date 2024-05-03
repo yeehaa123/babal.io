@@ -13,7 +13,6 @@ import CardMeta from "./CardMeta"
 import Toolbar from "./Toolbar"
 import CuratorSection from './Curator';
 
-
 type Props = {
   course: Course,
   actions: Actions,
