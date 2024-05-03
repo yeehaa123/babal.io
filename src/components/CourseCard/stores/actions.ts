@@ -3,6 +3,7 @@ import { OverlayModes } from "../types";
 type CoreActions = {
   login: () => Promise<void>,
   logout: () => Promise<void>,
+  toggleBookmark: () => Promise<void>,
   selectCheckpoint: (task: string) => void,
   unselectCheckpoint: () => void,
   setOverlayMode: (mode: OverlayModes) => void,
@@ -15,6 +16,7 @@ export default function initialize({
   selectCheckpoint,
   unselectCheckpoint,
   setOverlayMode,
+  toggleBookmark,
   logout
 }: CoreActions) {
 
@@ -42,9 +44,6 @@ export default function initialize({
 
   function cloneCourse() {
     console.log("CLONE");
-  }
-  function toggleBookmark() {
-    console.log
   }
 
   function toggleComplete() {

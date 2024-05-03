@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils"
-import { BookmarkIcon, BookmarkFilledIcon } from '@radix-ui/react-icons'
+import { StarIcon, StarFilledIcon } from '@radix-ui/react-icons'
 type Props = {
   isBookmarked: boolean,
   canBookmark: boolean,
@@ -12,8 +12,8 @@ export default function Bookmark({
   canBookmark,
 }: Props) {
   const Icon = isBookmarked
-    ? BookmarkFilledIcon
-    : BookmarkIcon
+    ? StarFilledIcon
+    : StarIcon
   return <Icon onClick={onClick} className={
-    cn("h-8 w-8 text-gray-500 invisible", { "visible": canBookmark })} />
+    cn("h-10 w-10 text-gray-500 invisible", { "visible": canBookmark })} />
 }

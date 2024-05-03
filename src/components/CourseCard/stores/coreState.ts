@@ -35,6 +35,11 @@ export function initiate({ course, authData }: { course: Course, authData: AuthD
     $state.setKey("overlayMode", undefined)
   }
 
+  function toggleBookmark() {
+    console.log($state.get().isBookmarked);
+    $state.setKey("isBookmarked", !$state.get().isBookmarked)
+  }
+
   function selectCheckpoint(task: string) {
     const checkpoint = course.checkpoints.find(t => t.task === task)
     const index = course.checkpoints.findIndex(t => t.task === task)
@@ -48,7 +53,7 @@ export function initiate({ course, authData }: { course: Course, authData: AuthD
   }
 
 
-  const actions = { setOverlayMode, hideOverlay, selectCheckpoint, unselectCheckpoint };
+  const actions = { setOverlayMode, hideOverlay, selectCheckpoint, toggleBookmark, unselectCheckpoint };
 
   return { $state, actions };
 }

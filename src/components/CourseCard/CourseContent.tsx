@@ -50,7 +50,7 @@ export default function CourseCard({
     <CardChrome>
       <CardHeader className="space-y-4">
         <CardTitle className="flex w-full justify-between space-x-5 ">
-          {goal}
+          <span className="max-w-[80%]">{goal}</span>
           <BookmarkIcon onClick={toggleBookmark}
             isBookmarked={isBookmarked}
             canBookmark={canBookmark} />
