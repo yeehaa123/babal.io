@@ -1,17 +1,19 @@
 import {
   CardDescription,
 } from "@/components/ui/card"
-import { determineOverlayState } from "./helpers";
 
 import type { Props } from "./index"
 import OverlayChrome from "./OverlayChrome";
 
-
-export default function CheckpointOverlay(props: Props) {
-  const overlayState = determineOverlayState(props);
-  return <OverlayChrome {...overlayState}>
-    <CardDescription>
-      {JSON.stringify(props.checkpoint, null, 2)}
-    </CardDescription>
-  </OverlayChrome>
+export default function CheckpointOverlay({ checkpoint, actions }: Props) {
+  const { task, description, isCompleted } = checkpoint!;
+  const onCancel = actions.hideCheckpoint;
+  console.log(isCompleted);
+  return (
+    <OverlayChrome title={task} onCancel={onCancel}>
+      <CardDescription>
+        {description}
+      </CardDescription>
+    </OverlayChrome>
+  )
 }

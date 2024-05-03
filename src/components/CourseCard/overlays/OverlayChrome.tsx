@@ -11,9 +11,9 @@ import {
 type Props = {
   title: string,
   onCancel: () => void,
-  onConfirm: (() => void) | undefined,
-  formId: string | undefined,
-  canConfirm: boolean
+  onConfirm?: (() => void) | undefined,
+  formId?: string | undefined,
+  canConfirm?: boolean
   children: ReactNode
 }
 
