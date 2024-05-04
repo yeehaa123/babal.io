@@ -1,10 +1,10 @@
 import type { Course } from "@/types";
 import CourseContent from "./CourseContent";
 import Overlay from "./overlays"
-import initialize from "./stores";
+import { useCourseCardStore } from "./stores";
 
 export default function CourseCard(course: Course) {
-  const { state, actions, affordances } = initialize({ course });
+  const { state, actions, affordances } = useCourseCardStore({ course });
   const { overlayMode, ...rest } = state;
   return overlayMode
     ? <Overlay

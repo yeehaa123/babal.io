@@ -6,7 +6,7 @@ import {
   CardContent,
 } from "@/components/ui/card"
 
-import type { StoreState } from "./stores";
+import type { CourseCardStore } from "./stores";
 import CardChrome from "./CardChrome";
 import BookmarkIcon from "./BookmarkIcon";
 import Checkpoint from "@/components/Checkpoint";
@@ -18,7 +18,7 @@ export default function CourseCard({
   state,
   actions,
   affordances,
-}: StoreState) {
+}: CourseCardStore) {
 
   const {
     course,

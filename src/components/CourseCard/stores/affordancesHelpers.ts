@@ -1,15 +1,6 @@
-import { RoleTypes } from "./roleHelper";
+import { RoleTypes } from './roleHelpers';
 
-export type Affordances = {
-  canAuthenticate: boolean,
-  canEdit: boolean,
-  canTakeNotes: boolean,
-  canClone: boolean,
-  canCheckComplete: boolean,
-  canBookmark: boolean
-}
-
-export default function determineAffordances(role: RoleTypes) {
+export function determineAffordances(role: RoleTypes) {
   const canClone = role === RoleTypes.LEARNER;
   const canBookmark = role === RoleTypes.LEARNER || role === RoleTypes.COLLECTOR;
   const canCheckComplete = role === RoleTypes.LEARNER;

@@ -1,12 +1,7 @@
-import {
-  CardDescription
-} from "@/components/ui/card"
-
-import type { StoreState } from "../stores";
+import type { CourseCardStore } from "../stores";
 import CheckpointOverlay from "./CheckpointOverlay";
-
-import OverlayChrome from "./OverlayChrome";
-import { determineOverlayState } from "./helpers";
+import AuthOverlay from "./AuthOverlay";
+import MockOverlay from "./MockOverlay";
 
 export enum OverlayModes {
   AUTH = "AUTH",
@@ -16,23 +11,13 @@ export enum OverlayModes {
   CLONE = "CLONE"
 }
 
-function MockContent(props: StoreState) {
-  const { course } = props.state;
-  const overlayState = determineOverlayState(props);
-  return <OverlayChrome {...overlayState}>
-    <CardDescription>
-      {JSON.stringify(course.curator, null, 2)}
-    </CardDescription>
-  </OverlayChrome>
-}
-
-export default function Overlay(props: StoreState) {
+export default function Overlay(props: CourseCardStore) {
   const overlayMode = props.state.overlayMode!
   const Overlay = {
-    [OverlayModes.NOTE]: MockContent,
-    [OverlayModes.AUTH]: MockContent,
-    [OverlayModes.EDIT]: MockContent,
-    [OverlayModes.CLONE]: MockContent,
+    [OverlayModes.NOTE]: MockOverlay,
+    [OverlayModes.AUTH]: AuthOverlay,
+    [OverlayModes.EDIT]: MockOverlay,
+    [OverlayModes.CLONE]: MockOverlay,
     [OverlayModes.CHECKPOINT]: CheckpointOverlay,
   }[overlayMode]
   return <Overlay {...props} />

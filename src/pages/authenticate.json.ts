@@ -18,7 +18,7 @@ export const GET: APIRoute = () => {
 export const POST: APIRoute = async () => {
   // const people = await authenticate('Yeehaa')
   return new Response(
-    JSON.stringify({ userName: "Yeeh" }), {
+    JSON.stringify({ userName: "Yeehaa" }), {
     status: 200,
     headers: {
       "Content-Type": "application/json"

@@ -13,8 +13,7 @@ export type Actions = {
   toggleBookmark: () => void,
   toggleComplete: () => void,
   toggleMetaVisible: () => void
-  hideOverlay: () => void,
-  hideCheckpoint: () => void
+  hideOverlay: () => void, hideCheckpoint: () => void
   showCheckpoint: (task: string) => void
 }
 
@@ -35,15 +34,15 @@ export default function initialize($state: CoreStore) {
   }
 
   function selectCheckpoint(task: string) {
-    const course = $state.get().course;
+    const { course } = $state.get();
     const checkpoint = course.checkpoints.find(t => t.task === task)
     const index = course.checkpoints.findIndex(t => t.task === task)
     if (checkpoint) {
-      const learnData = $state.get().learnData;
-      const isCompleted = learnData && learnData[index];
+      const isCompleted = !!index
       $state.setKey("checkpoint", { ...checkpoint, isCompleted })
     }
   }
+
   function unselectCheckpoint() {
     $state.setKey("checkpoint", undefined);
   }
@@ -52,6 +51,10 @@ export default function initialize($state: CoreStore) {
     selectCheckpoint(task);
     setOverlayMode(OverlayModes.CHECKPOINT);
   };
+
+  function cloneCourse() {
+    setOverlayMode(OverlayModes.CLONE);
+  }
 
   function hideCheckpoint() {
     unselectCheckpoint();
@@ -74,16 +77,13 @@ export default function initialize($state: CoreStore) {
 
 
   function editCourse() {
-    console.log("EDIT");
+    setOverlayMode(OverlayModes.EDIT);
   }
 
   function addNotes() {
     console.log("NOTE");
   }
 
-  function cloneCourse() {
-    console.log("CLONE");
-  }
 
   function toggleComplete() {
     console.log

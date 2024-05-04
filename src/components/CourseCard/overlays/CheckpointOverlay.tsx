@@ -1,28 +1,23 @@
-import {
-  CardDescription,
-} from "@/components/ui/card"
-
 import { ExternalLinkIcon } from '@radix-ui/react-icons'
 import { Button } from "@/components/ui/button"
-import CardChrome from "../CardChrome";
-import { Checkbox } from "@/components/ui/checkbox"
 import { cn } from "@/lib/utils"
-
 import {
+  CardDescription,
   CardHeader,
   CardContent,
   CardFooter,
   CardTitle,
 } from "@/components/ui/card"
-import type { StoreState } from "../stores"
+import type { CourseCardStore } from "../stores"
 
-export default function CheckpointOverlay({ state, actions, affordances }: StoreState) {
+import CardChrome from "../CardChrome";
+import { Checkbox } from "@/components/ui/checkbox"
+
+export default function CheckpointOverlay({ state, actions, affordances }: CourseCardStore) {
   const { checkpoint } = state;
   const { canCheckComplete } = affordances;
-  const { goal, task, description, isCompleted, href } = checkpoint!;
+  const { goal, task, description, href } = checkpoint!;
   const { hideCheckpoint, toggleComplete } = actions;
-  const onCancel = actions.hideCheckpoint;
-  console.log(isCompleted);
   return (
     <CardChrome>
       <CardHeader className="flex flex-row gap-x-7 space-y-0 items-top">
@@ -40,7 +35,7 @@ export default function CheckpointOverlay({ state, actions, affordances }: Store
           <span className="break-words max-w-[90%]">{href}</span></a>
       </CardContent >
       <CardFooter className="flex w-full justify-between gap-x-2">
-        <Button onClick={onCancel} className="w-full">Close</Button>
+        <Button onClick={hideCheckpoint} className="w-full">Close</Button>
       </CardFooter>
     </CardChrome>
 

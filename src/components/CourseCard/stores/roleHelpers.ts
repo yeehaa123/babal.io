@@ -1,5 +1,5 @@
 import type { CoreState } from './';
-import type { AuthData } from '@/stores/authState';
+import type { AuthData } from "@/stores/authState";
 
 export enum RoleTypes {
   GUEST = "GUEST",
@@ -7,12 +7,8 @@ export enum RoleTypes {
   COLLECTOR = "COLLECTOR",
   CURATOR = "CURATOR"
 }
-
-export default function determineRole({
-  authData,
-  state
-}: { authData: AuthData, state: CoreState }) {
-  const userName = authData.userName;
+export function determineRole({ state, authData }: { state: CoreState, authData: AuthData }) {
+  const { userName } = authData
   const { course, isBookmarked } = state;
   const isAuthenticated = !!userName;
   const isCurator = !!(course?.curator && userName === course.curator.alias);
@@ -28,4 +24,3 @@ export default function determineRole({
     return RoleTypes.GUEST;
   }
 }
-
