@@ -1,9 +1,10 @@
-import { OverlayModes } from "../types";
-import type { Props } from "./index"
+import { OverlayModes } from ".";
+import type { StoreState } from "../stores"
 
-function determineOverlayState({ isAuthenticated, overlayMode, actions }: Props) {
+function determineOverlayState({ state, actions }: StoreState) {
+  const { overlayMode, isAuthenticated } = state;
   const { authenticate, signOut, hideCheckpoint } = actions;
-  const title = overlayMode;
+  const title = overlayMode!;
   const onCancel = isAuthenticated ? signOut : hideCheckpoint;
   const onConfirm = authenticate;
   const canConfirm = overlayMode === OverlayModes.AUTH;

@@ -1,5 +1,3 @@
-import type { Actions, Affordances, Course } from "./types";
-import CardChrome from "./CardChrome";
 import {
   CardDescription,
   CardHeader,
@@ -7,27 +5,27 @@ import {
   CardFooter,
   CardContent,
 } from "@/components/ui/card"
+
+import type { StoreState } from "./stores";
+import CardChrome from "./CardChrome";
 import BookmarkIcon from "./BookmarkIcon";
 import Checkpoint from "@/components/Checkpoint";
 import CardMeta from "./CardMeta"
 import Toolbar from "./Toolbar"
 import CuratorSection from './Curator';
 
-type Props = {
-  course: Course,
-  actions: Actions,
-  affordances: Affordances,
-  isBookmarked: boolean,
-  isMetaVisible: boolean
-}
-
 export default function CourseCard({
-  course,
+  state,
   actions,
   affordances,
-  isBookmarked,
-  isMetaVisible
-}: Props) {
+}: StoreState) {
+
+  const {
+    course,
+    isBookmarked,
+    isMetaVisible
+  } = state
+
   const {
     goal,
     curator,
@@ -35,6 +33,7 @@ export default function CourseCard({
     description,
     habitat
   } = course;
+
   const {
     canCheckComplete,
     canBookmark,

@@ -10,11 +10,10 @@ export default function CourseCard(course: Course) {
     ? <Overlay
       affordances={affordances}
       actions={actions}
-      overlayMode={overlayMode}
-      {...rest} />
+      state={{ overlayMode, ...rest }} />
 
     : <CourseContent
       affordances={affordances}
       actions={actions}
-      {...state} />
+      state={state} />
 }

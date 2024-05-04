@@ -1,17 +1,19 @@
 import { map } from 'nanostores';
-import type { MapStore } from 'nanostores';
-import { $authState } from "@/stores/authState";
 import { useStore } from '@nanostores/react';
-import { OverlayModes } from "../types";
-import type { Course, Checkpoint } from "../types";
+
+import type { MapStore } from 'nanostores';
+import type { Course, Checkpoint } from "@/types";
+import type { Actions } from "./actions";
+import type { Affordances } from "./affordanceHelper";
+import type { OverlayModes } from "../overlays";
+
+import { $authState } from "@/stores/authState";
 import bindActions from "./actions";
 import { useState } from 'react';
-import {
-  determineAffordances,
-  determineRole
-} from "./helpers";
+import determineAffordances from "./affordanceHelper";
+import determineRole from "./roleHelper";
 
-export interface CoreState {
+interface CoreState {
   overlayMode: OverlayModes | undefined,
   course: Course,
   isAuthenticated: boolean,
@@ -22,11 +24,17 @@ export interface CoreState {
   isMetaVisible: boolean
 }
 
-export type CoreStore = MapStore<CoreState>
+type StoreState = {
+  state: CoreState,
+  actions: Actions,
+  affordances: Affordances,
+}
+
+type CoreStore = MapStore<CoreState>
 
 const courseCompletion = [true, false, false, true];
 
-export default function initialize({ course }: { course: Course }) {
+export default function initialize({ course }: { course: Course }): StoreState {
   const authData = useStore($authState);
   const userName = authData.userName;
   const isAuthenticated = !!userName;
@@ -52,3 +60,5 @@ export default function initialize({ course }: { course: Course }) {
 
   return { state, actions, affordances };
 }
+
+export type { CoreState, CoreStore, StoreState, Affordances, Actions }

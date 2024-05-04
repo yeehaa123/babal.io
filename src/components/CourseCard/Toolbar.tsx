@@ -8,7 +8,7 @@ import {
   Pencil1Icon,
   Pencil2Icon,
 } from '@radix-ui/react-icons'
-import type { Actions, Affordances } from "./types";
+import type { Actions, Affordances } from "./stores";
 
 
 type Props = {

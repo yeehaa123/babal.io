@@ -1,6 +1,7 @@
-import { OverlayModes } from "../types";
-import { authActions } from '@/stores/authState';
 import type { CoreStore } from ".";
+
+import { OverlayModes } from "../overlays";
+import { authActions } from '@/stores/authState';
 
 export type Actions = {
   authenticate: () => void,
