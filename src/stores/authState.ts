@@ -24,3 +24,5 @@ export async function login() {
 export async function logout() {
   $state.setKey("userName", undefined);
 }
+
+export const authActions = { login, logout };

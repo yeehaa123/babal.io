@@ -1,4 +1,6 @@
 import type { Course, Checkpoint } from "@/types";
+import type { CoreState } from "./stores";
+import type { Actions } from "./stores/actions";
 
 export type Affordances = {
   canAuthenticate: boolean,
@@ -8,23 +10,6 @@ export type Affordances = {
   canCheckComplete: boolean,
   canBookmark: boolean
 }
-
-export type Actions = {
-  authenticate: () => void,
-  signIn: () => void,
-  signOut: () => void,
-  editCourse: () => void,
-  addNotes: () => void,
-  cloneCourse: () => void;
-  toggleBookmark: () => void,
-  toggleComplete: () => void,
-  toggleMetaVisible: () => void
-  hideOverlay: () => void,
-  hideCheckpoint: () => void
-  showCheckpoint: (task: string) => void
-}
-
-export type { Course, Checkpoint }
 
 export enum OverlayModes {
   AUTH = "AUTH",
@@ -40,14 +25,6 @@ export enum RoleTypes {
   COLLECTOR = "COLLECTOR",
   CURATOR = "CURATOR"
 }
-export type CoreState = {
-  overlayMode: OverlayModes | undefined,
-  course: Course,
-  isAuthenticated: boolean,
-  learnData: boolean[] | undefined,
-  userName: string | undefined,
-  checkpoint: Checkpoint | undefined,
-  isBookmarked: boolean,
-  isMetaVisible: boolean
-}
 
+
+export type { Course, Checkpoint, CoreState, Actions }

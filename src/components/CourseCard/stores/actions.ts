@@ -1,24 +1,61 @@
 import { OverlayModes } from "../types";
+import { authActions } from '@/stores/authState';
+import type { CoreStore } from ".";
 
-type CoreActions = {
-  login: () => Promise<void>,
-  logout: () => Promise<void>,
-  toggleBookmark: () => Promise<void>,
-  selectCheckpoint: (task: string) => void,
-  unselectCheckpoint: () => void,
-  setOverlayMode: (mode: OverlayModes) => void,
+export type Actions = {
+  authenticate: () => void,
+  signIn: () => void,
+  signOut: () => void,
+  editCourse: () => void,
+  addNotes: () => void,
+  cloneCourse: () => void;
+  toggleBookmark: () => void,
+  toggleComplete: () => void,
+  toggleMetaVisible: () => void
   hideOverlay: () => void,
+  hideCheckpoint: () => void
+  showCheckpoint: (task: string) => void
 }
 
-export default function initialize({
-  login,
-  hideOverlay,
-  selectCheckpoint,
-  unselectCheckpoint,
-  setOverlayMode,
-  toggleBookmark,
-  logout
-}: CoreActions) {
+export default function initialize($state: CoreStore) {
+  const { login, logout } = authActions;
+
+  function setOverlayMode(mode: OverlayModes) {
+    $state.setKey("overlayMode", mode)
+  }
+
+  function hideOverlay() {
+    $state.setKey("overlayMode", undefined)
+  }
+
+  function toggleBookmark() {
+    console.log($state.get().isBookmarked);
+    $state.setKey("isBookmarked", !$state.get().isBookmarked)
+  }
+
+  function selectCheckpoint(task: string) {
+    const course = $state.get().course;
+    const checkpoint = course.checkpoints.find(t => t.task === task)
+    const index = course.checkpoints.findIndex(t => t.task === task)
+    if (checkpoint) {
+      const learnData = $state.get().learnData;
+      const isCompleted = learnData && learnData[index];
+      $state.setKey("checkpoint", { ...checkpoint, isCompleted })
+    }
+  }
+  function unselectCheckpoint() {
+    $state.setKey("checkpoint", undefined);
+  }
+
+  function showCheckpoint(task: string) {
+    selectCheckpoint(task);
+    setOverlayMode(OverlayModes.CHECKPOINT);
+  };
+
+  function hideCheckpoint() {
+    unselectCheckpoint();
+    hideOverlay();
+  };
 
   async function authenticate() {
     await login();
@@ -33,6 +70,7 @@ export default function initialize({
     await logout();
     hideOverlay();
   }
+
 
   function editCourse() {
     console.log("EDIT");
@@ -54,15 +92,6 @@ export default function initialize({
     console.log
   }
 
-  function showCheckpoint(task: string) {
-    selectCheckpoint(task);
-    setOverlayMode(OverlayModes.CHECKPOINT);
-  };
-
-  function hideCheckpoint() {
-    unselectCheckpoint();
-    hideOverlay();
-  };
 
   return {
     authenticate,

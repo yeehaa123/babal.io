@@ -21,6 +21,7 @@ export default function CheckpointOverlay({ checkpoint, actions, affordances }: 
   const { goal, task, description, isCompleted, href } = checkpoint!;
   const { hideCheckpoint, toggleComplete } = actions;
   const onCancel = actions.hideCheckpoint;
+  console.log(isCompleted);
   return (
     <CardChrome>
       <CardHeader className="flex flex-row gap-x-7 space-y-0 items-top">
