@@ -9,7 +9,6 @@ import type { CoreStore, CoreState } from "./coreStore";
 import { initialize } from "./coreStore";
 import { initialize as augment } from "./augmentedStore";
 
-
 type CourseCardStore = {
   state: AugmentedState,
   actions: Actions,

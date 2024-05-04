@@ -2,12 +2,12 @@ import { map } from 'nanostores';
 import type { MapStore } from 'nanostores';
 
 import type { OverlayModes } from "../overlays";
-import type { Course, Checkpoint } from "@/types";
+import type { Course } from "@/types";
 
 export interface CoreState {
   overlayMode: OverlayModes | undefined,
   course: Course,
-  checkpoint: Checkpoint | undefined,
+  checkpoint: string | undefined,
   isBookmarked: boolean,
   isMetaVisible: boolean
 }

@@ -2,6 +2,7 @@ import type { CoreStore } from ".";
 
 import { OverlayModes } from "../overlays";
 import { authActions } from '@/stores/authState';
+import { useStore } from '@nanostores/react';
 
 export type Actions = {
   authenticate: () => void,
@@ -29,18 +30,11 @@ export default function initialize($state: CoreStore) {
   }
 
   function toggleBookmark() {
-    console.log($state.get().isBookmarked);
     $state.setKey("isBookmarked", !$state.get().isBookmarked)
   }
 
   function selectCheckpoint(task: string) {
-    const { course } = $state.get();
-    const checkpoint = course.checkpoints.find(t => t.task === task)
-    const index = course.checkpoints.findIndex(t => t.task === task)
-    if (checkpoint) {
-      const isCompleted = !!index
-      $state.setKey("checkpoint", { ...checkpoint, isCompleted })
-    }
+    $state.setKey("checkpoint", task)
   }
 
   function unselectCheckpoint() {
