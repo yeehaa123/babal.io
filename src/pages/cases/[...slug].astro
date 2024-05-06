@@ -31,7 +31,7 @@ const { Content } = await entry.render();
         <Content />
       </Article>
       <div class="relative overflow-hidden lg:max-w-lg flex justify-center my-12 lg:m-0 lg:justify-start">
-        { course && <CourseCard {...course} client:load/>}
+        { course && <CourseCard course={course} client:load/>}
       </div>
     </div>
   </div>

@@ -1,23 +1,13 @@
-import { batched, map } from 'nanostores'
-import { $registeredCoursesState } from './courses';
+import { map } from 'nanostores'
 
 export interface AppState {
   isSideBarOpen: boolean,
 }
 
-const $coreState = map<AppState>({ isSideBarOpen: false })
+export const $appState = map<AppState>({ isSideBarOpen: false })
 
 export function toggleSideBar() {
-  const isSideBarOpen = $coreState.get().isSideBarOpen;
-  $coreState.setKey('isSideBarOpen', !isSideBarOpen)
+  const isSideBarOpen = $appState.get().isSideBarOpen;
+  $appState.setKey('isSideBarOpen', !isSideBarOpen)
 }
 
-export const $appState = batched(
-  [$coreState, $registeredCoursesState],
-  (state, courses) => {
-    console.log(courses);
-    return {
-      ...state,
-      courses
-    }
-  })
