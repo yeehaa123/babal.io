@@ -1,29 +1,37 @@
 import type { Course } from "@/types";
 import CourseContent from "./CourseContent";
-import Overlay from "./overlays"
-import { useCourseCardStore } from "./stores";
-import OffcourseContainer from "@/containers/Offcourse"
+import type { CourseCardStore } from "./stores";
+import { CourseContainer } from "@/containers/Offcourse"
+import Overlay from "./overlays";
 
-type Props = {
-  course: Course,
-  standAlone?: boolean
+export type CourseCard = CourseCardStore
+
+export interface CourseCardContainer {
+  store?: CourseCardStore,
+  course?: Course,
+  standAlone?: boolean,
 }
 
-export default function CourseCard({ course, standAlone = true }: Props) {
-  const { state, actions, affordances } = useCourseCardStore({ course });
-  const { overlayMode, ...rest } = state;
-  return <OffcourseContainer standAlone={standAlone} courses={[course]}>
-    {
-      overlayMode
-        ? <Overlay
-          affordances={affordances}
-          actions={actions}
-          state={{ overlayMode, ...rest }} />
+function Wrapper({ store }: { store?: CourseCardStore | undefined }) {
+  if (store) {
+    return store.state.overlayMode
+      ? <Overlay {...store} />
+      : <CourseContent {...store} />
+  }
+  return <div>Error</div>
+}
 
-        : <CourseContent
-          affordances={affordances}
-          actions={actions}
-          state={state} />
-    }
-  </OffcourseContainer>
+
+export default function CourseCard(
+  { course, store }: CourseCardContainer) {
+  if (course) {
+    return (
+      <CourseContainer course={course} >
+        <Wrapper />
+      </CourseContainer>
+    )
+  } else
+    return (
+      <Wrapper store={store} />
+    )
 }

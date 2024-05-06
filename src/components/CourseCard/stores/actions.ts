@@ -17,7 +17,7 @@ export type Actions = {
   showCheckpoint: (task: string) => void
 }
 
-export default function initialize($state: CoreStore) {
+export default function initialize($state: CoreStore | any) {
   const { login, logout } = authActions;
 
   function setOverlayMode(mode: OverlayModes) {

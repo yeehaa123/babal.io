@@ -1,10 +1,15 @@
-import { registerCourses } from "@/stores/courses";
 import type { Course } from "@/types";
-import type { ReactNode } from "react";
 
-type Props = { courses: Course[], children: ReactNode }
+import { CollectionContainer } from "@/containers/Offcourse"
+import CourseCard from "@/components/CourseCard"
 
-export default function CourseCollection({ courses, children }: Props) {
-  registerCourses(courses);
-  return children;
+export type CollectionProps = { courses: Course[] }
+
+
+export default function CourseCollection({ courses }: CollectionProps) {
+  return (
+    <CollectionContainer courses={courses}>
+      <CourseCard />
+    </CollectionContainer>
+  )
 }
