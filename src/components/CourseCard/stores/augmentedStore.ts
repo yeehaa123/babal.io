@@ -6,7 +6,8 @@ import type { RoleTypes } from './roleHelpers';
 import { determineRole } from "./roleHelpers"
 import { determineAffordances } from "./affordancesHelpers"
 import bindActions from "./actions";
-import { $userState } from "@/stores/userData";
+import { $authState } from "@/stores/authState";
+import { $learnData } from "@/stores/learnData";
 import type { Checkpoint, Course } from '@/types';
 
 
@@ -38,18 +39,20 @@ function prepCourse({ course, courseLearnData }:
 }
 
 export function initialize($state: CoreStore) {
-  const initialUserData = { learnData: undefined, userName: undefined };
   const actions = bindActions($state);
-  return computed([$state, $userState], (state, userData) => {
+  return computed([$state, $authState, $learnData], (state, authData, learnData) => {
+    const { userName } = authData
+    const role = determineRole({ state, authData });
     const { course, checkpoint: checkpointId } = state;
-    const role = determineRole({ state, userData });
-    const { learnData, userName } = userData || initialUserData;
-    const courseLearnData = learnData;
+    const courseLearnData = learnData[course.goal]
     const newCourse = prepCourse({ course, courseLearnData })
+
     const checkpoint = checkpointId
       ? newCourse.checkpoints.find(t => t.task === checkpointId)
       : undefined;
+
     const affordances = determineAffordances(role);
+
     return {
       state: {
         ...state,

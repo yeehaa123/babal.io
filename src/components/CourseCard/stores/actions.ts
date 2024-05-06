@@ -2,7 +2,6 @@ import type { CoreStore } from ".";
 
 import { OverlayModes } from "../overlays";
 import { authActions } from '@/stores/authState';
-import { useStore } from '@nanostores/react';
 
 export type Actions = {
   authenticate: () => void,

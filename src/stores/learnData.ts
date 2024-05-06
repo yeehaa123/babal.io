@@ -1,9 +1,12 @@
-import { batched, task } from 'nanostores';
-import { $authState } from "@/stores/authState";
+import { map } from 'nanostores'
 
-export const $learnState = batched($authState, ({ userName }) => task(async () => {
-  if (userName) {
-    return [true, false, false, true];
-  }
-  return;
-}));
+export type LearnState = Record<string, boolean[]>
+
+export const $learnData = map<LearnState>()
+
+export function augmentCourse(courseId: string) {
+  $learnData.setKey(courseId, [true, false, true, true]);
+}
+
+
+

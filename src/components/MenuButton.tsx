@@ -1,7 +1,8 @@
-import { useAppState } from "@/stores/appState";
+import { $appState, toggleSideBar } from "@/stores/appState";
+import { useStore } from "@nanostores/react";
 
 export default function MenuButton() {
-  const { isSideBarOpen, toggleSideBar } = useAppState();
+  const { isSideBarOpen } = useStore($appState);
   return (
     <button
       type="button"

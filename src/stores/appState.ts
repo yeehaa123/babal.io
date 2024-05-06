@@ -1,20 +1,23 @@
-import { map } from 'nanostores'
-import { useStore } from '@nanostores/react' // or '@nanostores/preact'
+import { batched, map } from 'nanostores'
+import { $registeredCoursesState } from './courses';
 
 export interface AppState {
   isSideBarOpen: boolean,
 }
 
-const $appState = map<AppState>({ isSideBarOpen: false })
+const $coreState = map<AppState>({ isSideBarOpen: false })
 
-
-
-export function useAppState() {
-  const { isSideBarOpen } = useStore($appState)
-  const toggleSideBar = () => $appState.setKey('isSideBarOpen', !isSideBarOpen)
-  return {
-    userName: "",
-    isSideBarOpen,
-    toggleSideBar
-  }
+export function toggleSideBar() {
+  const isSideBarOpen = $coreState.get().isSideBarOpen;
+  $coreState.setKey('isSideBarOpen', !isSideBarOpen)
 }
+
+export const $appState = batched(
+  [$coreState, $registeredCoursesState],
+  (state, courses) => {
+    console.log(courses);
+    return {
+      ...state,
+      courses
+    }
+  })
