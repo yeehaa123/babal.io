@@ -7,4 +7,3 @@ export function registerCourses(courses: Course[]) {
   const register = $registeredCoursesState.get();
   $registeredCoursesState.set([...new Set([...register, ...courses])])
 }
-

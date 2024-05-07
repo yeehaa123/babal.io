@@ -1,15 +1,13 @@
 import type { Course } from "@/types";
 
-import { CollectionContainer } from "@/containers/Offcourse"
 import CourseCard from "@/components/CourseCard"
+import { useOffcourse } from "@/containers/Offcourse"
 
 export type CollectionProps = { courses: Course[] }
 
-
 export default function CourseCollection({ courses }: CollectionProps) {
+  const stores = useOffcourse(courses);
   return (
-    <CollectionContainer courses={courses}>
-      <CourseCard />
-    </CollectionContainer>
+    <>{stores.map((store, index) => <CourseCard key={index} store={store} />)}</>
   )
 }
