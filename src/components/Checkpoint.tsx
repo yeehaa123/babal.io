@@ -5,7 +5,7 @@ import type { Checkpoint } from "@/types";
 
 interface Props extends Checkpoint {
   canCheckComplete: boolean,
-  toggleCheck: () => void
+  toggleCheck: (id: string) => void
   showCheckpoint: (task: string) => void
 }
 
@@ -24,7 +24,7 @@ export default function Checkpoint({
         checked={!!isCompleted}
         disabled={!canCheckComplete}
         id={`${courseId}-${task}`}
-        onClick={() => toggleCheck()} />
+        onClick={() => toggleCheck(courseId)} />
       <Label htmlFor={`${courseId}-${task}`}>
         <button onClick={() => showCheckpoint(task)}>{task}</button>
       </Label>

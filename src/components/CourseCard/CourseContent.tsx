@@ -13,6 +13,7 @@ import CardMeta from "./CardMeta"
 import Toolbar from "./Toolbar"
 import CuratorSection from './Curator';
 import type { CourseCard } from ".";
+import { toggleComplete } from "@/stores/learnData"
 
 export default function CourseCard({
   course,
@@ -20,6 +21,7 @@ export default function CourseCard({
   actions,
   affordances,
 }: CourseCard) {
+  console.log(course.id);
   const {
     isBookmarked,
     isMetaVisible
@@ -41,7 +43,6 @@ export default function CourseCard({
   const {
     toggleBookmark,
     showCheckpoint,
-    toggleComplete,
     toggleMetaVisible,
   } = actions;
 

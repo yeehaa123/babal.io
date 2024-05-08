@@ -24,3 +24,8 @@ export const $missingLearnData = batched([$authState, $coursesState], (
     augmentCourses(courseIds);
   }
 })
+
+
+export function toggleComplete(courseId: string) {
+  $learnData.setKey(courseId, [true, false, true, false]);
+}
