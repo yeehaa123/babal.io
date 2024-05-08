@@ -63,14 +63,19 @@ export function createOffcourseStore({ courses, authData }: StoreProps) {
       const actions = {
         hideCheckpoint: (courseId: string) => {
           set((state) => {
-            state.stores[courseId]!.cardState.overlayMode = OverlayModes.NONE
+            if (state.stores[courseId]) {
+              state.stores[courseId]!.cardState.overlayMode = OverlayModes.NONE
+            }
           })
         },
         toggleBookmark: (courseId: string) => {
           set((state) => {
-            state.stores[courseId]!.cardState.isBookmarked
-              = !state.stores[courseId]!.cardState.isBookmarked
+            if (state.stores[courseId]) {
+              state.stores[courseId]!.cardState.isBookmarked
+                = !state.stores[courseId]!.cardState.isBookmarked
+            }
           })
+
         }
       }
 
