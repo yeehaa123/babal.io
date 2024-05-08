@@ -1,34 +1,82 @@
-import { batched } from 'nanostores'
+import { createStore } from 'zustand'
+import { OverlayModes } from "@/components/CourseCard/overlays";
+import { immer } from 'zustand/middleware/immer'
+import type { AuthData } from '@/stores/authState';
+import type { Checkpoint, Course } from "@/types";
 import { determineAffordances } from "@/components/CourseCard/stores/affordancesHelpers";
-import bind from "@/components/CourseCard/stores/actions"
-import { RoleTypes } from "@/components/CourseCard/stores/roleHelpers";
-import { $coursesState, registerCourses } from './courses';
-import { $learnData } from './learnData';
+import { determineRole } from "@/components/CourseCard/stores/roleHelpers";
 
-export const $offcourseState = batched([$coursesState, $learnData], (courses, learnData) => {
-  const stores = Object.values(courses).map((course) => {
-    let checkpoint;
+export interface StoreProps { courses: Course[], authData: AuthData }
 
-    const cardState = {
-      overlayMode: undefined,
-      course,
-      checkpoint,
-      isBookmarked: false,
-      isMetaVisible: false,
-    }
+export interface CoreState {
+  overlayMode: OverlayModes,
+  isBookmarked: boolean,
+  isMetaVisible: boolean
+}
 
-    const affordances = determineAffordances(RoleTypes.GUEST);
-    const actions = bind(cardState);
+export type Affordances = {
+  canAuthenticate: boolean,
+  canEdit: boolean,
+  canTakeNotes: boolean,
+  canClone: boolean,
+  canCheckComplete: boolean,
+  canBookmark: boolean
+}
+export type CourseCardStore = {
+  course: Course,
+  checkpoint: Checkpoint | undefined,
+  cardState: CoreState,
+  affordances: Affordances
+}
 
-    return {
-      course,
-      checkpoint,
-      cardState,
-      affordances,
-      actions
-    }
-  })
-  return { stores };
-})
+export type OffcourseStore = ReturnType<typeof createOffcourseStore>
 
-export { registerCourses }
+function createCardStore(course: Course, authData: AuthData) {
+  let checkpoint;
+  const { userName } = authData;
+  const cardState = {
+    overlayMode: OverlayModes.NOTE,
+    course,
+    checkpoint,
+    isBookmarked: !!userName,
+    isMetaVisible: false,
+  }
+  const role = determineRole({ cardState, course, authData });
+  const affordances = determineAffordances(role);
+  return {
+    course,
+    checkpoint,
+    cardState,
+    affordances
+  }
+}
+
+
+export function createOffcourseStore({ courses, authData }: StoreProps) {
+  return createStore<{ stores: Record<string, CourseCardStore>, actions: any }>()(immer(
+    (set) => {
+      const storeEntries = courses.map(course => {
+        const cardStore = createCardStore(course, authData);
+        return [course.id, cardStore]
+      });
+      const stores = Object.fromEntries(storeEntries);
+      const actions = {
+        hideCheckpoint: (courseId: string) => {
+          set((state) => {
+            state.stores[courseId]!.cardState.overlayMode = OverlayModes.NONE
+          })
+        },
+        toggleBookmark: (courseId: string) => {
+          set((state) => {
+            state.stores[courseId]!.cardState.isBookmarked
+              = !state.stores[courseId]!.cardState.isBookmarked
+          })
+        }
+      }
+
+      return {
+        stores,
+        actions
+      }
+    }))
+}

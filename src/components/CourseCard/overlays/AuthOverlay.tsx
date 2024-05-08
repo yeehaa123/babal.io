@@ -1,14 +1,15 @@
 import { Button } from "@/components/ui/button"
+import actions from "@/components/CourseCard/stores/actions"
 import {
   CardHeader,
   CardFooter,
   CardTitle,
 } from "@/components/ui/card"
-import type { CourseCardStore } from "../stores"
+import type { CourseCardStore } from "@/containers/Offcourse";
 
 import CardChrome from "../CardChrome";
 
-export default function CheckpointOverlay({ actions }: CourseCardStore) {
+export default function CheckpointOverlay({ }: CourseCardStore) {
   const { hideCheckpoint, authenticate } = actions;
   return (
     <CardChrome>

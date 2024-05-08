@@ -1,18 +1,24 @@
-import { registerCourses } from "@/stores/offcourse";
-import { useStore } from "@nanostores/react";
-import { $offcourseState } from "@/stores/offcourse";
-import { useEffect } from "react";
-import type { Course } from "@/types";
-import type { CourseCardStore } from "@/components//CourseCard/stores";
-import { $missingLearnData } from "@/stores/learnData";
+import type { ReactElement } from 'react';
+import { createContext, useRef } from "react"
+import { createOffcourseStore } from "@/stores/offcourse"
+import type { CoreState, CourseCardStore, StoreProps, OffcourseStore, Affordances } from "@/stores/offcourse"
 
-
-export function useOffcourse(c: Course[]): CourseCardStore[] {
-  useEffect(() => {
-    registerCourses(c);
-  }, [])
-  useStore($missingLearnData);
-  const { stores } = useStore($offcourseState);
-  return stores;
+interface ProviderProps extends StoreProps {
+  children: ReactElement
 }
 
+export const StoreProvider = ({ children, courses, authData }: ProviderProps) => {
+  const storeRef = useRef<OffcourseStore>()
+  if (!storeRef.current) {
+    storeRef.current = createOffcourseStore({ courses, authData });
+  }
+  return (
+    <OffcourseContext.Provider value={storeRef.current}>
+      {children}
+    </OffcourseContext.Provider>
+  )
+}
+
+export const OffcourseContext = createContext<OffcourseStore | null>(null)
+
+export type { CoreState, CourseCardStore, Affordances }

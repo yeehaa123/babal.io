@@ -38,7 +38,7 @@ export default function Overlay({
       <CardFooter className="flex w-full justify-between gap-x-2">
         {formId && <Button type="submit" form={formId} className="w-full">Submit</Button>}
         {canConfirm && <Button onClick={onConfirm} className="w-full">Submit</Button>}
-        <Button onClick={onCancel} className="w-full">Cancel</Button>
+        <Button onClick={() => onCancel()} className="w-full">Cancel</Button>
       </CardFooter>
     </CardChrome>
   )

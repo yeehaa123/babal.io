@@ -1,7 +1,6 @@
-import type { CoreStore } from ".";
-
 import { OverlayModes } from "../overlays";
 import { authActions } from '@/stores/authState';
+
 
 export type Actions = {
   authenticate: () => void,
@@ -17,88 +16,86 @@ export type Actions = {
   showCheckpoint: (task: string) => void
 }
 
-export default function initialize($state: CoreStore | any) {
-  const { login, logout } = authActions;
+const { login, logout } = authActions;
 
-  function setOverlayMode(mode: OverlayModes) {
-    $state.setKey("overlayMode", mode)
-  }
+function setOverlayMode(mode: OverlayModes) {
+  console.log(mode)
+}
 
-  function hideOverlay() {
-    $state.setKey("overlayMode", undefined)
-  }
+function hideOverlay() {
+  console.log()
+}
 
-  function toggleBookmark() {
-    $state.setKey("isBookmarked", !$state.get().isBookmarked)
-  }
+function toggleBookmark() {
+  console.log()
+}
 
-  function selectCheckpoint(task: string) {
-    $state.setKey("checkpoint", task)
-  }
+function selectCheckpoint(task: string) {
+  console.log(task)
+}
 
-  function unselectCheckpoint() {
-    $state.setKey("checkpoint", undefined);
-  }
+function unselectCheckpoint() {
+  console.log()
+}
 
-  function showCheckpoint(task: string) {
-    selectCheckpoint(task);
-    setOverlayMode(OverlayModes.CHECKPOINT);
-  };
+function showCheckpoint(task: string) {
+  selectCheckpoint(task);
+  setOverlayMode(OverlayModes.CHECKPOINT);
+};
 
-  function cloneCourse() {
-    setOverlayMode(OverlayModes.CLONE);
-  }
+function cloneCourse() {
+  setOverlayMode(OverlayModes.CLONE);
+}
 
-  function hideCheckpoint() {
-    unselectCheckpoint();
-    hideOverlay();
-  };
+function hideCheckpoint() {
+  unselectCheckpoint();
+  hideOverlay();
+};
 
-  async function authenticate() {
-    await login();
-    hideOverlay();
-  }
+async function authenticate() {
+  await login();
+  hideOverlay();
+}
 
-  function signIn() {
-    setOverlayMode(OverlayModes.AUTH);
-  }
+function signIn() {
+  setOverlayMode(OverlayModes.AUTH);
+}
 
-  async function signOut() {
-    await logout();
-    hideOverlay();
-  }
-
-
-  function editCourse() {
-    setOverlayMode(OverlayModes.EDIT);
-  }
-
-  function addNotes() {
-    console.log("NOTE");
-  }
+async function signOut() {
+  await logout();
+  hideOverlay();
+}
 
 
-  function toggleComplete() {
-    console.log
-  }
+function editCourse() {
+  setOverlayMode(OverlayModes.EDIT);
+}
 
-  function toggleMetaVisible() {
-    console.log
-  }
+function addNotes() {
+  console.log("NOTE");
+}
 
 
-  return {
-    authenticate,
-    signOut,
-    signIn,
-    editCourse,
-    hideCheckpoint,
-    hideOverlay,
-    addNotes,
-    cloneCourse,
-    toggleBookmark,
-    toggleComplete,
-    toggleMetaVisible,
-    showCheckpoint,
-  }
+function toggleComplete() {
+  console.log
+}
+
+function toggleMetaVisible() {
+  console.log
+}
+
+
+export default {
+  authenticate,
+  signOut,
+  signIn,
+  editCourse,
+  hideCheckpoint,
+  hideOverlay,
+  addNotes,
+  cloneCourse,
+  toggleBookmark,
+  toggleComplete,
+  toggleMetaVisible,
+  showCheckpoint,
 }

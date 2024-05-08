@@ -14,6 +14,11 @@ import Toolbar from "./Toolbar"
 import CuratorSection from './Curator';
 import type { CourseCard } from ".";
 import { toggleComplete } from "@/stores/learnData"
+import xactions from "./stores/actions"
+const {
+  showCheckpoint,
+  toggleMetaVisible,
+} = xactions;
 
 export default function CourseCard({
   course,
@@ -21,13 +26,13 @@ export default function CourseCard({
   actions,
   affordances,
 }: CourseCard) {
-  console.log(course.id);
   const {
     isBookmarked,
     isMetaVisible
   } = cardState;
 
   const {
+    id,
     goal,
     curator,
     checkpoints,
@@ -41,16 +46,16 @@ export default function CourseCard({
   } = affordances;
 
   const {
-    toggleBookmark,
-    showCheckpoint,
-    toggleMetaVisible,
+    toggleBookmark
   } = actions;
 
   return <CardChrome>
     <CardHeader className="space-y-4">
       <CardTitle className="flex w-full justify-between space-x-5 ">
         <span className="max-w-[80%]">{goal}</span>
-        <BookmarkIcon onClick={toggleBookmark}
+        <BookmarkIcon onClick={() => {
+          toggleBookmark(id)
+        }}
           isBookmarked={isBookmarked}
           canBookmark={canBookmark} />
       </CardTitle>

@@ -8,15 +8,18 @@ import {
   CardFooter,
   CardTitle,
 } from "@/components/ui/card"
-import type { CourseCardStore } from "../stores"
+import type { CourseCard } from "..";
 
 import CardChrome from "../CardChrome";
 import Checkbox from "@/components/Checkbox"
 
-export default function CheckpointOverlay({ checkpoint, actions, affordances }: CourseCardStore) {
+
+const toggleComplete = console.log
+
+export default function CheckpointOverlay({ checkpoint, affordances, actions }: CourseCard) {
   const { canCheckComplete } = affordances;
   const { courseId, isCompleted, task, description, href } = checkpoint!;
-  const { hideCheckpoint, toggleComplete } = actions;
+  const { hideCheckpoint } = actions;
   return (
     <CardChrome>
       <CardHeader className="flex flex-row gap-x-7 space-y-0 items-top">
@@ -36,7 +39,10 @@ export default function CheckpointOverlay({ checkpoint, actions, affordances }: 
           <span className="break-words max-w-[90%]">{href}</span></a>
       </CardContent >
       <CardFooter className="flex w-full justify-between gap-x-2">
-        <Button onClick={hideCheckpoint} className="w-full">Close</Button>
+        <Button onClick={() => {
+          console.log(courseId)
+          hideCheckpoint(courseId)
+        }} className="w-full">Close</Button>
       </CardFooter>
     </CardChrome>
 
