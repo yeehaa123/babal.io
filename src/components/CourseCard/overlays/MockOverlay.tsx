@@ -8,8 +8,8 @@ import type { CourseCardStore } from "../stores"
 
 import CardChrome from "../CardChrome";
 
-export default function MockOverlay({ state, actions }: CourseCardStore) {
-  const { overlayMode } = state;
+export default function MockOverlay({ cardState, actions }: CourseCardStore) {
+  const { overlayMode } = cardState;
   const { hideCheckpoint } = actions;
   return (
     <CardChrome>

@@ -7,7 +7,7 @@ import { determineAffordances } from "./affordancesHelpers"
 import bindActions from "./actions";
 import { $learnData } from "@/stores/learnData";
 import type { Checkpoint, Course } from '@/types';
-import { $offcourseState } from '@/stores/offcourse';
+import { $authState } from '@/stores/authState';
 
 
 export type Affordances = {
@@ -38,9 +38,9 @@ function prepCourse({ course, courseLearnData }:
 export function initialize($state: CoreStore) {
   const actions = bindActions($state);
   return computed(
-    [$state, $offcourseState, $learnData],
+    [$state, $authState, $learnData],
     (state, authData, learnData) => {
-      const { userName } = authData
+      const { userName } = authData;
       const role = determineRole({ state, authData });
       const { course, checkpoint: checkpointId } = state;
       const courseLearnData = learnData[course.goal]

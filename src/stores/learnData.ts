@@ -1,4 +1,7 @@
 import { map } from 'nanostores'
+import { batched } from 'nanostores'
+import { $coursesState } from './courses';
+import { $authState } from './authState';
 
 export type LearnState = Record<string, boolean[]>
 
@@ -13,3 +16,11 @@ export function augmentCourses(courseIds: string[]) {
     }
   }
 }
+
+export const $missingLearnData = batched([$authState, $coursesState], (
+  { userName }, courses) => {
+  if (!userName) {
+    const courseIds = Object.keys(courses);
+    augmentCourses(courseIds);
+  }
+})

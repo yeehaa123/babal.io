@@ -6,6 +6,7 @@ export type Step = {
 }
 
 export type CoursesDBResult = {
+  id: string,
   habitat: string | null,
   description: string,
   goal: string,
@@ -28,14 +29,14 @@ export type Curator = {
   }
 }
 export interface CheckpointsDBResult {
-  goal: string,
+  courseId: string,
   task: string,
   href: string,
   description: string | null
 }
 
 export interface Checkpoint {
-  goal: string,
+  courseId: string,
   task: string,
   href: string,
   description?: string | undefined,
@@ -44,22 +45,10 @@ export interface Checkpoint {
 
 
 export type Course = {
+  id: string,
   goal: string,
   description: string,
   curator: Curator,
   habitat?: string | undefined,
   checkpoints: Checkpoint[]
 }
-
-
-export type RawCourse = {
-  goal: string,
-  description: string,
-  curator: string,
-  habitat?: string | undefined,
-  checkpoints: {
-    task: string,
-    href: string
-  }[]
-}
-

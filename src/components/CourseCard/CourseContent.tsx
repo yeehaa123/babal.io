@@ -15,19 +15,15 @@ import CuratorSection from './Curator';
 import type { CourseCard } from ".";
 
 export default function CourseCard({
-  state,
+  course,
+  cardState,
   actions,
   affordances,
 }: CourseCard) {
-  if (!state || !actions! || !affordances) {
-    return <div>Error</div>
-  }
-
   const {
-    course,
     isBookmarked,
     isMetaVisible
-  } = state;
+  } = cardState;
 
   const {
     goal,
@@ -67,7 +63,7 @@ export default function CourseCard({
         {checkpoints.map((cp, index) => (
           <Checkpoint toggleCheck={toggleComplete}
             showCheckpoint={showCheckpoint}
-            canCheckComplete={canCheckComplete} key={index} {...cp} goal={goal} />))
+            canCheckComplete={canCheckComplete} key={index} {...cp} />))
         }
       </ul>
     </CardContent>

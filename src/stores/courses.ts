@@ -1,9 +1,14 @@
+import { map } from 'nanostores'
+
 import type { Course } from '@/types';
-import { atom } from 'nanostores';
 
-export const $registeredCoursesState = atom<Course[]>([])
-
+type CoursesMap = Record<string, Course>
+export const $coursesState = map<CoursesMap>({})
 export function registerCourses(courses: Course[]) {
-  const register = $registeredCoursesState.get();
-  $registeredCoursesState.set([...new Set([...register, ...courses])])
+  let coursesMap = $coursesState.get();
+  let newCourses = {};
+  for (const course of courses) {
+    coursesMap[course.id] = course;
+  }
+  $coursesState.set({ ...coursesMap, ...newCourses });
 }

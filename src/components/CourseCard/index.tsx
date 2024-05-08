@@ -14,7 +14,7 @@ export interface CourseCardContainer {
 export default function CourseCard(
   { course, store }: CourseCardContainer) {
   if (store) {
-    return store.state.overlayMode
+    return store.cardState.overlayMode
       ? <Overlay {...store} />
       : <CourseContent {...store} />
   }

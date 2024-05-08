@@ -12,7 +12,7 @@ interface Props extends Checkpoint {
 
 export default function Checkpoint({
   task,
-  goal,
+  courseId,
   isCompleted,
   toggleCheck,
   showCheckpoint,
@@ -23,9 +23,9 @@ export default function Checkpoint({
       <Checkbox
         checked={!!isCompleted}
         disabled={!canCheckComplete}
-        id={`${goal}-${task}`}
+        id={`${courseId}-${task}`}
         onClick={() => toggleCheck()} />
-      <Label htmlFor={`${goal}-${task}`}>
+      <Label htmlFor={`${courseId}-${task}`}>
         <button onClick={() => showCheckpoint(task)}>{task}</button>
       </Label>
     </li>

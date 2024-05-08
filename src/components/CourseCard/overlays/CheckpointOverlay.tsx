@@ -13,16 +13,15 @@ import type { CourseCardStore } from "../stores"
 import CardChrome from "../CardChrome";
 import Checkbox from "@/components/Checkbox"
 
-export default function CheckpointOverlay({ state, actions, affordances }: CourseCardStore) {
-  const { checkpoint } = state;
+export default function CheckpointOverlay({ checkpoint, actions, affordances }: CourseCardStore) {
   const { canCheckComplete } = affordances;
-  const { goal, isCompleted, task, description, href } = checkpoint!;
+  const { courseId, isCompleted, task, description, href } = checkpoint!;
   const { hideCheckpoint, toggleComplete } = actions;
   return (
     <CardChrome>
       <CardHeader className="flex flex-row gap-x-7 space-y-0 items-top">
         <CardTitle>{task}</CardTitle>
-        <Checkbox id={`${goal}-${task}`}
+        <Checkbox id={`${courseId}-${task}`}
           checked={!!isCompleted}
           disabled={!canCheckComplete}
           className={cn("h-12 w-12 mt-0")}

@@ -12,7 +12,7 @@ export enum OverlayModes {
 }
 
 export default function Overlay(props: CourseCardStore) {
-  const overlayMode = props.state.overlayMode!
+  const overlayMode = props.cardState.overlayMode!
   const Overlay = {
     [OverlayModes.NOTE]: MockOverlay,
     [OverlayModes.AUTH]: AuthOverlay,
