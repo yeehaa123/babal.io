@@ -9,7 +9,7 @@ import {
   Pencil2Icon,
 } from '@radix-ui/react-icons'
 import type { Actions } from "@/components/CourseCard/stores/actions";
-import type { Affordances } from "@/containers/Offcourse"
+import type { Affordances } from "."
 
 
 type Props = {

@@ -4,11 +4,11 @@ import {
   CardFooter,
   CardTitle,
 } from "@/components/ui/card"
-import type { CourseCard } from "..";
+import type { CourseCardStore } from "..";
 
 import CardChrome from "../CardChrome";
 
-export default function MockOverlay({ course, cardState, actions }: CourseCard) {
+export default function MockOverlay({ course, cardState, actions }: CourseCardStore) {
   const { id } = course;
   const { overlayMode } = cardState;
   const { hideCheckpoint } = actions;

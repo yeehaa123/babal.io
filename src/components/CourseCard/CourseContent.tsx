@@ -12,7 +12,7 @@ import Checkpoint from "@/components/Checkpoint";
 import CardMeta from "./CardMeta"
 import Toolbar from "./Toolbar"
 import CuratorSection from './Curator';
-import type { CourseCard } from ".";
+import type { CourseCardStore } from ".";
 import { toggleComplete } from "@/stores/learnData"
 import xactions from "./stores/actions"
 const {
@@ -25,13 +25,13 @@ export default function CourseCard({
   cardState,
   actions,
   affordances,
-}: CourseCard) {
+}: CourseCardStore) {
   const {
-    isBookmarked,
     isMetaVisible
   } = cardState;
 
   const {
+    isBookmarked,
     id,
     goal,
     curator,

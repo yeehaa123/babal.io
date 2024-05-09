@@ -8,15 +8,14 @@ import {
   CardFooter,
   CardTitle,
 } from "@/components/ui/card"
-import type { CourseCard } from "..";
-
+import type { CourseCardStore } from "..";
 import CardChrome from "../CardChrome";
 import Checkbox from "@/components/Checkbox"
 
 
 const toggleComplete = console.log
 
-export default function CheckpointOverlay({ checkpoint, affordances, actions }: CourseCard) {
+export default function CheckpointOverlay({ checkpoint, affordances, actions }: CourseCardStore) {
   const { canCheckComplete } = affordances;
   const { courseId, isCompleted, task, description, href } = checkpoint!;
   const { hideCheckpoint } = actions;

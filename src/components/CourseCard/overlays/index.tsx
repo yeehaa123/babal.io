@@ -1,4 +1,4 @@
-import type { CourseCard } from "..";
+import type { CourseCardStore } from "..";
 import CheckpointOverlay from "./CheckpointOverlay";
 import AuthOverlay from "./AuthOverlay";
 import MockOverlay from "./MockOverlay";
@@ -12,7 +12,7 @@ export enum OverlayModes {
   CLONE = "CLONE"
 }
 
-export default function Overlay(props: CourseCard) {
+export default function Overlay(props: CourseCardStore) {
   const overlayMode = props.cardState.overlayMode!
   const Overlay = {
     [OverlayModes.NONE]: MockOverlay,

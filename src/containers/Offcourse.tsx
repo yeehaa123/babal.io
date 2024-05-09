@@ -1,10 +1,13 @@
 import type { ReactElement } from 'react';
 import { createContext, useRef } from "react"
 import { createOffcourseStore } from "@/stores/offcourse"
-import type { CoreState, CourseCardStore, StoreProps, OffcourseStore, Affordances } from "@/stores/offcourse"
+import type { StoreProps, OffcourseStore } from "@/stores/offcourse"
+import { useStore } from "zustand";
+import type { OffcourseState } from "@/stores/offcourse";
+import { useContext } from "react";
 
 interface ProviderProps extends StoreProps {
-  children: ReactElement
+  children: ReactElement | ReactElement[]
 }
 
 export const StoreProvider = ({ children, courses, authData }: ProviderProps) => {
@@ -21,4 +24,8 @@ export const StoreProvider = ({ children, courses, authData }: ProviderProps) =>
 
 export const OffcourseContext = createContext<OffcourseStore | null>(null)
 
-export type { CoreState, CourseCardStore, Affordances }
+export function useOffcourseContext<T>(selector: (state: OffcourseState) => T): T {
+  const store = useContext(OffcourseContext)
+  if (!store) throw new Error('Missing OffcourseContext.Provider in the tree')
+  return useStore(store, selector)
+}
