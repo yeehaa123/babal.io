@@ -6,7 +6,7 @@ const Courses = defineTable({
     goal: column.text(),
     curator: column.text(),
     description: column.text(),
-    habitat: column.text({ optional: true }),
+    habitat: column.text({ unique: true, optional: true }),
   },
   indexes: [
     { on: ["id", "habitat"], unique: true },

@@ -7,9 +7,9 @@ import { StoreProvider } from "@/containers/Offcourse"
 import { $authState, login } from "@/stores/authState";
 import { Button } from "./ui/button";
 
-export type CollectionProps = { courses: Course[] }
+export type CollectionProps = { courses: Course[], standAlone?: boolean }
 
-function InnerCollection() {
+function InnerCollection({ standAlone = false }: { standAlone: boolean | undefined }) {
   const authData = useStore($authState);
   const {
     courses,
@@ -31,17 +31,17 @@ function InnerCollection() {
       {courseIds.map((id) =>
         <CourseCardContainer key={id} authData={authData} courseId={id} />)}
     </div>
-    <div className="flex gap-4 mt-8">
-      <Button className="w-[200px]" onClick={login}>Sign In</Button>
-      <Button className="w-[200px]" onClick={addCourse}>Add Course</Button>
-    </div>
+    {!standAlone && <div className="flex gap-4 mt-8">
+      <Button className="w-[150px]" onClick={login}>Sign In</Button>
+      <Button className="w-[150px]" onClick={addCourse}>Add Course</Button>
+    </div>}
   </div >
 }
 
-export default function CourseCollection({ courses }: CollectionProps) {
+export default function CourseCollection({ courses, standAlone }: CollectionProps) {
   return (
     <StoreProvider courses={courses}>
-      <InnerCollection />
+      <InnerCollection standAlone={standAlone} />
     </StoreProvider>
   )
 }

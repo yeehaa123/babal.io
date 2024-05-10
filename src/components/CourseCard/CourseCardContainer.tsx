@@ -14,6 +14,6 @@ export function CourseCardContainer(
     return <CourseCard authData={authData} courseId={courseId} />
   }
   return course
-    ? <CourseCollection courses={[course]} />
+    ? <CourseCollection standAlone={true} courses={[course]} />
     : <div>ERROR</div>
 }
