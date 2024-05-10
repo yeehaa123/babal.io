@@ -1,35 +1,40 @@
-import CourseCollection from "@/components/CourseCollection"
-import type { Course } from "@/types";
-import type { Affordances } from "./stores/affordancesHelpers";
-import { useOffcourseContext } from "@/containers/Offcourse";
+import type { Checkpoint, Course } from "@/types";
 import CourseContent from "./CourseContent";
 import Overlay, { OverlayModes } from "./overlays";
-import type { CourseCardStore } from "@/stores/offcourse";
+import type { Affordances } from "@/components/CourseCard/stores/affordancesHelpers";
+import { useCourseCardStore } from "./stores";
+import { CourseCardContainer } from "./CourseCardContainer";
+import type { AuthData } from "@/stores/authState";
 
-
-export interface CourseCardContainer {
-  course?: Course,
-  courseId?: string,
+export interface CardState {
+  overlayMode: OverlayModes,
+  isMetaVisible: boolean
 }
 
-function CourseCard({ courseId }: { courseId: string }) {
-  const store = useOffcourseContext((state) => state.stores[courseId])
+export interface AugmentedCourse extends Course {
+  isBookmarked: boolean
+}
+
+export type CourseCardStore = {
+  course: AugmentedCourse,
+  checkpoint: Checkpoint | undefined,
+  actions: any,
+  cardState: CardState,
+  affordances: Affordances
+}
+
+export function CourseCard({ courseId, authData }: { courseId: string, authData: AuthData }) {
+  const store = useCourseCardStore({ courseId, authData });
+
   if (!store) {
     return <div>ERROR</div>
   }
+
   return store.cardState.overlayMode === OverlayModes.NONE
     ? <CourseContent {...store} />
     : <Overlay {...store} />
 }
 
-export default function CourseCardContainer(
-  { course, courseId }: CourseCardContainer) {
-  if (courseId) {
-    return <CourseCard courseId={courseId} />
-  }
-  return course
-    ? <CourseCollection courses={[course]} />
-    : <div>ERROR</div>
-}
+export default CourseCardContainer;
 
-export type { Affordances, CourseCardStore };
+export type { Affordances };

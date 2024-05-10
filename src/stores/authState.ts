@@ -9,7 +9,7 @@ const $state = map<AuthData>({ userName: undefined })
 export const $authState = computed($state,
   ({ userName }) => {
     return {
-      userName: "yeehaa",
+      userName,
       isAuthenticated: !!userName
     }
   }

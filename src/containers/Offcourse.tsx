@@ -10,10 +10,10 @@ interface ProviderProps extends StoreProps {
   children: ReactElement | ReactElement[]
 }
 
-export const StoreProvider = ({ children, courses, authData }: ProviderProps) => {
+export const StoreProvider = ({ children, courses }: ProviderProps) => {
   const storeRef = useRef<OffcourseStore>()
   if (!storeRef.current) {
-    storeRef.current = createOffcourseStore({ courses, authData });
+    storeRef.current = createOffcourseStore({ courses });
   }
   return (
     <OffcourseContext.Provider value={storeRef.current}>

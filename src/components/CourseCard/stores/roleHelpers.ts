@@ -1,4 +1,5 @@
-import type { CourseCardStore } from "..";
+import type { AugmentedCourse, } from "@/components/CourseCard/";
+import type { AuthData } from '@/stores/authState';
 
 export enum RoleTypes {
   GUEST = "GUEST",
@@ -8,8 +9,13 @@ export enum RoleTypes {
 }
 
 
+type CardProps = {
+  course: AugmentedCourse,
+  authData: AuthData
+}
+
 export function determineRole(
-  { course, authData }: Pick<CourseCardStore, "course" | "authData">) {
+  { course, authData }: CardProps) {
   const { userName } = authData;
   const { isBookmarked } = course;
   const isAuthenticated = !!userName;
