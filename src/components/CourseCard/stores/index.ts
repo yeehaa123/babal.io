@@ -3,11 +3,20 @@ import { OverlayModes } from "../overlays";
 import { determineAffordances } from "@/components/CourseCard/stores/affordancesHelpers";
 import { determineRole } from "@/components/CourseCard/stores/roleHelpers";
 import type { AuthData } from "@/stores/authState";
+import type { Course } from "@/types";
+
+type StoreProps = {
+  courseId: Course['id'],
+  authData: AuthData
+}
 
 export function useCourseCardStore(
-  { courseId, authData }: { courseId: string, authData: AuthData }
+  { courseId, authData }: StoreProps
 ) {
-  const rawCourse = useOffcourseContext((state) => state.courses[courseId])
+
+  const rawCourse = useOffcourseContext((state) => state.courses[courseId]);
+  const learnData = useOffcourseContext((state) => state.learnData[courseId]);
+  console.log(learnData);
 
   if (!rawCourse) {
     return
@@ -18,7 +27,7 @@ export function useCourseCardStore(
     isMetaVisible: false,
   }
 
-  const course = { ...rawCourse, isBookmarked: true };
+  const course = { ...rawCourse, isBookmarked: undefined };
 
   const checkpoint = undefined;
 

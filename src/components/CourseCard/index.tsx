@@ -12,7 +12,7 @@ export interface CardState {
 }
 
 export interface AugmentedCourse extends Course {
-  isBookmarked: boolean
+  isBookmarked: boolean | undefined
 }
 
 export type CourseCardStore = {

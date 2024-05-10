@@ -4,35 +4,44 @@ import { useOffcourseContext } from "@/containers/Offcourse";
 import { useStore } from "@nanostores/react"
 import CourseCardContainer from "@/components/CourseCard"
 import { StoreProvider } from "@/containers/Offcourse"
-import { $authState } from "@/stores/authState";
+import { $authState, login } from "@/stores/authState";
+import { Button } from "./ui/button";
 
 export type CollectionProps = { courses: Course[] }
 
-function InnerCollection({ courses }: CollectionProps) {
+function InnerCollection() {
   const authData = useStore($authState);
   const {
-    missingCourses,
-    fetchLearnData
+    courses,
+    fetchMissingLearnData,
+    addCourse,
   } = useOffcourseContext((state) => state);
+
+  const courseIds = Object.keys(courses);
 
   useEffect(() => {
     if (authData.userName) {
-      fetchLearnData()
+      fetchMissingLearnData()
     }
-  }, [authData])
+  }, [authData, courses])
 
-  console.log(missingCourses);
 
-  return <>
-    {courses.map(({ id }) =>
-      <CourseCardContainer key={id} authData={authData} courseId={id} />)}
-  </>
+  return <div className="flex flex-col items-center">
+    <div className="flex gap-4">
+      {courseIds.map((id) =>
+        <CourseCardContainer key={id} authData={authData} courseId={id} />)}
+    </div>
+    <div className="flex gap-4 mt-8">
+      <Button className="w-[200px]" onClick={login}>Sign In</Button>
+      <Button className="w-[200px]" onClick={addCourse}>Add Course</Button>
+    </div>
+  </div >
 }
 
 export default function CourseCollection({ courses }: CollectionProps) {
   return (
     <StoreProvider courses={courses}>
-      <InnerCollection courses={courses} />
+      <InnerCollection />
     </StoreProvider>
   )
 }
