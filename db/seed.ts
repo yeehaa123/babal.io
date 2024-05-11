@@ -35,7 +35,6 @@ async function prepSocials(rawPeople: Curator[]) {
 async function prepCourses(courses: RawCourse[]): Promise<TempCourse[]> {
   return courses.map((course) => {
     const id = nanoid();
-    console.log(id);
     const { habitat, ...rest } = course;
     return { id, habitat: habitat || null, ...rest }
   });
