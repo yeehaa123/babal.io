@@ -16,7 +16,7 @@ export function useCourseCardStore(
 
   const rawCourse = useOffcourseContext((state) => state.courses[courseId]);
   const learnData = useOffcourseContext((state) => state.learnData[courseId]);
-  console.log(learnData);
+  console.log(courseId, learnData);
 
   if (!rawCourse) {
     return
