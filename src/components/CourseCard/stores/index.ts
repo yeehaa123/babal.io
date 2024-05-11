@@ -1,44 +1,90 @@
 import { useOffcourseContext } from "@/containers/Offcourse";
-import { OverlayModes } from "../overlays";
-import { determineAffordances } from "@/components/CourseCard/stores/affordancesHelpers";
-import { determineRole } from "@/components/CourseCard/stores/roleHelpers";
+import { login, logout } from "@/stores/authState";
 import type { AuthData } from "@/stores/authState";
+
 import type { Course } from "@/types";
+import {
+  determineRole,
+  determineAffordances
+} from "./helpers"
+import { useCardState } from "./cardState";
+import { OverlayModes } from "../overlays";
 
 type StoreProps = {
   courseId: Course['id'],
   authData: AuthData
 }
 
-export function useCourseCardStore(
-  { courseId, authData }: StoreProps
-) {
+export interface AugmentedCourse extends Course {
+  isBookmarked?: boolean | undefined
+}
 
-  const rawCourse = useOffcourseContext((state) => state.courses[courseId]);
-  const learnData = useOffcourseContext((state) => state.learnData[courseId]);
-  console.log(courseId, learnData);
+export function useCourseCardStore({ courseId, authData }: StoreProps) {
 
-  if (!rawCourse) {
+  const course = useOffcourseContext((state) => state.courses[courseId]);
+  const { toggleBookmark, toggleComplete, cloneCourse } = useOffcourseContext((state) => state.actions);
+
+  if (!course) {
     return
   }
 
-  const cardState = {
-    overlayMode: OverlayModes.NONE,
-    isMetaVisible: false,
-  }
+  const {
+    cardState,
+    setOverlayMode,
+    hideOverlay,
+    showCheckpoint,
+    hideCheckpoint,
+    toggleMetaVisible
+  } = useCardState();
 
-  const course = { ...rawCourse, isBookmarked: undefined };
+  const { selectedCheckpoint } = cardState
 
-  const checkpoint = undefined;
 
+  const checkpoint = course.checkpoints.find(cp => cp.task === selectedCheckpoint)
   const role = determineRole({ course, authData });
+  console.log(role);
   const affordances = determineAffordances(role);
 
-  const actions = {
-    hideCheckpoint: console.log(),
-    toggleBookmark: console.log()
+
+  const signIn = () => {
+    setOverlayMode(OverlayModes.AUTH);
   }
 
+  const signOut = () => {
+    logout()
+  }
+
+  const authenticate = async () => {
+    await login();
+    hideOverlay();
+  }
+
+  const showCloneOverlay = () => {
+    setOverlayMode(OverlayModes.CLONE)
+  }
+  const showEditOverlay = () => {
+    setOverlayMode(OverlayModes.EDIT)
+  }
+  const showNotesOverlay = () => {
+    setOverlayMode(OverlayModes.NOTE)
+  }
+
+  const actions = {
+    hideOverlay,
+    setOverlayMode,
+    authenticate,
+    signIn,
+    cloneCourse,
+    signOut,
+    showCloneOverlay,
+    showNotesOverlay,
+    showEditOverlay,
+    showCheckpoint,
+    hideCheckpoint,
+    toggleMetaVisible,
+    toggleComplete,
+    toggleBookmark
+  }
 
   return { course, checkpoint, cardState, affordances, actions }
 }

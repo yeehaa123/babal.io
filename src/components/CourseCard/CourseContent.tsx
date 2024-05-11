@@ -13,12 +13,6 @@ import CardMeta from "./CardMeta"
 import Toolbar from "./Toolbar"
 import CuratorSection from './Curator';
 import type { CourseCardStore } from ".";
-import { toggleComplete } from "@/stores/learnData"
-import xactions from "./stores/actions"
-const {
-  showCheckpoint,
-  toggleMetaVisible,
-} = xactions;
 
 export default function CourseCard({
   course,
@@ -46,7 +40,10 @@ export default function CourseCard({
   } = affordances;
 
   const {
-    toggleBookmark
+    showCheckpoint,
+    toggleComplete,
+    toggleBookmark,
+    toggleMetaVisible
   } = actions;
 
   return <CardChrome>
@@ -54,7 +51,7 @@ export default function CourseCard({
       <CardTitle className="flex w-full justify-between space-x-5 ">
         <span className="max-w-[80%]">{goal}</span>
         <BookmarkIcon onClick={() => {
-          toggleBookmark(id)
+          toggleBookmark({ courseId: id })
         }}
           isBookmarked={isBookmarked}
           canBookmark={canBookmark} />
@@ -67,7 +64,7 @@ export default function CourseCard({
     <CardContent>
       <ul className="flex flex-col gap-2">
         {checkpoints.map((cp, index) => (
-          <Checkpoint toggleCheck={toggleComplete}
+          <Checkpoint toggleCheck={() => toggleComplete({ courseId: id, checkpointId: index })}
             showCheckpoint={showCheckpoint}
             canCheckComplete={canCheckComplete} key={index} {...cp} />))
         }

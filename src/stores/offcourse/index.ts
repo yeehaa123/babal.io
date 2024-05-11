@@ -7,7 +7,7 @@ export interface StoreProps { courses: Course[] }
 
 export type OffcourseStore = ReturnType<typeof createOffcourseStore>
 
-type LearnData = {
+export type LearnData = {
   isBookmarked: boolean,
   tasksCompleted: boolean[]
 }

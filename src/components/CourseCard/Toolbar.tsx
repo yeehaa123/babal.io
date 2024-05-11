@@ -8,9 +8,15 @@ import {
   Pencil1Icon,
   Pencil2Icon,
 } from '@radix-ui/react-icons'
-import type { Actions } from "@/components/CourseCard/stores/actions";
 import type { Affordances } from "."
 
+type Actions = {
+  signIn: () => void,
+  signOut: () => void,
+  showCloneOverlay: () => void,
+  showEditOverlay: () => void,
+  showNotesOverlay: () => void
+}
 
 type Props = {
   habitat?: string | undefined,
@@ -32,9 +38,9 @@ export default function Toolbar({
   const {
     signIn,
     signOut,
-    editCourse,
-    addNotes,
-    cloneCourse
+    showEditOverlay,
+    showNotesOverlay,
+    showCloneOverlay
   } = actions;
   return (
     <div className="flex w-full justify-between">
@@ -43,11 +49,11 @@ export default function Toolbar({
           className={cn("h-4 w-4 text-gray-500", { "hidden": !canAuthenticate })} />
         <ExitIcon onClick={signOut}
           className={cn("h-4 w-4 text-gray-500", { "hidden": canAuthenticate })} />
-        <Pencil1Icon onClick={editCourse}
+        <Pencil1Icon onClick={showEditOverlay}
           className={cn("h-4 w-4 text-gray-500", { "hidden": !canEdit })} />
-        <Pencil2Icon onClick={addNotes}
+        <Pencil2Icon onClick={showNotesOverlay}
           className={cn("h-4 w-4 text-gray-500", { "hidden": !canTakeNotes })} />
-        <CopyIcon onClick={cloneCourse}
+        <CopyIcon onClick={showCloneOverlay}
           className={cn("h-4 w-4 text-gray-500", { "hidden": !canClone })} />
       </div>
       <div className="flex gap-x-4 ">

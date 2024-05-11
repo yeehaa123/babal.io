@@ -1,7 +1,7 @@
 import type { Checkpoint, Course } from "@/types";
 import CourseContent from "./CourseContent";
 import Overlay, { OverlayModes } from "./overlays";
-import type { Affordances } from "@/components/CourseCard/stores/affordancesHelpers";
+import type { Affordances } from "@/components/CourseCard/stores/helpers";
 import { useCourseCardStore } from "./stores";
 import { CourseCardContainer } from "./CourseCardContainer";
 import type { AuthData } from "@/stores/authState";
@@ -12,7 +12,7 @@ export interface CardState {
 }
 
 export interface AugmentedCourse extends Course {
-  isBookmarked: boolean | undefined
+  isBookmarked?: boolean | undefined
 }
 
 export type CourseCardStore = {

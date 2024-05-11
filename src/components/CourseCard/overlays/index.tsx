@@ -2,6 +2,7 @@ import type { CourseCardStore } from "..";
 import CheckpointOverlay from "./CheckpointOverlay";
 import AuthOverlay from "./AuthOverlay";
 import MockOverlay from "./MockOverlay";
+import CloneOverlay from "./CloneOverlay";
 
 export enum OverlayModes {
   NONE = "NONE",
@@ -19,7 +20,7 @@ export default function Overlay(props: CourseCardStore) {
     [OverlayModes.NOTE]: MockOverlay,
     [OverlayModes.AUTH]: AuthOverlay,
     [OverlayModes.EDIT]: MockOverlay,
-    [OverlayModes.CLONE]: MockOverlay,
+    [OverlayModes.CLONE]: CloneOverlay,
     [OverlayModes.CHECKPOINT]: CheckpointOverlay,
   }[overlayMode]
   return <Overlay {...props} />
