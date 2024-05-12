@@ -8,11 +8,11 @@ type OffcourseInitialState = Omit<OffcourseState, "actions">
 
 type Api = StoreApi<OffcourseInitialState>;
 
-type CourseQuery = {
-  courseId: Course['id']
+interface CourseQuery {
+  courseId: Course['courseId']
 }
-type CheckpointQuery = {
-  courseId: Course['id'],
+
+interface CheckpointQuery extends CourseQuery {
   checkpointId: number
 }
 
@@ -77,17 +77,33 @@ class StoreActions {
     this.augmentCourse({ courseId });
   }
 
-  fetchMissingLearnData = () => {
-    for (const courseId of this.missingCourses) {
-      this.set(produce((state) => {
-        state.learnData[courseId] = {
-          isBookmarked: true,
-          tasksCompleted: [true, true, false, false]
+  fetchMissingLearnData = async ({ userName }: { userName: string | undefined }) => {
+    if (userName) {
+      const learnData = await fetchLearnData({ courseIds: this.missingCourses, userName })
+      if (learnData) {
+        for (const courseId of Object.keys(learnData)) {
+          this.set(produce((state) => {
+            state.learnData[courseId] = learnData[courseId]
+          }))
+          this.augmentCourse({ courseId });
         }
-      }))
-      this.augmentCourse({ courseId });
+      }
     }
   }
 }
+
+export async function fetchLearnData({ courseIds, userName }:
+  { courseIds: Course['courseId'][], userName: string }) {
+  if (courseIds.length > 0) {
+    const response = await fetch('/learnData.json', {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ courseIds, userName })
+    });
+    const data = await response.json();
+    return data.learnData;
+  }
+}
+
 
 export { StoreActions }

@@ -33,7 +33,8 @@ export function determineRole(
 export function determineAffordances(role: CardRoleTypes) {
   const canClone = role === CardRoleTypes.LEARNER;
   const canBookmark = role !== CardRoleTypes.GUEST;
-  const canCheckComplete = role === CardRoleTypes.LEARNER || role === CardRoleTypes.COLLECTOR;
+  // const canCheckComplete = role === CardRoleTypes.LEARNER || role === CardRoleTypes.COLLECTOR;
+  const canCheckComplete = role !== CardRoleTypes.GUEST;
   const canTakeNotes = role === CardRoleTypes.COLLECTOR;
   const canEdit = role === CardRoleTypes.CURATOR;
   const canAuthenticate = role === CardRoleTypes.GUEST;

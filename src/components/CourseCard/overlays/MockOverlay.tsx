@@ -8,8 +8,7 @@ import type { CourseCardStore } from "..";
 
 import CardChrome from "../CardChrome";
 
-export default function MockOverlay({ course, cardState, actions }: CourseCardStore) {
-  const { id } = course;
+export default function MockOverlay({ cardState, actions }: CourseCardStore) {
   const { overlayMode } = cardState;
   const { hideCheckpoint } = actions;
 
@@ -19,7 +18,7 @@ export default function MockOverlay({ course, cardState, actions }: CourseCardSt
         <CardTitle>{overlayMode} </CardTitle>
       </CardHeader>
       <CardFooter className="flex w-full justify-between gap-x-2">
-        <Button onClick={() => hideCheckpoint(id)} className="w-full">Cancel</Button>
+        <Button onClick={hideCheckpoint} className="w-full">Cancel</Button>
       </CardFooter>
     </CardChrome >
 

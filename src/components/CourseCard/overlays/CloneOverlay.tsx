@@ -9,7 +9,7 @@ import type { CourseCardStore } from "..";
 import CardChrome from "../CardChrome";
 
 export default function MockOverlay({ course, actions }: CourseCardStore) {
-  const { id } = course;
+  const { courseId } = course;
   const { cloneCourse, hideOverlay } = actions;
 
   return (
@@ -19,8 +19,7 @@ export default function MockOverlay({ course, actions }: CourseCardStore) {
       </CardHeader>
       <CardFooter className="flex w-full justify-between gap-x-2">
         <Button onClick={() => {
-          cloneCourse({ courseId: id })
-          hideOverlay()
+          cloneCourse({ courseId })
         }} className="w-full">Clone</Button>
         <Button onClick={hideOverlay} className="w-full">Cancel</Button>
       </CardFooter>

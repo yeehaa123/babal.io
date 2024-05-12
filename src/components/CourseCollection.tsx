@@ -12,14 +12,15 @@ export type CollectionProps = { courses: Course[], standAlone?: boolean }
 
 function InnerCollection() {
   const authData = useStore($authState);
+  const { userName } = authData;
   const {
     fetchMissingLearnData,
   } = useOffcourseContext((state) => state.actions);
   const courseIds = useOffcourseContext(useShallow((state) => Object.keys(state.courses)))
 
   useEffect(() => {
-    if (authData.userName) {
-      fetchMissingLearnData()
+    if (userName) {
+      fetchMissingLearnData(authData)
     }
   }, [authData, courseIds])
 

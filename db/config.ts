@@ -2,20 +2,33 @@ import { defineDb, defineTable, column } from 'astro:db';
 
 const Courses = defineTable({
   columns: {
-    id: column.text({ primaryKey: true }),
+    courseId: column.text({ primaryKey: true }),
     goal: column.text(),
     curator: column.text(),
     description: column.text(),
     habitat: column.text({ unique: true, optional: true }),
   },
   indexes: [
-    { on: ["id", "habitat"], unique: true },
+    { on: ["courseId", "habitat"], unique: true },
   ]
 });
 
+const CompletionData = defineTable({
+  columns: {
+    courseId: column.text({ references: () => Courses.columns.courseId }),
+    checkpointId: column.text({ references: () => Checkpoints.columns.checkpointId }),
+    userName: column.text({ references: () => People.columns.alias }),
+    completedAt: column.date({ optional: true })
+  },
+  indexes: [
+    { on: ["courseId", "userName"] },
+  ]
+})
+
 const Checkpoints = defineTable({
   columns: {
-    courseId: column.text({ references: () => Courses.columns.id }),
+    checkpointId: column.text({ primaryKey: true }),
+    courseId: column.text({ references: () => Courses.columns.courseId }),
     task: column.text(),
     href: column.text(),
     description: column.text({ optional: true })
@@ -36,7 +49,7 @@ const Socials = defineTable({
 })
 
 export default defineDb({
-  tables: { Courses, Checkpoints, People, Socials },
+  tables: { Courses, Checkpoints, People, Socials, CompletionData },
 })
 
 

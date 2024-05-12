@@ -14,10 +14,10 @@ import { useState } from "react";
 import type { CourseNote } from "../forms/NoteForm";
 
 export function NoteOverlay({ course, cardState, actions }: CourseCardStore) {
-  const { id } = course;
+  const { courseId } = course;
   const { overlayMode } = cardState;
   const { hideCheckpoint } = actions;
-  const formId = `${id}-note-form`
+  const formId = `${courseId}-note-form`
   const [notes, setNotes] = useState<CourseNote[]>([]);
 
   return (
@@ -35,7 +35,7 @@ export function NoteOverlay({ course, cardState, actions }: CourseCardStore) {
       </CardContent>
       <CardFooter className="flex flex-col w-full justify-between gap-2">
         <Button type="submit" form={formId} className="w-full">Add Note</Button>
-        <Button onClick={() => hideCheckpoint(id)} className="w-full">Close</Button>
+        <Button onClick={hideCheckpoint} className="w-full">Close</Button>
       </CardFooter>
     </CardChrome >
 

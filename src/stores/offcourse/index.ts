@@ -22,7 +22,7 @@ export type OffcourseState = {
 
 export function createOffcourseStore({ courses }: StoreProps) {
   const storeEntries = courses.map(course => {
-    return [course.id, course]
+    return [course.courseId, course]
   });
 
   const initialState = {

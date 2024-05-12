@@ -11,7 +11,7 @@ import { useCardState } from "./cardState";
 import { OverlayModes } from "../overlays";
 
 type StoreProps = {
-  courseId: Course['id'],
+  courseId: Course['courseId'],
   authData: AuthData
 }
 
@@ -42,7 +42,6 @@ export function useCourseCardStore({ courseId, authData }: StoreProps) {
 
   const checkpoint = course.checkpoints.find(cp => cp.task === selectedCheckpoint)
   const role = determineRole({ course, authData });
-  console.log(role);
   const affordances = determineAffordances(role);
 
 

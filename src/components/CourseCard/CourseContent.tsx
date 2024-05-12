@@ -26,7 +26,7 @@ export default function CourseCard({
 
   const {
     isBookmarked,
-    id,
+    courseId,
     goal,
     curator,
     checkpoints,
@@ -51,7 +51,7 @@ export default function CourseCard({
       <CardTitle className="flex w-full justify-between space-x-5 ">
         <span className="max-w-[80%]">{goal}</span>
         <BookmarkIcon onClick={() => {
-          toggleBookmark({ courseId: id })
+          toggleBookmark({ courseId })
         }}
           isBookmarked={isBookmarked}
           canBookmark={canBookmark} />
@@ -64,7 +64,7 @@ export default function CourseCard({
     <CardContent>
       <ul className="flex flex-col gap-2">
         {checkpoints.map((cp, index) => (
-          <Checkpoint toggleCheck={() => toggleComplete({ courseId: id, checkpointId: index })}
+          <Checkpoint toggleCheck={() => toggleComplete({ courseId, checkpointId: index })}
             showCheckpoint={showCheckpoint}
             canCheckComplete={canCheckComplete} key={index} {...cp} />))
         }
