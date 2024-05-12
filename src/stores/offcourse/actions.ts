@@ -51,7 +51,7 @@ class StoreActions {
       const newId = "dfadsfljk998fdaslk";
       state.courses = {
         ...this.courses,
-        [newId]: { ...course, id: newId, goal: "HURRAY" }
+        [newId]: { ...course, courseId: newId, goal: "HURRAY" }
       };
     }))
   }

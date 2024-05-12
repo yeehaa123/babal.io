@@ -7,7 +7,7 @@
     "start": "astro dev",
     "check": "astro check",
     "seed": "astro db execute db/seed.ts --remote",
-    "reset": "astro db push  --remote --force-reset",
+    "reset": "astro db push --remote --force-reset",
     "build": "astro check && astro build --remote",
     "preview": "astro preview",
     "astro": "astro"
