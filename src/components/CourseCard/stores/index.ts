@@ -22,7 +22,11 @@ export interface AugmentedCourse extends Course {
 export function useCourseCardStore({ courseId, authData }: StoreProps) {
 
   const course = useOffcourseContext((state) => state.courses[courseId]);
-  const { toggleBookmark, toggleComplete, cloneCourse } = useOffcourseContext((state) => state.actions);
+  const {
+    toggleBookmark,
+    toggleComplete,
+    cloneCourse: cc
+  } = useOffcourseContext((state) => state.actions);
 
   if (!course) {
     return
@@ -66,6 +70,11 @@ export function useCourseCardStore({ courseId, authData }: StoreProps) {
   }
   const showNotesOverlay = () => {
     setOverlayMode(OverlayModes.NOTE)
+  }
+
+  const cloneCourse = () => {
+    cc({ courseId });
+    hideOverlay();
   }
 
   const actions = {

@@ -43,23 +43,28 @@ class StoreActions {
   }
 
   cloneCourse = ({ courseId }: CourseQuery) => {
+    const newId = "dfadsfljk998fdaslk";
     this.set(produce((state) => {
       const course = this.courses[courseId];
       if (!course) {
         throw ("TODO: ERROR")
       }
-      const newId = "dfadsfljk998fdaslk";
       state.courses = {
         ...this.courses,
         [newId]: { ...course, courseId: newId, goal: "HURRAY" }
       };
     }))
+    this.augmentCourse({ courseId: newId });
   }
 
   toggleBookmark = ({ courseId }: CourseQuery) => {
     this.set(produce((state) => {
+      const learnData = this.learnData[courseId] || { tasksCompleted: [] };
       const isBookmarked = this.learnData[courseId]?.isBookmarked;
-      state.learnData[courseId].isBookmarked = !isBookmarked;
+      state.learnData[courseId] = {
+        ...learnData,
+        isBookmarked: !isBookmarked
+      }
     }))
     this.augmentCourse({ courseId });
   }

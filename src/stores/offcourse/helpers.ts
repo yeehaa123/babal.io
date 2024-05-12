@@ -5,15 +5,11 @@ import type { LearnData } from "@/stores/offcourse";
 export function prepareCourse(
   { course, learnData }:
     { course: Course, learnData: LearnData | undefined }) {
-  if (!learnData) {
-    return course
-  }
-
   return {
     ...course, checkpoints: course.checkpoints.map((cp, index) => ({
       ...cp,
-      isCompleted: learnData.tasksCompleted[index]
+      isCompleted: learnData?.tasksCompleted[index]
     })),
-    isBookmarked: learnData.isBookmarked
+    isBookmarked: learnData?.isBookmarked
   }
 }
