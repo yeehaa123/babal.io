@@ -12,12 +12,18 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import { noteFormSchema } from "./schemas";
 
+export type CourseNote = {
+  timeStamp: Date,
+  message: string
+}
+
 export type Props = {
-  onConfirm: (v: any) => void,
+  onConfirm: (v: CourseNote) => void,
+  formId: string;
 
 }
 
-export default function NoteOverlay({ onConfirm }: Props) {
+export function NoteForm({ onConfirm, formId }: Props) {
   const form = useForm<z.infer<typeof noteFormSchema>>({
     resolver: zodResolver(noteFormSchema),
     defaultValues: {
@@ -25,10 +31,10 @@ export default function NoteOverlay({ onConfirm }: Props) {
     },
   })
 
-  function onSubmit(values: z.infer<typeof noteFormSchema>) {
-    return onConfirm(values);
+  function onSubmit({ note }: z.infer<typeof noteFormSchema>) {
+    form.reset();
+    return onConfirm({ message: note, timeStamp: new Date });
   }
-  const formId = "note"
 
   return (
     <Form {...form}>
