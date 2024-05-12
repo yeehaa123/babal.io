@@ -42,11 +42,6 @@ class StoreActions {
     }))
   }
 
-  addCourse = () => {
-    const courseId = Object.keys(this.courses)[0]!;
-    this.cloneCourse({ courseId });
-  };
-
   cloneCourse = ({ courseId }: CourseQuery) => {
     this.set(produce((state) => {
       const course = this.courses[courseId];
