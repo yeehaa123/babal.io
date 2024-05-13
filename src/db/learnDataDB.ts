@@ -1,8 +1,8 @@
 import type { LearnData } from '@/stores/offcourse';
-import { db, CompletionData, inArray, and, eq } from 'astro:db';
+import { db, CompletionData, inArray, and, eq, BookmarkData } from 'astro:db';
 
 export async function getLearnData({ userName, courseIds }: { userName: string, courseIds: string[] }) {
-  const dbResult = await db
+  const learnDataDBResult = await db
     .select()
     .from(CompletionData)
     .where((and(
@@ -10,13 +10,25 @@ export async function getLearnData({ userName, courseIds }: { userName: string, 
       inArray(CompletionData.courseId, courseIds)
     )))
 
-  const learnData = dbResult.reduce((acc, row) => {
+  const bookmarkDataDBResult = await db
+    .select()
+    .from(BookmarkData)
+    .where((and(
+      eq(BookmarkData.userName, userName),
+      inArray(BookmarkData.courseId, courseIds)
+    )))
+
+
+  const learnData = learnDataDBResult.reduce((acc, row) => {
     const { courseId, completedAt } = row;
     const ld = acc.get(courseId);
 
-    const rand = Math.random() < 0.7
     if (!ld) {
-      acc.set(courseId, { isBookmarked: rand, tasksCompleted: [!!completedAt] })
+      const isBookmarked = bookmarkDataDBResult.find(c => c.courseId === courseId);
+      acc.set(courseId, {
+        isBookmarked: !!isBookmarked,
+        tasksCompleted: [!!completedAt]
+      })
       return acc;
     } else {
       acc.set(courseId,

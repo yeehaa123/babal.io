@@ -12,7 +12,7 @@ export interface RawCourse {
   }[]
 }
 
-interface TempCourse extends Omit<RawCourse, "habitat"> {
+export interface TempCourse extends Omit<RawCourse, "habitat"> {
   courseId: string,
   habitat: string | null,
 }

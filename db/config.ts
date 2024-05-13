@@ -13,18 +13,6 @@ const Courses = defineTable({
   ]
 });
 
-const CompletionData = defineTable({
-  columns: {
-    courseId: column.text({ references: () => Courses.columns.courseId }),
-    checkpointId: column.text({ references: () => Checkpoints.columns.checkpointId }),
-    userName: column.text({ references: () => People.columns.alias }),
-    completedAt: column.date({ optional: true })
-  },
-  indexes: [
-    { on: ["courseId", "userName"] },
-  ]
-})
-
 const Checkpoints = defineTable({
   columns: {
     checkpointId: column.text({ primaryKey: true }),
@@ -48,8 +36,31 @@ const Socials = defineTable({
   }
 })
 
+const CompletionData = defineTable({
+  columns: {
+    courseId: column.text({ references: () => Courses.columns.courseId }),
+    checkpointId: column.text({ references: () => Checkpoints.columns.checkpointId }),
+    userName: column.text({ references: () => People.columns.alias }),
+    completedAt: column.date()
+  },
+  indexes: [
+    { on: ["courseId", "userName"] },
+  ]
+})
+
+const BookmarkData = defineTable({
+  columns: {
+    courseId: column.text({ references: () => Courses.columns.courseId }),
+    userName: column.text({ references: () => People.columns.alias }),
+    bookmarkedAt: column.date()
+  },
+  indexes: [
+    { on: ["courseId", "userName"] },
+  ]
+})
+
 export default defineDb({
-  tables: { Courses, Checkpoints, People, Socials, CompletionData },
+  tables: { Courses, Checkpoints, People, Socials, CompletionData, BookmarkData },
 })
 
 
