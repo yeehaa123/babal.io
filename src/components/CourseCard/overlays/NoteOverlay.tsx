@@ -9,16 +9,14 @@ import type { CourseCardStore } from "..";
 
 import CardChrome from "../CardChrome";
 import { NoteForm } from "../forms/NoteForm";
-import { useState } from "react";
 
-import type { CourseNote } from "../forms/NoteForm";
 
 export function NoteOverlay({ course, cardState, actions }: CourseCardStore) {
-  const { courseId } = course;
+  const { courseId, notes } = course;
   const { overlayMode } = cardState;
-  const { hideCheckpoint } = actions;
+  const { hideCheckpoint, addNote } = actions;
   const formId = `${courseId}-note-form`
-  const [notes, setNotes] = useState<CourseNote[]>([]);
+  console.log(course.notes);
 
   return (
     <CardChrome>
@@ -31,7 +29,7 @@ export function NoteOverlay({ course, cardState, actions }: CourseCardStore) {
             {note.message}
           </div>)
         )}</div>
-        <NoteForm formId={formId} onConfirm={(note) => setNotes(notes => ([note, ...notes]))} />
+        <NoteForm formId={formId} onConfirm={(note) => addNote({ courseId, ...note })} />
       </CardContent>
       <CardFooter className="flex flex-col w-full justify-between gap-2">
         <Button type="submit" form={formId} className="w-full">Add Note</Button>

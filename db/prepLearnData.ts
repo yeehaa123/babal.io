@@ -25,3 +25,20 @@ export function prepBookmarkData({ people, courses }:
   })
   return shuffle(all).slice(0, 2);
 }
+
+const messages = ["This is it!", "revise this", "Need more time to process", "There is so much to learn", "Why do you share this"];
+
+export function prepNotesData({ people, courses }:
+  { people: { alias: string }[], courses: TempCourse[] }) {
+  const all = people.flatMap(({ alias }) => {
+    return courses.flatMap(({ courseId }) => {
+      return shuffle(messages).slice(0, 3).map((message: string) => {
+        const userName = alias;
+        const createdAt = new Date;
+        return { userName, courseId, message, createdAt };
+      })
+    })
+  })
+  return shuffle(all).slice(0, 2);
+
+}

@@ -1,6 +1,6 @@
 import type { StoreApi } from "zustand";
 import type { Course } from "@/types";
-import type { OffcourseState } from "./"
+import type { CourseNote, OffcourseState } from "./"
 import { produce } from 'immer';
 import { prepareCourse } from "./helpers";
 
@@ -65,6 +65,15 @@ class StoreActions {
         ...learnData,
         isBookmarked: !isBookmarked
       }
+    }))
+    this.augmentCourse({ courseId });
+  }
+
+  addNote = (courseNote: CourseNote & CourseQuery) => {
+    const { courseId } = courseNote;
+    this.set(produce((state) => {
+      const oldNotes = this.learnData[courseId]?.notes || [];
+      state.learnData[courseId].notes = [courseNote, ...oldNotes];
     }))
     this.augmentCourse({ courseId });
   }

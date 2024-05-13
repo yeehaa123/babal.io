@@ -10,6 +10,7 @@ export function prepareCourse(
       ...cp,
       isCompleted: learnData?.tasksCompleted[index]
     })),
-    isBookmarked: learnData?.isBookmarked
+    isBookmarked: learnData?.isBookmarked,
+    notes: learnData?.notes || []
   }
 }

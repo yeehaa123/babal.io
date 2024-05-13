@@ -15,17 +15,14 @@ type StoreProps = {
   authData: AuthData
 }
 
-export interface AugmentedCourse extends Course {
-  isBookmarked?: boolean | undefined
-}
-
 export function useCourseCardStore({ courseId, authData }: StoreProps) {
 
   const course = useOffcourseContext((state) => state.courses[courseId]);
   const {
     toggleBookmark,
     toggleComplete,
-    cloneCourse: cc
+    addNote,
+    ...storeActions
   } = useOffcourseContext((state) => state.actions);
 
   if (!course) {
@@ -73,7 +70,7 @@ export function useCourseCardStore({ courseId, authData }: StoreProps) {
   }
 
   const cloneCourse = () => {
-    cc({ courseId });
+    storeActions.cloneCourse({ courseId });
     hideOverlay();
   }
 
@@ -83,6 +80,7 @@ export function useCourseCardStore({ courseId, authData }: StoreProps) {
     authenticate,
     signIn,
     cloneCourse,
+    addNote,
     signOut,
     showCloneOverlay,
     showNotesOverlay,

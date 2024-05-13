@@ -59,8 +59,26 @@ const BookmarkData = defineTable({
   ]
 })
 
-export default defineDb({
-  tables: { Courses, Checkpoints, People, Socials, CompletionData, BookmarkData },
+const NoteData = defineTable({
+  columns: {
+    courseId: column.text({ references: () => Courses.columns.courseId }),
+    userName: column.text({ references: () => People.columns.alias }),
+    createdAt: column.date(),
+    message: column.text()
+  },
+  indexes: [
+    { on: ["courseId", "userName"] },
+  ]
 })
 
-
+export default defineDb({
+  tables: {
+    Courses,
+    Checkpoints,
+    People,
+    Socials,
+    CompletionData,
+    BookmarkData,
+    NoteData
+  },
+})

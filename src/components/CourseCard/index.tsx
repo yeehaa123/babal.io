@@ -5,6 +5,7 @@ import type { Affordances } from "@/components/CourseCard/stores/helpers";
 import { useCourseCardStore } from "./stores";
 import { CourseCardContainer } from "./CourseCardContainer";
 import type { AuthData } from "@/stores/authState";
+import type { CourseNote } from "@/stores/offcourse";
 
 export interface CardState {
   overlayMode: OverlayModes,
@@ -12,7 +13,8 @@ export interface CardState {
 }
 
 export interface AugmentedCourse extends Course {
-  isBookmarked?: boolean | undefined
+  isBookmarked?: boolean | undefined,
+  notes: CourseNote[]
 }
 
 export type CourseCardStore = {

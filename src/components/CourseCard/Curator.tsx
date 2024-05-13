@@ -8,6 +8,9 @@ import {
   CardDescription,
 } from "@/components/ui/card"
 
+import { minidenticon } from 'minidenticons'
+import { useMemo } from 'react'
+
 type Socials = {
   linkedin?: string,
 }
@@ -19,13 +22,24 @@ interface Props {
 
 import { GitHubLogoIcon, LinkedInLogoIcon, InstagramLogoIcon } from '@radix-ui/react-icons'
 
+const GeneratedAvatarImage = ({ userName }: { userName: string }) => {
+  const saturation = 100;
+  const lightness = 100;
+  const svgURI = useMemo(
+    () => 'data:image/svg+xml;utf8,' + encodeURIComponent(minidenticon(userName, saturation, lightness)),
+    [userName, saturation, lightness]
+  )
+  // return (<img src={svgURI} alt={username} {...props} />)
+  return <AvatarImage src={svgURI} className="rounded bg-black text-white" alt="@shadcn" />
+}
+
 
 export default function Curator({ alias, socials }: Props) {
   return (
     <div className="flex align-middle py-4 items-center justify-between">
       <div className="flex items-center space-x-3">
         <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+          <GeneratedAvatarImage userName={alias} />
           <AvatarFallback>YH</AvatarFallback>
         </Avatar>
         <CardDescription>{alias}</CardDescription>
