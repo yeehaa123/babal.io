@@ -24,6 +24,7 @@ export async function getLearnData({ userName, courseIds }: { userName: string, 
     const ld = acc.get(courseId);
 
     if (!ld) {
+
       const isBookmarked = bookmarkDataDBResult.find(c => c.courseId === courseId);
       acc.set(courseId, {
         isBookmarked: !!isBookmarked,
