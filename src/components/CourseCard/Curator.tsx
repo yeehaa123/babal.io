@@ -31,7 +31,7 @@ export default function Curator({ alias, socials }: Props) {
       <div className="flex items-center space-x-3">
         <Avatar>
           <GeneratedAvatarImage userName={alias} saturation={100} lightness={100} />
-          <AvatarFallback className="bg-black text-white">YH</AvatarFallback>
+          <AvatarFallback className="bg-indigo-600 text-white">YH</AvatarFallback>
         </Avatar>
         <CardDescription>{alias}</CardDescription>
       </div>

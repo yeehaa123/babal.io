@@ -80,8 +80,19 @@ class StoreActions {
 
   toggleComplete = ({ courseId, checkpointId }: CheckpointQuery) => {
     this.set(produce((state) => {
-      const isComplete = this.learnData[courseId]?.tasksCompleted[checkpointId];
-      state.learnData[courseId].tasksCompleted[checkpointId] = !isComplete
+      if (this.learnData[courseId]) {
+        const isComplete = this.learnData[courseId]?.tasksCompleted[checkpointId];
+        state.learnData[courseId].tasksCompleted[checkpointId] = !isComplete
+      } else {
+        const learnData = {
+          isBookmarked: false,
+          tasksCompleted: [false, false, false, false],
+          notes: []
+        }
+
+        learnData.tasksCompleted[checkpointId] = true;
+        state.learnData[courseId] = learnData;
+      }
     }))
     this.augmentCourse({ courseId });
   }
