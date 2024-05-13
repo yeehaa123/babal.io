@@ -21,16 +21,19 @@ interface Props {
 }
 
 import { GitHubLogoIcon, LinkedInLogoIcon, InstagramLogoIcon } from '@radix-ui/react-icons'
+import { cn } from "@/lib/utils"
 
-const GeneratedAvatarImage = ({ userName }: { userName: string }) => {
+const GeneratedAvatarImage = ({ userName, className }: { userName: string, className: string }) => {
   const saturation = 100;
   const lightness = 100;
   const svgURI = useMemo(
     () => 'data:image/svg+xml;utf8,' + encodeURIComponent(minidenticon(userName, saturation, lightness)),
     [userName, saturation, lightness]
   )
-  // return (<img src={svgURI} alt={username} {...props} />)
-  return <AvatarImage src={svgURI} className="rounded bg-black text-white" alt="@shadcn" />
+  return <AvatarImage
+    src={svgURI}
+    className={cn("rounded bg-black text-white", className)}
+    alt={userName} />
 }
 
 
@@ -39,8 +42,8 @@ export default function Curator({ alias, socials }: Props) {
     <div className="flex align-middle py-4 items-center justify-between">
       <div className="flex items-center space-x-3">
         <Avatar>
-          <GeneratedAvatarImage userName={alias} />
-          <AvatarFallback>YH</AvatarFallback>
+          <GeneratedAvatarImage className="hover:invisible" userName={alias} />
+          <AvatarFallback className="bg-black text-white">YH</AvatarFallback>
         </Avatar>
         <CardDescription>{alias}</CardDescription>
       </div>
