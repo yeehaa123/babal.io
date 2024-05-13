@@ -9,7 +9,7 @@ import type { CourseCardStore } from "..";
 import CardChrome from "../CardChrome";
 
 export default function CheckpointOverlay({ actions }: CourseCardStore) {
-  const { hideOverlay, authenticate } = actions;
+  const { hideOverlay, showRegisterOverlay, authenticate } = actions;
   return (
     <CardChrome>
       <CardHeader className="flex flex-row gap-x-7 space-y-0 items-top">
@@ -17,6 +17,7 @@ export default function CheckpointOverlay({ actions }: CourseCardStore) {
       </CardHeader>
       <CardFooter className="flex w-full justify-between gap-x-2">
         <Button onClick={authenticate} className="w-full">Sign In</Button>
+        <Button onClick={showRegisterOverlay} className="w-full">Sign Up</Button>
         <Button onClick={hideOverlay} className="w-full">Cancel</Button>
       </CardFooter>
     </CardChrome>

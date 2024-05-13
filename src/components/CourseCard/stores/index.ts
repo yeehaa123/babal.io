@@ -65,6 +65,9 @@ export function useCourseCardStore({ courseId, authData }: StoreProps) {
   const showEditOverlay = () => {
     setOverlayMode(OverlayModes.EDIT)
   }
+  const showRegisterOverlay = () => {
+    setOverlayMode(OverlayModes.REGISTER)
+  }
   const showNotesOverlay = () => {
     setOverlayMode(OverlayModes.NOTE)
   }
@@ -83,6 +86,7 @@ export function useCourseCardStore({ courseId, authData }: StoreProps) {
     addNote,
     signOut,
     showCloneOverlay,
+    showRegisterOverlay,
     showNotesOverlay,
     showEditOverlay,
     showCheckpoint,

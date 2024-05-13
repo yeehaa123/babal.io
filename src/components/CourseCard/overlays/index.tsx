@@ -8,6 +8,7 @@ import { NoteOverlay } from "./NoteOverlay";
 export enum OverlayModes {
   NONE = "NONE",
   AUTH = "AUTH",
+  REGISTER = "REGISTER",
   EDIT = "EDIT",
   NOTE = "NOTE",
   CHECKPOINT = "CHECKPOINT",
@@ -19,6 +20,7 @@ export default function Overlay(props: CourseCardStore) {
   const Overlay = {
     [OverlayModes.NONE]: MockOverlay,
     [OverlayModes.NOTE]: NoteOverlay,
+    [OverlayModes.REGISTER]: MockOverlay,
     [OverlayModes.AUTH]: AuthOverlay,
     [OverlayModes.EDIT]: MockOverlay,
     [OverlayModes.CLONE]: CloneOverlay,
