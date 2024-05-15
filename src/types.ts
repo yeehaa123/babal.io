@@ -33,7 +33,8 @@ export interface CheckpointsDBResult {
   checkpointId: string,
   task: string,
   href: string,
-  description: string | null
+  description: string | null,
+  tags: string | null
 }
 
 export interface Checkpoint {
@@ -41,7 +42,8 @@ export interface Checkpoint {
   checkpointId: string,
   task: string,
   href: string,
-  description?: string | undefined,
+  description: string | undefined,
+  tags: string[]
 }
 
 

@@ -14,6 +14,7 @@ export async function getCourseById(courseId: string) {
     .innerJoin(Checkpoints, eq(Courses.courseId, Checkpoints.courseId))
 
   const result = processCourseResults(dbResult);
+
   return result.get(courseId);
 }
 
@@ -50,8 +51,9 @@ function processCourseResults(result: {
     (acc, row) => {
       const { courseId, curator: name, habitat, ...course } = row.Courses;
       let curator = { alias: name, socials: {} };
-      const { description, ...cp } = row.Checkpoints;
+      const { description, tags, ...cp } = row.Checkpoints;
       const checkpoint = {
+        tags: tags?.split(",").map(t => t.trim()) || [],
         description: description ? description : undefined,
         ...cp
       }

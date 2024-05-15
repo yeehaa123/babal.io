@@ -17,6 +17,7 @@ export interface AugmentedCheckpoint extends Checkpoint {
 }
 
 export interface AugmentedCourse extends Omit<Course, 'checkpoints'> {
+  tags: string[],
   isBookmarked?: boolean | undefined,
   notes: CourseNote[]
   checkpoints: AugmentedCheckpoint[]

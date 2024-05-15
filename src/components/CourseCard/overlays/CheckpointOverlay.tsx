@@ -1,3 +1,4 @@
+import { Tags } from "@/components/Tags"
 import { ExternalLinkIcon } from '@radix-ui/react-icons'
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -17,7 +18,7 @@ const toggleComplete = console.log
 
 export default function CheckpointOverlay({ checkpoint, affordances, actions }: CourseCardStore) {
   const { canCheckComplete } = affordances;
-  const { courseId, isCompleted, task, description, href } = checkpoint!;
+  const { courseId, isCompleted, task, description, href, tags } = checkpoint!;
   const { hideCheckpoint } = actions;
   return (
     <CardChrome>
@@ -30,6 +31,7 @@ export default function CheckpointOverlay({ checkpoint, affordances, actions }: 
           onClick={() => toggleComplete()} />
       </CardHeader>
       <CardContent className="space-y-4 grow flex flex-col justify-center">
+        <Tags tags={tags} />
         <CardDescription>{description}</CardDescription>
         <a href={href}
           onClick={hideCheckpoint}

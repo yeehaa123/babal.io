@@ -19,7 +19,8 @@ const Checkpoints = defineTable({
     courseId: column.text({ references: () => Courses.columns.courseId }),
     task: column.text(),
     href: column.text(),
-    description: column.text({ optional: true })
+    description: column.text({ optional: true }),
+    tags: column.text({ optional: true })
   }
 });
 

@@ -27,9 +27,6 @@ export async function getLearnData({ userName, courseIds }:
       inArray(NoteData.courseId, courseIds)
     )))
 
-  console.log(noteDataDBResult);
-
-
   const learnData = learnDataDBResult.reduce((acc, row) => {
     const { courseId, completedAt } = row;
     const ld = acc.get(courseId);

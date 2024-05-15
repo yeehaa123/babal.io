@@ -20,7 +20,7 @@ export interface TempCourse extends Omit<RawCourse, "habitat"> {
   habitat: string | null,
 }
 
-export interface TempCheckpoint extends Checkpoint {
+export interface TempCheckpoint extends Omit<Checkpoint, "description" | "tags"> {
   goal: Course['goal']
 }
 
@@ -28,9 +28,9 @@ async function prepCheckpoint(cp: TempCheckpoint, cache: LLMCache) {
   const { href, task, goal } = cp;
   const id = href + task + goal;
   let hash = crypto.createHash('md5').update(id).digest("hex")
-  const { description, summary } = cache.get(hash) || await getLLMDescription(cp);
-  cache.set(hash, { ...cp, description, summary });
-  return { ...cp, description };
+  const { description, summary, tags } = cache.get(hash) || await getLLMDescription(cp);
+  cache.set(hash, { ...cp, description, summary, tags });
+  return { ...cp, description, tags };
 }
 
 

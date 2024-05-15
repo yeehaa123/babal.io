@@ -13,6 +13,7 @@ import CardMeta from "./CardMeta"
 import Toolbar from "./Toolbar"
 import CuratorSection from './Curator';
 import type { CourseCardStore } from ".";
+import { Tags } from "@/components/Tags"
 
 export default function CourseCard({
   course,
@@ -31,6 +32,7 @@ export default function CourseCard({
     curator,
     checkpoints,
     description,
+    tags,
     habitat
   } = course;
 
@@ -60,6 +62,7 @@ export default function CourseCard({
       {isMetaVisible
         ? <CardMeta onClick={toggleMetaVisible} id={goal} />
         : <CardDescription onClick={toggleMetaVisible}>{description}</CardDescription>}
+      <Tags tags={tags} />
     </CardHeader>
     <CardContent>
       <ul className="flex flex-col gap-2">
