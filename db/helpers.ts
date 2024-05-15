@@ -21,16 +21,17 @@ export function shuffle([...arr]) {
   return arr;
 };
 
+export type LLMCache = Map<string, CheckpointsDBResult & { summary: string | null }>;
 
-export function writeCache(cache: Map<string, CheckpointsDBResult>) {
+export function writeCache(cache: LLMCache) {
   const cacheData = Object.fromEntries(cache);
   writeFile('checkpoints.cache', JSON.stringify(cacheData, null, 2)).then(() => {
   })
 }
 
-export async function readCache() {
+export async function readCache(): Promise<LLMCache | void> {
   return readFile('checkpoints.cache', 'utf8').then((f) => {
     const cacheData = JSON.parse(f);
-    return new Map(Object.entries(cacheData));
-  }).catch(() => { return })
+    return new Map(Object.entries(cacheData)) as LLMCache
+  }).catch(() => console.log('initializing'));
 }

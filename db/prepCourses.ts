@@ -1,7 +1,8 @@
 import { nanoid } from 'nanoid'
-import type { Checkpoint, CheckpointsDBResult } from "@/types"
-import OpenAI from "openai";
-import { readCache, writeCache } from './helpers';
+import type { Checkpoint, Course } from "@/types"
+import type { LLMCache } from './helpers';
+import { getLLMDescription } from './LLMaugmentation';
+import crypto from 'crypto';
 
 export interface RawCourse {
   goal: string,
@@ -19,33 +20,17 @@ export interface TempCourse extends Omit<RawCourse, "habitat"> {
   habitat: string | null,
 }
 
-const openai = new OpenAI({ apiKey: import.meta.env.OPENAI_API_KEY });
-
-async function getDescription({ href, task }: Checkpoint) {
-  console.log("NOT CACHED ", href);
-  const num_chars = 400;
-  const completion = await openai.chat.completions.create({
-    messages: [{ "role": "system", "content": "You are a helpful assistant." },
-    {
-      "role": "assistant", "content": `Please explain how the following link '${href}' helps people to achieve the following objective '${task}' in no more than ${num_chars} characters without including a suggestion to read the article or a link?`
-    }],
-    model: "gpt-4o"
-  });
-
-  const answer = completion.choices[0];
-  return answer?.message.content || null;
+export interface TempCheckpoint extends Checkpoint {
+  goal: Course['goal']
 }
 
-async function getCachedDescription(href: string) {
-  const cache = await readCache();
-  if (!cache) return;
-  const checkpoint = cache.get(href) as CheckpointsDBResult;
-  return checkpoint.description || null;
-}
-
-async function prepCheckpoint(cp: Checkpoint) {
-  const description = await getCachedDescription(cp.href) || await getDescription(cp);
-  return { ...cp, description }
+async function prepCheckpoint(cp: TempCheckpoint, cache: LLMCache) {
+  const { href, task, goal } = cp;
+  const id = href + task + goal;
+  let hash = crypto.createHash('md5').update(id).digest("hex")
+  const { description, summary } = cache.get(hash) || await getLLMDescription(cp);
+  cache.set(hash, { ...cp, description, summary });
+  return { ...cp, description };
 }
 
 
@@ -57,20 +42,14 @@ export async function prepCourses(courses: RawCourse[]): Promise<TempCourse[]> {
   });
 }
 
-export async function prepCheckpoints(courses: TempCourse[]) {
-  const flatCheckpoints = courses.flatMap(({ courseId, checkpoints }) => {
+export async function prepCheckpoints(courses: TempCourse[], cache: LLMCache) {
+  const flatCheckpoints = courses.flatMap(({ courseId, goal, checkpoints }) => {
     return checkpoints.map((checkpoint) => {
       const checkpointId = nanoid();
-      return { courseId, checkpointId, ...checkpoint }
+      return { courseId, goal, checkpointId, ...checkpoint }
     })
   })
 
-  const promises = flatCheckpoints.map(prepCheckpoint);
-  const data = await Promise.all(promises);
-  const newCache = data.reduce((acc, cp) => {
-    acc.set(cp.href, cp)
-    return acc;
-  }, new Map<string, CheckpointsDBResult>);
-  writeCache(newCache);
-  return data;
+  const promises = flatCheckpoints.map((cp) => prepCheckpoint(cp, cache));
+  return Promise.all(promises);
 }

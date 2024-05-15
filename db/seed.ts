@@ -8,7 +8,7 @@ import {
   BookmarkData,
   NoteData
 } from 'astro:db';
-import { readDir } from "./helpers"
+import { readCache, readDir, writeCache } from "./helpers"
 import type { Curator } from "@/types"
 import type { RawCourse } from "./prepCourses"
 import { prepCourses, prepCheckpoints } from "./prepCourses"
@@ -28,7 +28,9 @@ export default async function() {
   const people = prepPeople(rawPeople);
   const socials = prepSocials(rawPeople);
   const courses = await prepCourses(rawCourses);
-  const checkpoints = await prepCheckpoints(courses);
+  const cache = await readCache() || new Map
+  const checkpoints = await prepCheckpoints(courses, cache);
+  writeCache(cache);
   const completionData = prepCompletionData({ people, checkpoints });
   const bookmarkData = prepBookmarkData({ people, courses });
   const noteData = prepNotesData({ people, courses });
