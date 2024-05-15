@@ -1,9 +1,9 @@
-import type { Checkpoint } from "@/types"
+import type { CheckpointsDBResult } from "@/types"
 import type { TempCourse } from "./prepCourses"
 import { shuffle } from "./helpers"
 
 
-export function prepCompletionData({ people, checkpoints }: { people: { alias: string }[], checkpoints: Checkpoint[] }) {
+export function prepCompletionData({ people, checkpoints }: { people: { alias: string }[], checkpoints: CheckpointsDBResult[] }) {
   const all = people.flatMap(({ alias }) => {
     return checkpoints.flatMap(({ courseId, checkpointId }) => {
       const userName = alias;

@@ -1,5 +1,7 @@
 import { nanoid } from 'nanoid'
-import type { Checkpoint } from "@/types"
+import type { Checkpoint, CheckpointsDBResult } from "@/types"
+import OpenAI from "openai";
+import { readCache, writeCache } from './helpers';
 
 export interface RawCourse {
   goal: string,
@@ -17,8 +19,32 @@ export interface TempCourse extends Omit<RawCourse, "habitat"> {
   habitat: string | null,
 }
 
-async function getDescription(cp: Checkpoint) {
-  const description = "The 80,000 Hours article details a method to identify personal strengths for career advancement. It encourages developing new skills beyond existing strengths. The method involves analyzing personal experiences, reflective questioning, and consulting established strength lists. Emphasis is placed on the importance of feedback and self-reflection for effectively identifying and using personal strengths."
+const openai = new OpenAI({ apiKey: import.meta.env.OPENAI_API_KEY });
+
+async function getDescription({ href, task }: Checkpoint) {
+  console.log("NOT CACHED ", href);
+  const num_chars = 400;
+  const completion = await openai.chat.completions.create({
+    messages: [{ "role": "system", "content": "You are a helpful assistant." },
+    {
+      "role": "assistant", "content": `Please explain how the following link '${href}' helps people to achieve the following objective '${task}' in no more than ${num_chars} characters without including a suggestion to read the article or a link?`
+    }],
+    model: "gpt-4o"
+  });
+
+  const answer = completion.choices[0];
+  return answer?.message.content || null;
+}
+
+async function getCachedDescription(href: string) {
+  const cache = await readCache();
+  if (!cache) return;
+  const checkpoint = cache.get(href) as CheckpointsDBResult;
+  return checkpoint.description || null;
+}
+
+async function prepCheckpoint(cp: Checkpoint) {
+  const description = await getCachedDescription(cp.href) || await getDescription(cp);
   return { ...cp, description }
 }
 
@@ -38,6 +64,13 @@ export async function prepCheckpoints(courses: TempCourse[]) {
       return { courseId, checkpointId, ...checkpoint }
     })
   })
-  const promises = flatCheckpoints.map(getDescription);
-  return Promise.all(promises);
+
+  const promises = flatCheckpoints.map(prepCheckpoint);
+  const data = await Promise.all(promises);
+  const newCache = data.reduce((acc, cp) => {
+    acc.set(cp.href, cp)
+    return acc;
+  }, new Map<string, CheckpointsDBResult>);
+  writeCache(newCache);
+  return data;
 }

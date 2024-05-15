@@ -1,0 +1,30 @@
+{
+  "https://80000hours.org/articles/personal-strengths/": {
+    "description": "The link provides a comprehensive guide to identifying personal strengths by offering practical strategies like self-reflection, feedback from others, and strength assessments. It emphasizes aligning strengths with impactful career choices, helping individuals understand their unique capabilities and how to leverage them effectively to achieve personal and professional fulfillment.\n",
+    "courseId": "-Pctrtf2gwMWi0NzvFuuP",
+    "checkpointId": "8SjS6AQSiyiQ1k9u1PYkX",
+    "task": "Discover your personal strengths",
+    "href": "https://80000hours.org/articles/personal-strengths/"
+  },
+  "https://maven.com/articles/identifying-greatest-weakness": {
+    "description": "The link discusses ways to identify and understand personal weaknesses. By recognizing and addressing these weaknesses, individuals can become more self-aware, improve their personal and professional growth, and turn these weaknesses into opportunities for development, ultimately leading to a better embrace of their limitations and the potential they hold for progress.",
+    "courseId": "-Pctrtf2gwMWi0NzvFuuP",
+    "checkpointId": "vE3ImwEoORgh-8TC2umLV",
+    "task": "Embrace your weaknesses",
+    "href": "https://maven.com/articles/identifying-greatest-weakness"
+  },
+  "https://fullscale.io/blog/swot-analysis-for-startups/": {
+    "description": "The link helps by providing a detailed guide on conducting a SWOT analysis for startups. It explains how to identify and evaluate the strengths, weaknesses, opportunities, and threats specific to a new business, using real-world examples and practical tips, thereby offering actionable insights to improve strategic planning and decision-making.",
+    "courseId": "-Pctrtf2gwMWi0NzvFuuP",
+    "checkpointId": "z7tJ7KvBFAxPWpEwwmiBI",
+    "task": "Do a SWOT analysis of your startup",
+    "href": "https://fullscale.io/blog/swot-analysis-for-startups/"
+  },
+  "https://www.42workspace.com/guide/superconnectors-in-rotterdam/": {
+    "description": "The link provides insights into networking and leveraging superconnectors in Rotterdam, helping individuals identify and connect with key influencers. This guidance can aid in formulating a clear and impactful critical ask by understanding how to approach and engage with influential contacts effectively to achieve specific objectives.",
+    "courseId": "-Pctrtf2gwMWi0NzvFuuP",
+    "checkpointId": "VxNF6rE0cPTb4XWbpm7MI",
+    "task": "Formulate your critical ask",
+    "href": "https://www.42workspace.com/guide/superconnectors-in-rotterdam/"
+  }
+}

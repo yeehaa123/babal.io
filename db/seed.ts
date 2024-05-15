@@ -1,11 +1,18 @@
-import { db, People, Socials, Courses, Checkpoints, CompletionData, BookmarkData, NoteData } from 'astro:db';
+import {
+  db,
+  People,
+  Socials,
+  Courses,
+  Checkpoints,
+  CompletionData,
+  BookmarkData,
+  NoteData
+} from 'astro:db';
 import { readDir } from "./helpers"
 import type { Curator } from "@/types"
 import type { RawCourse } from "./prepCourses"
 import { prepCourses, prepCheckpoints } from "./prepCourses"
 import { prepBookmarkData, prepCompletionData, prepNotesData } from "./prepLearnData"
-
-
 
 function prepPeople(rawPeople: Curator[]) {
   return rawPeople.map(p => ({ alias: p.alias }));
@@ -14,8 +21,6 @@ function prepPeople(rawPeople: Curator[]) {
 function prepSocials(rawPeople: Curator[]) {
   return rawPeople.map(p => ({ alias: p.alias, ...p.socials }));
 }
-
-
 
 export default async function() {
   const rawCourses = await readDir<RawCourse>('./src/content/courses');

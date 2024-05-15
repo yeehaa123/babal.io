@@ -12,14 +12,19 @@ export interface CardState {
   isMetaVisible: boolean
 }
 
-export interface AugmentedCourse extends Course {
+export interface AugmentedCheckpoint extends Checkpoint {
+  isCompleted?: boolean | undefined;
+}
+
+export interface AugmentedCourse extends Omit<Course, 'checkpoints'> {
   isBookmarked?: boolean | undefined,
   notes: CourseNote[]
+  checkpoints: AugmentedCheckpoint[]
 }
 
 export type CourseCardStore = {
   course: AugmentedCourse,
-  checkpoint: Checkpoint | undefined,
+  checkpoint: AugmentedCheckpoint | undefined,
   actions: any,
   cardState: CardState,
   affordances: Affordances

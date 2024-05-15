@@ -42,7 +42,6 @@ export interface Checkpoint {
   task: string,
   href: string,
   description?: string | undefined,
-  isCompleted?: boolean | undefined,
 }
 
 
