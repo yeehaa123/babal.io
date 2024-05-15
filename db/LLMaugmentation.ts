@@ -2,9 +2,9 @@ import type { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 import type { TempCheckpoint } from "./prepCourses";
 import OpenAI from "openai";
 
-const openai = new OpenAI({ apiKey: import.meta.env.OPENAI_API_KEY });
 
 export async function getLLMDescription({ href, task, goal }: TempCheckpoint) {
+  const openai = new OpenAI({ apiKey: import.meta.env.OPENAI_API_KEY });
   console.log("NOT CACHED ", href, goal);
   const num_words = 300;
   const num_chars = 400;
