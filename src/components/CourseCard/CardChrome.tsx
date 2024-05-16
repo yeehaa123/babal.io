@@ -8,7 +8,7 @@ type Props = {
 export default function CardChrome({ children }: Props) {
   return (
     <Card className="relative max-w-[380px] min-w-[380px] select-none 
-    min-h-[500px] h-full w-full flex flex-col justify-between" >
+    min-h-[650px] h-full w-full flex flex-col justify-between" >
       {children}
     </Card >)
 }
