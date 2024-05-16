@@ -12,6 +12,7 @@ export enum OverlayModes {
   EDIT = "EDIT",
   NOTE = "NOTE",
   CHECKPOINT = "CHECKPOINT",
+  SHARE = "SHARE",
   CLONE = "CLONE"
 }
 
@@ -23,6 +24,7 @@ export default function Overlay(props: CourseCardStore) {
     [OverlayModes.REGISTER]: MockOverlay,
     [OverlayModes.AUTH]: AuthOverlay,
     [OverlayModes.EDIT]: MockOverlay,
+    [OverlayModes.SHARE]: MockOverlay,
     [OverlayModes.CLONE]: CloneOverlay,
     [OverlayModes.CHECKPOINT]: CheckpointOverlay,
   }[overlayMode]

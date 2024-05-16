@@ -68,10 +68,14 @@ export function useCourseCardStore({ courseId, authData }: StoreProps) {
   const showRegisterOverlay = () => {
     setOverlayMode(OverlayModes.REGISTER)
   }
+
   const showNotesOverlay = () => {
     setOverlayMode(OverlayModes.NOTE)
   }
 
+  const showShareOverlay = () => {
+    setOverlayMode(OverlayModes.SHARE)
+  }
   const cloneCourse = () => {
     storeActions.cloneCourse({ courseId });
     hideOverlay();
@@ -89,6 +93,7 @@ export function useCourseCardStore({ courseId, authData }: StoreProps) {
     showRegisterOverlay,
     showNotesOverlay,
     showEditOverlay,
+    showShareOverlay,
     showCheckpoint,
     hideCheckpoint,
     toggleMetaVisible,

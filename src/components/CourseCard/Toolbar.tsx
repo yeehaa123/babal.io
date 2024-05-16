@@ -14,6 +14,7 @@ type Actions = {
   signIn: () => void,
   signOut: () => void,
   showCloneOverlay: () => void,
+  showShareOverlay: () => void,
   showEditOverlay: () => void,
   showNotesOverlay: () => void
 }
@@ -39,6 +40,7 @@ export default function Toolbar({
     signIn,
     signOut,
     showEditOverlay,
+    showShareOverlay,
     showNotesOverlay,
     showCloneOverlay
   } = actions;
@@ -60,7 +62,7 @@ export default function Toolbar({
         <a href={habitat} className={cn("invisible", { "visible": habitat })}>
           <Crosshair1Icon className="h-4 w-4 text-gray-500" />
         </a>
-        <Share1Icon className="h-4 w-4 text-gray-500" />
+        <Share1Icon onClick={showShareOverlay} className="h-4 w-4 text-gray-500" />
       </div>
     </div>
   )
