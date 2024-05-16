@@ -9,9 +9,9 @@ import {
   CardFooter,
   CardTitle,
 } from "@/components/ui/card"
-import CardChrome from "../CardChrome";
+import { CardChrome } from "@/offcourse/components/CourseCard";
 import Checkbox from "@/offcourse/components/Checkbox"
-import type { CourseCardStore } from "..";
+import type { CourseCardStore } from "@/offcourse/stores/card/types";
 
 export default function CheckpointOverlay({ checkpoint, affordances, actions }: CourseCardStore) {
   const { canCheckComplete } = affordances;

@@ -6,14 +6,15 @@ import {
   CardContent,
 } from "@/components/ui/card"
 
-import CardChrome from "./CardChrome";
+import { CardChrome } from "@/offcourse/components/CourseCard";
 import BookmarkIcon from "./BookmarkIcon";
 import Checkpoint from "@/offcourse/components/Checkpoint";
 import CardMeta from "./CardMeta"
 import Toolbar from "./Toolbar"
 import CuratorSection from './Curator';
-import type { CourseCardStore } from ".";
 import { Tags } from "@/offcourse/components/Tags"
+
+import type { CourseCardStore } from "@/offcourse/stores/card/types";
 
 export default function CourseCard({
   course,

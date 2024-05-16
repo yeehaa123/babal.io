@@ -1,3 +1,7 @@
+import type {
+  AugmentedCourse,
+  AugmentedCheckpoint
+} from "@/offcourse/types";
 
 export enum OverlayModes {
   NONE = "NONE",
@@ -17,3 +21,25 @@ export enum CardRoleTypes {
   CURATOR = "CURATOR"
 }
 
+export type Affordances = {
+  canAuthenticate: boolean,
+  canBookmark: boolean,
+  canTakeNotes: boolean
+  canCheckComplete: boolean,
+  canClone: boolean,
+  canEdit: boolean
+
+}
+
+export interface CardState {
+  overlayMode: OverlayModes,
+  isMetaVisible: boolean
+}
+
+export type CourseCardStore = {
+  course: AugmentedCourse,
+  checkpoint: AugmentedCheckpoint | undefined,
+  actions: any,
+  cardState: CardState,
+  affordances: Affordances
+}

@@ -8,7 +8,8 @@ import {
   Pencil1Icon,
   Pencil2Icon,
 } from '@radix-ui/react-icons'
-import type { Affordances } from "."
+
+import type { Affordances } from "@/offcourse/stores/card/types"
 
 type Actions = {
   signIn: () => void,

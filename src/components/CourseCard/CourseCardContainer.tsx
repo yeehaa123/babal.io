@@ -1,6 +1,6 @@
 import CourseCollection from "@/offcourse/components/CourseCollection"
 import type { Course } from "@/types";
-import { CourseCard } from "./"
+import { CourseCard } from "@/offcourse/components/CourseCard"
 import type { AuthData } from "@/stores/authState";
 
 export interface CourseCardContainer {

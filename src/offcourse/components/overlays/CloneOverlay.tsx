@@ -4,9 +4,9 @@ import {
   CardFooter,
   CardTitle,
 } from "@/components/ui/card"
-import type { CourseCardStore } from "..";
+import type { CourseCardStore } from "@/offcourse/stores/card/types";
 
-import CardChrome from "../CardChrome";
+import { CardChrome } from "@/offcourse/components/CourseCard";
 
 export default function MockOverlay({ course, actions }: CourseCardStore) {
   const { courseId } = course;
