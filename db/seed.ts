@@ -16,16 +16,17 @@ import { prepCourses, prepCheckpoints, prepTags } from "./prepCourses"
 import { prepBookmarkData, prepCompletionData, prepNotesData } from "./prepLearnData"
 
 function prepPeople(rawPeople: Curator[]) {
-  return rawPeople.map(p => ({ alias: p.alias }));
+  return rawPeople.map(p => ({ alias: p.alias.toLowerCase() }));
 }
 
 function prepSocials(rawPeople: Curator[]) {
-  return rawPeople.map(p => ({ alias: p.alias, ...p.socials }));
+  return rawPeople.map(p => ({ alias: p.alias.toLowerCase(), ...p.socials }));
 }
 
 export default async function() {
   const rawCourses = await readDir<RawCourse>('./src/content/courses');
   const rawPeople = await readDir<Curator>('./src/content/people');
+
 
   const people = prepPeople(rawPeople);
   const socials = prepSocials(rawPeople);

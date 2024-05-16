@@ -28,13 +28,13 @@ interface Props {
 export function Curator({ alias, socials }: Props) {
   return (
     <div className="flex align-middle py-4 items-center justify-between">
-      <div className="flex items-center space-x-3">
+      <a href={`/offcourse/curator/${alias}`} className="flex items-center space-x-3">
         <Avatar>
           <GeneratedAvatarImage userName={alias} saturation={100} lightness={100} />
           <AvatarFallback className="bg-indigo-600 text-white">YH</AvatarFallback>
         </Avatar>
         <CardDescription>{alias}</CardDescription>
-      </div>
+      </a>
 
       {socials &&
         <div className="flex items-center space-x-3">

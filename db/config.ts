@@ -10,6 +10,7 @@ const Courses = defineTable({
   },
   indexes: [
     { on: ["courseId", "habitat"], unique: true },
+    { on: ["curator", "courseId"], unique: true },
   ]
 });
 

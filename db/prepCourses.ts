@@ -37,8 +37,8 @@ async function prepCheckpoint(cp: TempCheckpoint, cache: LLMCache) {
 export function prepCourses(courses: RawCourse[]): TempCourse[] {
   return courses.map((course) => {
     const courseId = nanoid();
-    const { habitat, ...rest } = course;
-    return { courseId, habitat: habitat || null, ...rest }
+    const { habitat, curator, ...rest } = course;
+    return { courseId, curator: curator.toLowerCase(), habitat: habitat || null, ...rest }
   });
 }
 

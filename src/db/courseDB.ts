@@ -27,6 +27,17 @@ export async function getCourses() {
   return Array.from(courseMap, ([_, c]) => c)
 }
 
+export async function getCoursesByCurator(curator: string) {
+  const dbResult = await db.select()
+    .from(Courses)
+    .where(eq(Courses.curator, curator))
+    .leftJoin(Socials, eq(Courses.curator, Socials.alias))
+    .innerJoin(Checkpoints, eq(Courses.courseId, Checkpoints.courseId))
+
+  const courseMap = processCourseResults(dbResult);
+  return Array.from(courseMap, ([_, c]) => c)
+}
+
 export async function getCoursesByTag(tag: string) {
   const dbResult = await db.select()
     .from(Tags)
