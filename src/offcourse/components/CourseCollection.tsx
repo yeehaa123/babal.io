@@ -4,7 +4,7 @@ import { useShallow } from 'zustand/react/shallow'
 
 import { useOffcourseContext } from "@/containers/Offcourse";
 import { useStore } from "@nanostores/react"
-import CourseCardContainer from "@/components/CourseCard"
+import { CourseCard } from "@/offcourse/components/CourseCard"
 import { StoreProvider } from "@/containers/Offcourse"
 import { $authState } from "@/stores/authState";
 
@@ -27,7 +27,7 @@ function InnerCollection() {
 
   return <>
     {courseIds.map((id) =>
-      <CourseCardContainer key={id} authData={authData} courseId={id} />)}
+      <CourseCard key={id} authData={authData} courseId={id} />)}
   </>
 }
 
