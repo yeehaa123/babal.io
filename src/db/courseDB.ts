@@ -1,4 +1,4 @@
-import { db, Socials, Courses, Checkpoints, eq } from 'astro:db';
+import { db, Socials, Courses, Checkpoints, Tags, eq } from 'astro:db';
 import type {
   Course,
   CoursesDBResult,
@@ -25,6 +25,27 @@ export async function getCourses() {
 
   const courseMap = processCourseResults(dbResult);
   return Array.from(courseMap, ([_, c]) => c)
+}
+
+export async function getCoursesByTag(tag: string) {
+  const dbResult = await db.select()
+    .from(Tags)
+    .where(eq(Tags.tag, tag))
+    .innerJoin(Courses, eq(Courses.courseId, Tags.courseId))
+    .leftJoin(Socials, eq(Courses.curator, Socials.alias))
+    .innerJoin(Checkpoints, eq(Courses.courseId, Checkpoints.courseId))
+
+  const courseMap = processCourseResults(dbResult);
+  return Array.from(courseMap, ([_, c]) => c)
+}
+
+export async function getTags() {
+  const dbResult = await db.select()
+    .from(Tags)
+
+  const allTags = dbResult.map(({ tag }) => tag);
+  const tags = new Set([...allTags]);
+  return [...tags]
 }
 
 

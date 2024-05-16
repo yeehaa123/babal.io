@@ -1,0 +1,28 @@
+---
+import Base from "@/layouts/Base.astro";
+import { navigation, siteData } from "@/consts";
+import { getCourses, getTags, getCoursesByTag} from "@/db/courseDB";
+import { CourseCollection } from "@/offcourse/components/CourseCollection";
+
+
+export async function getStaticPaths() {
+  const tags = await getTags();
+  console.log(tags);
+  const promises  = tags.map(async (tag: string) => {
+  const courses  = await getCoursesByTag(tag);
+    return { params: { tag: tag }, props: { courses }}
+  })
+  return await Promise.all(promises);
+}
+
+
+const { courses } = Astro.props;
+---
+
+<Base {navigation} {siteData}>
+  <div class="bg-white py-24 sm:py-32">
+    <div class="flex flex-col lg:flex-row lg:gap-x-5 gap-y-5 mx-auto max-w-7xl px-6 lg:px-8">
+        <CourseCollection courses={courses} client:load/>
+    </div>
+  </div>
+</Base>
