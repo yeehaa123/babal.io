@@ -14,7 +14,6 @@ export async function getCourseById(courseId: string) {
     .innerJoin(Checkpoints, eq(Courses.courseId, Checkpoints.courseId))
 
   const result = processCourseResults(dbResult);
-
   return result.get(courseId);
 }
 
@@ -34,11 +33,11 @@ export async function getCourseByHabitat(postId: string) {
     courseId: Courses.courseId
   }).from(Courses)
     .where(eq(Courses.habitat, postId))
+
   const courseId = index[0]?.courseId;
 
-  if (!courseId) {
-    return
-  }
+  if (!courseId) { return }
+
   return getCourseById(courseId)
 }
 
@@ -53,6 +52,7 @@ function processCourseResults(result: {
       const entry = acc.get(courseId);
       let curator = { alias: name, socials: {} };
       const { description, tags, ...cp } = row.Checkpoints;
+
       const checkpoint = {
         tags: tags?.split(",").map(t => t.trim()) || [],
         description: description ? description : undefined,
@@ -64,11 +64,12 @@ function processCourseResults(result: {
           let { alias, ...socials } = curator;
           curator = { alias, ...socials }
         }
+
         acc.set(courseId, {
-          courseId,
-          tags: [...checkpoint.tags],
-          curator,
           ...course,
+          courseId,
+          curator,
+          tags: [...checkpoint.tags],
           habitat: habitat ? habitat : undefined,
           checkpoints: [checkpoint]
         })
@@ -88,4 +89,3 @@ function processCourseResults(result: {
     new Map()
   );
 }
-

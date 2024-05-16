@@ -12,6 +12,7 @@ import type { LearnData } from '@/offcourse/types';
 
 export async function getLearnData({ userName, courseIds }:
   { userName: string, courseIds: string[] }) {
+
   const learnDataDBResult = await db
     .select()
     .from(CompletionData)
@@ -50,12 +51,15 @@ export async function getLearnData({ userName, courseIds }:
             return { message, createdAt }
           }) : []
       })
+
       return acc;
     } else {
       acc.set(courseId,
         { ...ld, tasksCompleted: [...ld.tasksCompleted, !!completedAt] })
     }
+
     return acc;
   }, new Map<string, LearnData>)
+
   return Object.fromEntries(learnData);
 }

@@ -1,4 +1,5 @@
 import { nanoid } from 'nanoid'
+import { readCache, writeCache } from "./helpers"
 import type { Checkpoint, CheckpointsDBResult, Course } from "@/types"
 import type { LLMCache } from './helpers';
 import { getLLMDescription } from './LLMaugmentation';
@@ -33,8 +34,7 @@ async function prepCheckpoint(cp: TempCheckpoint, cache: LLMCache) {
   return { ...cp, description, tags };
 }
 
-
-export async function prepCourses(courses: RawCourse[]): Promise<TempCourse[]> {
+export function prepCourses(courses: RawCourse[]): TempCourse[] {
   return courses.map((course) => {
     const courseId = nanoid();
     const { habitat, ...rest } = course;
@@ -42,16 +42,18 @@ export async function prepCourses(courses: RawCourse[]): Promise<TempCourse[]> {
   });
 }
 
-export async function prepCheckpoints(courses: TempCourse[], cache: LLMCache) {
+export async function prepCheckpoints(courses: TempCourse[]) {
+  const cache = await readCache() || new Map;
   const flatCheckpoints = courses.flatMap(({ courseId, goal, checkpoints }) => {
     return checkpoints.map((checkpoint) => {
       const checkpointId = nanoid();
       return { courseId, goal, checkpointId, ...checkpoint }
     })
   })
-
   const promises = flatCheckpoints.map((cp) => prepCheckpoint(cp, cache));
-  return Promise.all(promises);
+  const checkpoints = await Promise.all(promises);
+  await writeCache(cache);
+  return checkpoints;
 }
 
 export function prepTags({ checkpoints }: { checkpoints: CheckpointsDBResult[] }) {

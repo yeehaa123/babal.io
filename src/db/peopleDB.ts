@@ -38,7 +38,9 @@ function processPeopleResults(result: {
     (acc, row) => {
       const { alias } = row.People;
       const { alias: _a, ...rest } = row.Socials;
-      const socials = Object.fromEntries(Object.entries(rest).map(([k, v]) => ([k, v ? v : undefined])));
+      const socials = Object.fromEntries(
+        Object.entries(rest).map(([k, v]) => ([k, v ? v : undefined]))
+      );
       acc.set(alias, {
         alias,
         socials
