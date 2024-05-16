@@ -3,6 +3,7 @@ import {
   People,
   Socials,
   Courses,
+  Tags,
   Checkpoints,
   CompletionData,
   BookmarkData,
@@ -11,7 +12,7 @@ import {
 import { readCache, readDir, writeCache } from "./helpers"
 import type { Curator } from "@/types"
 import type { RawCourse } from "./prepCourses"
-import { prepCourses, prepCheckpoints } from "./prepCourses"
+import { prepCourses, prepCheckpoints, prepTags } from "./prepCourses"
 import { prepBookmarkData, prepCompletionData, prepNotesData } from "./prepLearnData"
 
 function prepPeople(rawPeople: Curator[]) {
@@ -31,6 +32,7 @@ export default async function() {
   const cache = await readCache() || new Map
   const checkpoints = await prepCheckpoints(courses, cache);
   writeCache(cache);
+  const tags = prepTags({ checkpoints })
   const completionData = prepCompletionData({ people, checkpoints });
   const bookmarkData = prepBookmarkData({ people, courses });
   const noteData = prepNotesData({ people, courses });
@@ -41,4 +43,5 @@ export default async function() {
   await db.insert(CompletionData).values(completionData);
   await db.insert(BookmarkData).values(bookmarkData);
   await db.insert(NoteData).values(noteData);
+  await db.insert(Tags).values(tags);
 }

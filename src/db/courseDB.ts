@@ -50,6 +50,7 @@ function processCourseResults(result: {
   return result.reduce<Map<string, Course>>(
     (acc, row) => {
       const { courseId, curator: name, habitat, ...course } = row.Courses;
+      const entry = acc.get(courseId);
       let curator = { alias: name, socials: {} };
       const { description, tags, ...cp } = row.Checkpoints;
       const checkpoint = {
@@ -57,7 +58,7 @@ function processCourseResults(result: {
         description: description ? description : undefined,
         ...cp
       }
-      const entry = acc.get(courseId);
+
       if (!entry) {
         if (row.Socials) {
           let { alias, ...socials } = curator;
@@ -65,16 +66,21 @@ function processCourseResults(result: {
         }
         acc.set(courseId, {
           courseId,
+          tags: [...checkpoint.tags],
           curator,
           ...course,
           habitat: habitat ? habitat : undefined,
           checkpoints: [checkpoint]
         })
       }
+
       if (entry) {
         const { ...old } = entry;
+        const tags = [...new Set([...old.tags, ...checkpoint.tags])];
         acc.set(courseId, {
-          ...old, checkpoints: [...old.checkpoints, checkpoint]
+          ...old,
+          tags,
+          checkpoints: [...old.checkpoints, checkpoint]
         })
       }
       return acc;

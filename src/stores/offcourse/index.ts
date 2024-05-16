@@ -29,11 +29,7 @@ export type OffcourseState = {
 
 export function createOffcourseStore({ courses }: StoreProps) {
   const storeEntries = courses.map(course => {
-    const tags = course.checkpoints.reduce((acc, { tags }) => {
-      return new Set([...acc, ...tags])
-    }, new Set)
-
-    return [course.courseId, { ...course, tags: [...tags] }]
+    return [course.courseId, course]
   });
 
   const initialState = {

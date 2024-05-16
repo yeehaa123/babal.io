@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid'
-import type { Checkpoint, Course } from "@/types"
+import type { Checkpoint, CheckpointsDBResult, Course } from "@/types"
 import type { LLMCache } from './helpers';
 import { getLLMDescription } from './LLMaugmentation';
 import crypto from 'crypto';
@@ -52,4 +52,19 @@ export async function prepCheckpoints(courses: TempCourse[], cache: LLMCache) {
 
   const promises = flatCheckpoints.map((cp) => prepCheckpoint(cp, cache));
   return Promise.all(promises);
+}
+
+export function prepTags({ checkpoints }: { checkpoints: CheckpointsDBResult[] }) {
+  const courseTags = checkpoints.reduce((acc, { courseId, tags: tagsString }) => {
+    const newTags = tagsString?.split(",").map(s => s.trim()) || [];
+    const oldTags = acc.get(courseId) || new Set(newTags);
+    const tags = new Set([...oldTags, ...newTags])
+    acc.set(courseId, [...tags])
+    return acc;
+  }, new Map<string, string[]>)
+  return Array.from(courseTags).flatMap(([courseId, tags]) => {
+    return tags.map(tag => {
+      return { courseId, tag }
+    })
+  })
 }

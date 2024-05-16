@@ -24,6 +24,16 @@ const Checkpoints = defineTable({
   }
 });
 
+const Tags = defineTable({
+  columns: {
+    courseId: column.text(),
+    tag: column.text(),
+  },
+  indexes: [
+    { on: ["tag", "courseId"], unique: true },
+  ]
+});
+
 const People = defineTable({
   columns: {
     alias: column.text({ primaryKey: true })
@@ -76,6 +86,7 @@ export default defineDb({
   tables: {
     Courses,
     Checkpoints,
+    Tags,
     People,
     Socials,
     CompletionData,

@@ -53,5 +53,6 @@ export type Course = {
   description: string,
   curator: Curator,
   habitat?: string | undefined,
-  checkpoints: Checkpoint[]
+  checkpoints: Checkpoint[],
+  tags: string[]
 }
