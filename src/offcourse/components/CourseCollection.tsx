@@ -1,27 +1,49 @@
 import type { Course } from "@/types";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react"
 import { useShallow } from 'zustand/react/shallow'
 
-import { useOffcourseContext } from "@/containers/Offcourse";
+import { OffcourseContext, useOffcourseContext } from "@/offcourse/stores/collection";
 import { useStore } from "@nanostores/react"
 import { CourseCard } from "@/offcourse/components/CourseCard"
-import { StoreProvider } from "@/containers/Offcourse"
 import { $authState } from "@/stores/authState";
+import { createOffcourseStore } from "@/offcourse/stores/collection"
 
-export type CollectionProps = { courses: Course[], standAlone?: boolean }
+import type { ReactElement } from 'react';
+import type { OffcourseStore } from "@/offcourse/stores/collection"
+
+type CollectionProps = {
+  courses: Course[],
+  standAlone?: boolean
+}
+
+interface ProviderProps {
+  courses: Course[],
+  children: ReactElement | ReactElement[]
+}
+
+const StoreProvider = ({ children, courses }: ProviderProps) => {
+  const storeRef = useRef<OffcourseStore>()
+  if (!storeRef.current) {
+    storeRef.current = createOffcourseStore({ courses });
+  }
+  return (
+    <OffcourseContext.Provider value={storeRef.current}>
+      {children}
+    </OffcourseContext.Provider>
+  )
+}
 
 function InnerCollection() {
   const authData = useStore($authState);
-  const { userName } = authData;
   const {
     fetchMissingLearnData,
   } = useOffcourseContext((state) => state.actions);
-  const courseIds = useOffcourseContext(useShallow((state) => Object.keys(state.courses)))
+
+  const courseIds = useOffcourseContext(
+    useShallow((state) => Object.keys(state.courses)))
 
   useEffect(() => {
-    if (userName) {
-      fetchMissingLearnData(authData)
-    }
+    authData.userName && fetchMissingLearnData(authData)
   }, [authData, courseIds])
 
 
@@ -31,7 +53,7 @@ function InnerCollection() {
   </>
 }
 
-export default function CourseCollection({ courses }: CollectionProps) {
+export function CourseCollection({ courses }: CollectionProps) {
   return (
     <StoreProvider courses={courses}>
       <InnerCollection />

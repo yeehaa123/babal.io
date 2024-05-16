@@ -1,12 +1,15 @@
-import { createStore } from 'zustand'
 import type { Course } from "@/types";
-import { combine } from "zustand/middleware";
-import { StoreActions } from "./actions"
 import type { AugmentedCourse, LearnData } from '@/offcourse/types';
 
-export interface StoreProps { courses: Course[] }
+import { createStore, useStore } from 'zustand'
+import { createContext, useContext } from "react"
+import { combine } from "zustand/middleware";
+import { StoreActions } from "./actions"
+
+interface StoreProps { courses: Course[] }
 
 export type OffcourseStore = ReturnType<typeof createOffcourseStore>
+
 
 type LearnDataState = Record<string, LearnData>
 
@@ -30,3 +33,10 @@ export function createOffcourseStore({ courses }: StoreProps) {
   )
 }
 
+export function useOffcourseContext<T>(selector: (state: OffcourseState) => T): T {
+  const store = useContext(OffcourseContext)
+  if (!store) throw new Error('Missing OffcourseContext.Provider in the tree')
+  return useStore(store, selector)
+}
+
+export const OffcourseContext = createContext<OffcourseStore | null>(null)

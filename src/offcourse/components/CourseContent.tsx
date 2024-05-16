@@ -1,3 +1,5 @@
+import type { CourseCardStore } from "@/offcourse/stores/card/types";
+
 import {
   CardDescription,
   CardHeader,
@@ -6,15 +8,13 @@ import {
   CardContent,
 } from "@/components/ui/card"
 
-import { CardChrome } from "@/offcourse/components/CourseCard";
-import BookmarkIcon from "./BookmarkIcon";
-import Checkpoint from "@/offcourse/components/Checkpoint";
-import CardMeta from "./CardMeta"
-import Toolbar from "./Toolbar"
-import CuratorSection from './Curator';
-import { Tags } from "@/offcourse/components/Tags"
-
-import type { CourseCardStore } from "@/offcourse/stores/card/types";
+import { CardChrome } from "./CourseCard";
+import { Bookmark } from "./Bookmark";
+import { Checkpoint } from "./Checkpoint";
+import { CardMeta } from "./CardMeta"
+import { Toolbar } from "./Toolbar"
+import { Curator } from './Curator';
+import { Tags } from "./Tags"
 
 export default function CourseCard({
   course,
@@ -53,13 +53,13 @@ export default function CourseCard({
     <CardHeader className="space-y-4">
       <CardTitle className="flex w-full justify-between space-x-5 ">
         <span className="max-w-[80%]">{goal}</span>
-        <BookmarkIcon onClick={() => {
+        <Bookmark onClick={() => {
           toggleBookmark({ courseId })
         }}
           isBookmarked={isBookmarked}
           canBookmark={canBookmark} />
       </CardTitle>
-      <CuratorSection {...curator} />
+      <Curator {...curator} />
       {isMetaVisible
         ? <CardMeta onClick={toggleMetaVisible} id={goal} />
         : <CardDescription onClick={toggleMetaVisible}>{description}</CardDescription>}

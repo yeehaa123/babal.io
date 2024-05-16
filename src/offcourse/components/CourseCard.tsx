@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/card"
 import CourseContent from "@/offcourse/components/CourseContent"
 import { OverlayModes } from "@/offcourse/stores/card/types";
 import { useCourseCardStore } from "@/offcourse/stores/card";
-import CourseCollection from "@/offcourse/components/CourseCollection"
+import { CourseCollection } from "@/offcourse/components/CourseCollection"
 import Overlay from "@/offcourse/components/overlays";
 
 import type { ReactNode } from "react"

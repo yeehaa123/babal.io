@@ -6,7 +6,7 @@ type Props = {
   onClick: () => void
 }
 
-export default function Bookmark({
+export function Bookmark({
   isBookmarked,
   onClick,
   canBookmark,

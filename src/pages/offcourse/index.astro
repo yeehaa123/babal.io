@@ -2,7 +2,7 @@
 import Base from "@/layouts/Base.astro";
 import { navigation, siteData } from "@/consts";
 import { getCourses } from "@/db/courseDB";
-import CourseCollection from "@/offcourse/components/CourseCollection";
+import { CourseCollection } from "@/offcourse/components/CourseCollection";
 
 const courses  = await getCourses()
 ---

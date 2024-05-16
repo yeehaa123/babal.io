@@ -25,7 +25,7 @@ interface Props {
   socials: Socials | undefined;
 }
 
-export default function Curator({ alias, socials }: Props) {
+export function Curator({ alias, socials }: Props) {
   return (
     <div className="flex align-middle py-4 items-center justify-between">
       <div className="flex items-center space-x-3">

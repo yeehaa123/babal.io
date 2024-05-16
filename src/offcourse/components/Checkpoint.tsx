@@ -10,7 +10,7 @@ interface Props extends AugmentedCheckpoint {
 }
 
 
-export default function Checkpoint({
+export function Checkpoint({
   task,
   courseId,
   isCompleted,

@@ -1,3 +1,5 @@
+import type { Affordances } from "@/offcourse/stores/card/types"
+
 import { cn } from "@/lib/utils"
 import {
   EnterIcon,
@@ -9,7 +11,6 @@ import {
   Pencil2Icon,
 } from '@radix-ui/react-icons'
 
-import type { Affordances } from "@/offcourse/stores/card/types"
 
 type Actions = {
   signIn: () => void,
@@ -26,7 +27,7 @@ type Props = {
   affordances: Affordances,
 }
 
-export default function Toolbar({
+export function Toolbar({
   habitat,
   actions,
   affordances

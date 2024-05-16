@@ -1,4 +1,4 @@
-import { useOffcourseContext } from "@/containers/Offcourse";
+import { useOffcourseContext } from "@/offcourse/stores/collection";
 import { login, logout } from "@/stores/authState";
 import type { AuthData } from "@/stores/authState";
 
