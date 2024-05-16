@@ -1,27 +1,20 @@
-import type { Checkpoint, Course } from "@/types";
 import CourseContent from "./CourseContent";
-import Overlay, { OverlayModes } from "./overlays";
-import type { Affordances } from "@/components/CourseCard/stores/helpers";
-import { useCourseCardStore } from "./stores";
+import Overlay from "./overlays";
+import type { Affordances } from "@/offcourse/stores/card/helpers";
+import { OverlayModes } from "@/offcourse/stores/card/types";
+import type {
+  AugmentedCourse,
+  AugmentedCheckpoint
+} from "@/offcourse/types";
+import { useCourseCardStore } from "@/offcourse/stores/card";
 import { CourseCardContainer } from "./CourseCardContainer";
 import type { AuthData } from "@/stores/authState";
-import type { CourseNote } from "@/stores/offcourse";
 
 export interface CardState {
   overlayMode: OverlayModes,
   isMetaVisible: boolean
 }
 
-export interface AugmentedCheckpoint extends Checkpoint {
-  isCompleted?: boolean | undefined;
-}
-
-export interface AugmentedCourse extends Omit<Course, 'checkpoints'> {
-  tags: string[],
-  isBookmarked?: boolean | undefined,
-  notes: CourseNote[]
-  checkpoints: AugmentedCheckpoint[]
-}
 
 export type CourseCardStore = {
   course: AugmentedCourse,

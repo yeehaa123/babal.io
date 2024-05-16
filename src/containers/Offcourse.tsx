@@ -1,10 +1,10 @@
-import type { ReactElement } from 'react';
 import { createContext, useRef } from "react"
-import { createOffcourseStore } from "@/stores/offcourse"
-import type { StoreProps, OffcourseStore } from "@/stores/offcourse"
 import { useStore } from "zustand";
-import type { OffcourseState } from "@/stores/offcourse";
 import { useContext } from "react";
+import { createOffcourseStore } from "@/offcourse/stores/collection"
+
+import type { ReactElement } from 'react';
+import type { StoreProps, OffcourseStore, OffcourseState } from "@/offcourse/stores/collection"
 
 interface ProviderProps extends StoreProps {
   children: ReactElement | ReactElement[]

@@ -1,7 +1,7 @@
-import { Tags } from "@/components/Tags"
 import { ExternalLinkIcon } from '@radix-ui/react-icons'
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { Tags } from "@/offcourse/components/Tags"
 import {
   CardDescription,
   CardHeader,
@@ -9,17 +9,14 @@ import {
   CardFooter,
   CardTitle,
 } from "@/components/ui/card"
-import type { CourseCardStore } from "..";
 import CardChrome from "../CardChrome";
-import Checkbox from "@/components/Checkbox"
-
-
-const toggleComplete = console.log
+import Checkbox from "@/offcourse/components/Checkbox"
+import type { CourseCardStore } from "..";
 
 export default function CheckpointOverlay({ checkpoint, affordances, actions }: CourseCardStore) {
   const { canCheckComplete } = affordances;
   const { courseId, isCompleted, task, description, href, tags } = checkpoint!;
-  const { hideCheckpoint } = actions;
+  const { hideCheckpoint, toggleComplete } = actions;
   return (
     <CardChrome>
       <CardHeader className="flex flex-row gap-x-7 space-y-0 items-top">
@@ -28,7 +25,7 @@ export default function CheckpointOverlay({ checkpoint, affordances, actions }: 
           checked={!!isCompleted}
           disabled={!canCheckComplete}
           className={cn("h-12 w-12 mt-0")}
-          onClick={() => toggleComplete()} />
+          onClick={toggleComplete} />
       </CardHeader>
       <CardContent className="space-y-4 grow flex flex-col justify-center">
         <Tags tags={tags} />

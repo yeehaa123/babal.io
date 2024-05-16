@@ -1,4 +1,4 @@
-import CourseCollection from "@/components/CourseCollection"
+import CourseCollection from "@/offcourse/components/CourseCollection"
 import type { Course } from "@/types";
 import { CourseCard } from "./"
 import type { AuthData } from "@/stores/authState";

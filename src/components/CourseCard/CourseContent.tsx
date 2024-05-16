@@ -8,12 +8,12 @@ import {
 
 import CardChrome from "./CardChrome";
 import BookmarkIcon from "./BookmarkIcon";
-import Checkpoint from "@/components/Checkpoint";
+import Checkpoint from "@/offcourse/components/Checkpoint";
 import CardMeta from "./CardMeta"
 import Toolbar from "./Toolbar"
 import CuratorSection from './Curator';
 import type { CourseCardStore } from ".";
-import { Tags } from "@/components/Tags"
+import { Tags } from "@/offcourse/components/Tags"
 
 export default function CourseCard({
   course,

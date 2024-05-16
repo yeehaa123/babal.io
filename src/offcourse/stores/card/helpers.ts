@@ -1,12 +1,7 @@
-import type { AugmentedCourse } from "..";
+import type { AugmentedCourse } from "@/offcourse/types";
+import { CardRoleTypes } from "./types"
 import type { AuthData } from "@/stores/authState";
 
-export enum CardRoleTypes {
-  GUEST = "GUEST",
-  LEARNER = "LEARNER",
-  COLLECTOR = "COLLECTOR",
-  CURATOR = "CURATOR"
-}
 
 export type Affordances = ReturnType<typeof determineAffordances>
 

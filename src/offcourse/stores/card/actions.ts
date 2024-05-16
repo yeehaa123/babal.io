@@ -1,4 +1,4 @@
-import { OverlayModes } from "../overlays";
+import { OverlayModes } from "./types";
 import { authActions } from '@/stores/authState';
 
 

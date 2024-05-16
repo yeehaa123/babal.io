@@ -1,5 +1,14 @@
-import type { LearnData } from '@/stores/offcourse';
-import { db, CompletionData, inArray, and, eq, BookmarkData, NoteData } from 'astro:db';
+import {
+  db,
+  inArray,
+  and,
+  eq,
+  CompletionData,
+  BookmarkData,
+  NoteData
+} from 'astro:db';
+
+import type { LearnData } from '@/offcourse/types';
 
 export async function getLearnData({ userName, courseIds }:
   { userName: string, courseIds: string[] }) {

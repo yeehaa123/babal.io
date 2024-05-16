@@ -1,7 +1,7 @@
 import { Label } from "@/components/ui/label"
-import Checkbox from "@/components/Checkbox"
+import Checkbox from "@/offcourse/components/Checkbox"
 
-import type { AugmentedCheckpoint } from "./CourseCard";
+import type { AugmentedCheckpoint } from "@/offcourse/types";
 
 interface Props extends AugmentedCheckpoint {
   canCheckComplete: boolean,

@@ -4,17 +4,7 @@ import AuthOverlay from "./AuthOverlay";
 import MockOverlay from "./MockOverlay";
 import CloneOverlay from "./CloneOverlay";
 import { NoteOverlay } from "./NoteOverlay";
-
-export enum OverlayModes {
-  NONE = "NONE",
-  AUTH = "AUTH",
-  REGISTER = "REGISTER",
-  EDIT = "EDIT",
-  NOTE = "NOTE",
-  CHECKPOINT = "CHECKPOINT",
-  SHARE = "SHARE",
-  CLONE = "CLONE"
-}
+import { OverlayModes } from "@/offcourse/stores/card/types";
 
 export default function Overlay(props: CourseCardStore) {
   const overlayMode = props.cardState.overlayMode!

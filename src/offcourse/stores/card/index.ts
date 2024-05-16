@@ -8,7 +8,7 @@ import {
   determineAffordances
 } from "./helpers"
 import { useCardState } from "./cardState";
-import { OverlayModes } from "../overlays";
+import { OverlayModes } from "./types";
 
 type StoreProps = {
   courseId: Course['courseId'],
