@@ -1,10 +1,5 @@
 import { nanoid } from 'nanoid'
-import { readCache, writeCache } from "./helpers"
-import type { Checkpoint, Course } from "@/offcourse/types"
 import type { CheckpointsDBResult } from "@/offcourse/db/types"
-import type { LLMCache } from './helpers';
-import { getLLMDescription } from './LLMaugmentation';
-import crypto from 'crypto';
 
 export interface RawCourse {
   goal: string,
@@ -22,18 +17,7 @@ export interface TempCourse extends Omit<RawCourse, "habitat"> {
   habitat: string | null,
 }
 
-export interface TempCheckpoint extends Omit<Checkpoint, "description" | "tags"> {
-  goal: Course['goal']
-}
 
-async function prepCheckpoint(cp: TempCheckpoint, cache: LLMCache) {
-  const { href, task, goal } = cp;
-  const id = href + task + goal;
-  let hash = crypto.createHash('md5').update(id).digest("hex")
-  const { description, summary, tags } = cache.get(hash) || await getLLMDescription(cp);
-  cache.set(hash, { ...cp, description, summary, tags });
-  return { ...cp, description, tags };
-}
 
 export function prepCourses(courses: RawCourse[]): TempCourse[] {
   return courses.map((course) => {
@@ -51,14 +35,6 @@ export function prepCheckpoints(courses: TempCourse[]) {
     })
   })
   return flatCheckpoints;
-}
-
-export async function augmentCheckpoints(checkpoints: TempCheckpoint[]) {
-  const cache = await readCache() || new Map;
-  const promises = checkpoints.map((cp) => prepCheckpoint(cp, cache));
-  const cp = await Promise.all(promises);
-  await writeCache(cache);
-  return cp;
 }
 
 export function prepTags(checkpoints: CheckpointsDBResult[]) {

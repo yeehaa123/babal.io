@@ -1,5 +1,5 @@
 import type { ChatCompletionMessageParam } from "openai/resources/index.mjs";
-import type { TempCheckpoint } from "./prepCourses";
+import type { TempCheckpoint } from "./augmentCheckpoints";
 import OpenAI from "openai";
 
 
