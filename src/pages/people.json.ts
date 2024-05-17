@@ -1,4 +1,4 @@
-import { getPeople } from "@/db/peopleDB";
+import { getPeople } from "@/offcourse/db";
 
 const people = await getPeople();
 

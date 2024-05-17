@@ -1,7 +1,7 @@
 ---
 import Base from "@/layouts/Base.astro";
 import { navigation, siteData } from "@/consts";
-import { getCourses } from "@/db/courseDB";
+import { getCourses } from "@/offcourse/db";
 import { CourseCollection } from "@/offcourse";
 
 const courses  = await getCourses()

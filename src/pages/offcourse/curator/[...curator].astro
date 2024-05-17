@@ -1,8 +1,7 @@
 ---
 import Base from "@/layouts/Base.astro";
 import { navigation, siteData } from "@/consts";
-import { getPeople } from "@/db/peopleDB";
-import { getCoursesByCurator } from "@/db/courseDB";
+import { getCoursesByCurator, getPeople } from "@/offcourse/db";
 import { CourseCollection } from "@/offcourse";
 
 export async function getStaticPaths() {

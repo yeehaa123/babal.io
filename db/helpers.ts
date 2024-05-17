@@ -1,4 +1,4 @@
-import type { CheckpointsDBResult } from '@/db/types';
+import type { CheckpointsDBResult } from '@/offcourse/db/types';
 
 import { readdir, readFile, writeFile } from 'fs/promises'
 import { parse } from 'yaml';

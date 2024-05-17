@@ -1,6 +1,6 @@
 export const prerender = false;
 
-import { authenticate } from "@/db/peopleDB";
+import { authenticate } from "@/offcourse/db";
 
 import type { APIRoute } from 'astro';
 

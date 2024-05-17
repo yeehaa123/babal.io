@@ -1,4 +1,4 @@
-import type { CheckpointsDBResult } from "@/db/types"
+import type { CheckpointsDBResult } from "@/offcourse/db/types"
 import type { TempCourse } from "./prepCourses"
 import { shuffle } from "./helpers"
 

@@ -8,5 +8,4 @@ export type Step = {
 export type NavItem = Record<"name" | "href", string>;
 
 
-
 export type { Curator, Checkpoint, Course }

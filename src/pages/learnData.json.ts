@@ -1,5 +1,5 @@
 export const prerender = false;
-import { getLearnData } from '@/db/learnDataDB';
+import { getLearnData } from '@/offcourse/db';
 import type { APIRoute } from 'astro';
 
 export const POST: APIRoute = async ({ request }) => {

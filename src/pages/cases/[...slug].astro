@@ -3,7 +3,7 @@ import Base from "@/layouts/Base.astro";
 import Article from "@/components/Article.astro";
 import { CourseCard }from "@/offcourse";
 import { getCollection } from 'astro:content';
-import { getCourseByHabitat } from "@/db/courseDB";
+import { getCourseByHabitat } from "@/offcourse/db";
 import { navigation, siteData } from "@/consts";
 
 export async function getStaticPaths() {
