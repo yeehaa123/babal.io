@@ -6,7 +6,6 @@ type GetLearnDataParams = {
   courseIds: Course['courseId'][]
 }
 
-
 export function getLearnData({ userName, courseIds }: GetLearnDataParams) {
   return getLearnDataByUserNameAndCourseIds({ userName, courseIds });
 }
