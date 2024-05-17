@@ -1,3 +1,5 @@
+export type Tag = string;
+
 export type Course = {
   courseId: string,
   goal: string,
@@ -5,7 +7,7 @@ export type Course = {
   curator: Curator,
   habitat?: string | undefined,
   checkpoints: Checkpoint[],
-  tags: string[]
+  tags: Tag[]
 }
 
 export type LearnData = {

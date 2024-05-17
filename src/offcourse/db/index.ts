@@ -3,21 +3,15 @@ import { authenticate, getPeople } from "./peopleDB";
 
 import {
   getTags,
-  getCoursesByTag,
-  getCourseByHabitat,
-  getCoursesByCurator,
-  getCourseById,
+  getCourse,
   getCourses
 } from "./course";
 
 export {
+  getCourse,
   authenticate,
   getLearnData,
   getPeople,
   getTags,
-  getCoursesByTag,
-  getCourseByHabitat,
-  getCourseById,
-  getCoursesByCurator,
   getCourses
 }

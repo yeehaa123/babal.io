@@ -3,13 +3,13 @@ import Base from "@/layouts/Base.astro";
 import Article from "@/components/Article.astro";
 import { CourseCard }from "@/offcourse";
 import { getCollection } from 'astro:content';
-import { getCourseByHabitat } from "@/offcourse/db";
+import { getCourse } from "@/offcourse/db";
 import { navigation, siteData } from "@/consts";
 
 export async function getStaticPaths() {
   const cases = await getCollection('cases');
   const promises = cases.map(async entry => {
-    const course = await getCourseByHabitat(`/cases/${entry.slug}`);
+    const course = await getCourse({ habitat: `/cases/${entry.slug}`});
     return {
       params: { slug: entry.slug }, props: { entry, course },
     }});

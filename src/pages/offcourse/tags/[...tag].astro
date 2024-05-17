@@ -1,13 +1,13 @@
 ---
 import Base from "@/layouts/Base.astro";
 import { navigation, siteData } from "@/consts";
-import { getTags, getCoursesByTag} from "@/offcourse/db";
+import { getTags, getCourses } from "@/offcourse/db";
 import { CourseCollection } from "@/offcourse";
 
 export async function getStaticPaths() {
   const tags = await getTags();
   const promises  = tags.map(async (tag: string) => {
-  const courses  = await getCoursesByTag(tag);
+  const courses  = await getCourses({ tag });
     return { params: { tag: tag }, props: { courses }}
   })
   return await Promise.all(promises);

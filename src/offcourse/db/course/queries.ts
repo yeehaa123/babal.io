@@ -12,7 +12,7 @@ export async function getCourseById(courseId: string) {
   return result.get(courseId);
 }
 
-export async function getCourses() {
+export async function getAllCourses() {
   const dbResult = await db.select()
     .from(Courses)
     .leftJoin(Socials, eq(Courses.curator, Socials.alias))
