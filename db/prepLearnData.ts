@@ -1,9 +1,8 @@
-import type { CheckpointsDBResult } from "@/offcourse/db/types"
-import type { TempCourse } from "./prepCourses"
+import type { TempCourse, TempCheckpoint } from "./prepCourses"
 import { shuffle } from "./helpers"
 
 export function prepCompletionData({ people, checkpoints }:
-  { people: { alias: string }[], checkpoints: CheckpointsDBResult[] }) {
+  { people: { alias: string }[], checkpoints: TempCheckpoint[] }) {
   const all = people.flatMap(({ alias }) => {
     return checkpoints.flatMap(({ courseId, checkpointId }) => {
       const userName = alias;
@@ -26,7 +25,13 @@ export function prepBookmarkData({ people, courses }:
   return shuffle(all).slice(0, 2);
 }
 
-const messages = ["This is it!", "revise this", "Need more time to process", "There is so much to learn", "Why do you share this"];
+const messages = [
+  "This is it!",
+  "revise this",
+  "Need more time to process",
+  "There is so much to learn",
+  "Why do you share this"
+];
 
 export function prepNotesData({ people, courses }:
   { people: { alias: string }[], courses: TempCourse[] }) {

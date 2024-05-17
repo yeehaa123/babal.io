@@ -43,21 +43,25 @@ export function prepCourses(courses: RawCourse[]): TempCourse[] {
   });
 }
 
-export async function prepCheckpoints(courses: TempCourse[]) {
-  const cache = await readCache() || new Map;
+export function prepCheckpoints(courses: TempCourse[]) {
   const flatCheckpoints = courses.flatMap(({ courseId, goal, checkpoints }) => {
     return checkpoints.map((checkpoint) => {
       const checkpointId = nanoid();
       return { courseId, goal, checkpointId, ...checkpoint }
     })
   })
-  const promises = flatCheckpoints.map((cp) => prepCheckpoint(cp, cache));
-  const checkpoints = await Promise.all(promises);
-  await writeCache(cache);
-  return checkpoints;
+  return flatCheckpoints;
 }
 
-export function prepTags({ checkpoints }: { checkpoints: CheckpointsDBResult[] }) {
+export async function augmentCheckpoints(checkpoints: TempCheckpoint[]) {
+  const cache = await readCache() || new Map;
+  const promises = checkpoints.map((cp) => prepCheckpoint(cp, cache));
+  const cp = await Promise.all(promises);
+  await writeCache(cache);
+  return cp;
+}
+
+export function prepTags(checkpoints: CheckpointsDBResult[]) {
   const courseTags = checkpoints.reduce((acc, { courseId, tags: tagsString }) => {
     const newTags = tagsString?.split(",").map(s => s.trim()) || [];
     const oldTags = acc.get(courseId) || new Set(newTags);
@@ -65,6 +69,7 @@ export function prepTags({ checkpoints }: { checkpoints: CheckpointsDBResult[] }
     acc.set(courseId, [...tags])
     return acc;
   }, new Map<string, string[]>)
+
   return Array.from(courseTags).flatMap(([courseId, tags]) => {
     return tags.map(tag => {
       return { courseId, tag }
