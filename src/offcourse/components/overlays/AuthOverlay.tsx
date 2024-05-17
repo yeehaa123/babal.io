@@ -4,7 +4,7 @@ import {
   CardFooter,
   CardTitle,
 } from "@/components/ui/card"
-import { CardChrome } from "@/offcourse/components/CourseCard";
+import { CardChrome } from "@/offcourse/components";
 
 import type { CourseCardStore } from "@/offcourse/stores/card/types";
 

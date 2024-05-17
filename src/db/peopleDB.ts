@@ -1,9 +1,11 @@
 import { db, Socials, People, eq } from 'astro:db';
 import type {
   Curator,
+} from "@/types";
+import type {
   peopleDBResult,
   SocialsDBResult,
-} from "@/types";
+} from "./types";
 
 export async function authenticate(userName: string) {
   const curator = await getPeopleByAlias(userName);

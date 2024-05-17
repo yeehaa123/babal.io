@@ -8,13 +8,15 @@ import {
   CardContent,
 } from "@/components/ui/card"
 
-import { CardChrome } from "./CourseCard";
-import { Bookmark } from "./Bookmark";
-import { Checkpoint } from "./Checkpoint";
-import { CardMeta } from "./CardMeta"
-import { Toolbar } from "./Toolbar"
-import { Curator } from './Curator';
-import { Tags } from "./Tags"
+import {
+  CardChrome,
+  Toolbar,
+  Curator,
+  Bookmark,
+  Checkpoint,
+  CardMeta,
+  Tags
+} from "./";
 
 export default function CourseCard({
   course,

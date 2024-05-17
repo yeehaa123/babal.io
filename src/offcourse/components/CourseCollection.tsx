@@ -1,15 +1,16 @@
 import type { Course } from "@/types";
-import { useEffect, useRef } from "react"
-import { useShallow } from 'zustand/react/shallow'
-
-import { OffcourseContext, useOffcourseContext } from "@/offcourse/stores/collection";
-import { useStore } from "@nanostores/react"
-import { CourseCard } from "@/offcourse/components/CourseCard"
-import { $authState } from "@/stores/authState";
-import { createOffcourseStore } from "@/offcourse/stores/collection"
-
 import type { ReactElement } from 'react';
 import type { OffcourseStore } from "@/offcourse/stores/collection"
+
+import { useEffect, useRef } from "react"
+import { useShallow } from 'zustand/react/shallow'
+import { useStore } from "@nanostores/react"
+
+import { OffcourseContext, useOffcourseContext } from "@/offcourse/stores/collection";
+import { $authState } from "@/stores/authState";
+import { createOffcourseStore } from "@/offcourse/stores/collection"
+import { CourseCard } from "."
+
 
 type CollectionProps = {
   courses: Course[],
@@ -53,7 +54,7 @@ function InnerCollection() {
   </>
 }
 
-export function CourseCollection({ courses }: CollectionProps) {
+export default function CourseCollection({ courses }: CollectionProps) {
   return (
     <StoreProvider courses={courses}>
       <InnerCollection />

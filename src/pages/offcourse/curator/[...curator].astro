@@ -3,19 +3,16 @@ import Base from "@/layouts/Base.astro";
 import { navigation, siteData } from "@/consts";
 import { getPeople } from "@/db/peopleDB";
 import { getCoursesByCurator } from "@/db/courseDB";
-import { CourseCollection } from "@/offcourse/components/CourseCollection";
-
+import { CourseCollection } from "@/offcourse";
 
 export async function getStaticPaths() {
   const people = await getPeople();
   const promises  = people.map(async ({alias}: {alias: string}) => {
   const courses  = await getCoursesByCurator(alias);
-    console.log(courses);
     return { params: { curator: alias }, props: { courses }}
   })
   return await Promise.all(promises);
 }
-
 
 const { courses } = Astro.props;
 ---

@@ -1,3 +1,5 @@
+import type { CourseCardStore } from "@/offcourse/stores/card/types";
+
 import { Button } from "@/components/ui/button"
 import {
   CardHeader,
@@ -5,12 +7,10 @@ import {
   CardTitle,
   CardContent,
 } from "@/components/ui/card"
-import { CardChrome } from "@/offcourse/components/CourseCard";
+import { CardChrome } from "@/offcourse/components";
 import { NoteForm } from "../forms/NoteForm";
 
-import type { CourseCardStore } from "@/offcourse/stores/card/types";
-
-export function NoteOverlay({ course, cardState, actions }: CourseCardStore) {
+export default function NoteOverlay({ course, cardState, actions }: CourseCardStore) {
   const { courseId, notes } = course;
   const { overlayMode } = cardState;
   const { hideCheckpoint, addNote } = actions;

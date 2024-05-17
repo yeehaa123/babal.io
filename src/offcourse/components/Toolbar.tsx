@@ -27,7 +27,7 @@ type Props = {
   affordances: Affordances,
 }
 
-export function Toolbar({
+export default function Toolbar({
   habitat,
   actions,
   affordances

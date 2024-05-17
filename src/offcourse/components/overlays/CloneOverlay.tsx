@@ -1,12 +1,13 @@
+import type { CourseCardStore } from "@/offcourse/stores/card/types";
+
 import { Button } from "@/components/ui/button"
 import {
   CardHeader,
   CardFooter,
   CardTitle,
 } from "@/components/ui/card"
-import type { CourseCardStore } from "@/offcourse/stores/card/types";
 
-import { CardChrome } from "@/offcourse/components/CourseCard";
+import { CardChrome } from "@/offcourse/components";
 
 export default function MockOverlay({ course, actions }: CourseCardStore) {
   const { courseId } = course;

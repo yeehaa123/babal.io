@@ -1,10 +1,13 @@
 import { db, Socials, Courses, Checkpoints, Tags, eq } from 'astro:db';
 import type {
   Course,
+} from "@/types";
+
+import type {
   CoursesDBResult,
   SocialsDBResult,
   CheckpointsDBResult
-} from "@/types";
+} from "./types";
 
 export async function getCourseById(courseId: string) {
   const dbResult = await db.select()

@@ -1,6 +1,7 @@
 import { nanoid } from 'nanoid'
 import { readCache, writeCache } from "./helpers"
-import type { Checkpoint, CheckpointsDBResult, Course } from "@/types"
+import type { Checkpoint, Course } from "@/types"
+import type { CheckpointsDBResult } from "@/db/types"
 import type { LLMCache } from './helpers';
 import { getLLMDescription } from './LLMaugmentation';
 import crypto from 'crypto';

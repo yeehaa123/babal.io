@@ -1,7 +1,8 @@
+import type { CourseCardStore } from "@/offcourse/stores/card/types";
+
 import { ExternalLinkIcon } from '@radix-ui/react-icons'
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import { Tags } from "@/offcourse/components/Tags"
 import {
   CardDescription,
   CardHeader,
@@ -9,9 +10,11 @@ import {
   CardFooter,
   CardTitle,
 } from "@/components/ui/card"
-import { CardChrome } from "@/offcourse/components/CourseCard";
-import Checkbox from "@/offcourse/components/Checkbox"
-import type { CourseCardStore } from "@/offcourse/stores/card/types";
+import {
+  CardChrome,
+  Checkbox,
+  Tags
+} from "@/offcourse/components";
 
 export default function CheckpointOverlay({ checkpoint, affordances, actions }: CourseCardStore) {
   const { canCheckComplete } = affordances;

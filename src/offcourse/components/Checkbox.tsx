@@ -1,4 +1,4 @@
-import { Checkbox } from "@/components/ui/checkbox"
+import { Checkbox as CB } from "@/components/ui/checkbox"
 import { cn } from "@/lib/utils"
 
 type Props = {
@@ -9,8 +9,8 @@ type Props = {
   className?: string
 }
 
-export default function CB({ id, checked, disabled, onClick, className }: Props) {
-  return <Checkbox
+export default function Checkbox({ id, checked, disabled, onClick, className }: Props) {
+  return <CB
     className={cn("bg-gray-50", className, { "invisible": disabled, "bg-gray-800": checked })}
     checked={checked}
     id={id}

@@ -2,8 +2,7 @@
 import Base from "@/layouts/Base.astro";
 import { navigation, siteData } from "@/consts";
 import { getTags, getCoursesByTag} from "@/db/courseDB";
-import { CourseCollection } from "@/offcourse/components/CourseCollection";
-
+import { CourseCollection } from "@/offcourse";
 
 export async function getStaticPaths() {
   const tags = await getTags();

@@ -1,36 +1,20 @@
-import {
-  Avatar,
-  AvatarFallback,
-} from "@/components/ui/avatar"
-
-
-import {
-  CardDescription,
-} from "@/components/ui/card"
+import type { Curator } from "@/types";
 
 import {
   GitHubLogoIcon,
   LinkedInLogoIcon,
   InstagramLogoIcon
 } from '@radix-ui/react-icons'
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { CardDescription } from "@/components/ui/card"
+import { AvatarImage } from "./";
 
-import { GeneratedAvatarImage } from "./GeneratedAvatar";
-
-type Socials = {
-  linkedin?: string,
-}
-
-interface Props {
-  alias: string;
-  socials: Socials | undefined;
-}
-
-export function Curator({ alias, socials }: Props) {
+export default function Curator({ alias, socials }: Curator) {
   return (
     <div className="flex align-middle py-4 items-center justify-between">
       <a href={`/offcourse/curator/${alias}`} className="flex items-center space-x-3">
         <Avatar>
-          <GeneratedAvatarImage userName={alias} saturation={100} lightness={100} />
+          <AvatarImage userName={alias} saturation={100} lightness={100} />
           <AvatarFallback className="bg-indigo-600 text-white">YH</AvatarFallback>
         </Avatar>
         <CardDescription>{alias}</CardDescription>

@@ -1,7 +1,7 @@
-import { Label } from "@/components/ui/label"
-import Checkbox from "@/offcourse/components/Checkbox"
-
 import type { AugmentedCheckpoint } from "@/offcourse/types";
+
+import { Label } from "@/components/ui/label"
+import { Checkbox } from "@/offcourse/components"
 
 interface Props extends AugmentedCheckpoint {
   canCheckComplete: boolean,
@@ -9,8 +9,7 @@ interface Props extends AugmentedCheckpoint {
   showCheckpoint: (task: string) => void
 }
 
-
-export function Checkpoint({
+export default function Checkpoint({
   task,
   courseId,
   isCompleted,

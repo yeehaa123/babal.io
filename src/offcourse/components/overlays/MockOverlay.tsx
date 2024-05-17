@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { CardChrome } from "@/offcourse/components/CourseCard";
+import { CardChrome } from "@/offcourse/components";
 import {
   CardHeader,
   CardFooter,
