@@ -11,7 +11,7 @@ export type SocialsDBResult = {
   linkedin: string | null
 }
 
-export type peopleDBResult = {
+export type PeopleDBResult = {
   alias: string,
 }
 

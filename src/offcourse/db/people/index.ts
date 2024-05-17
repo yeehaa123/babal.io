@@ -1,6 +1,4 @@
-import type {
-  Curator,
-} from "@/offcourse/types";
+import type { Curator } from "@/offcourse/types";
 
 import { getAllPeople, getPersonByAlias } from "./queries";
 
@@ -8,9 +6,10 @@ export function getPeople() {
   return getAllPeople();
 }
 
-type GetPersonParams = {
+type PersonQueryParams = {
   alias: Curator['alias']
 }
-export async function getPerson({ alias }: GetPersonParams): Promise<Curator | undefined> {
+
+export async function getPerson({ alias }: PersonQueryParams): Promise<Curator | undefined> {
   return getPersonByAlias(alias)
 }

@@ -3,7 +3,7 @@ import type {
 } from "@/offcourse/types";
 
 import type {
-  peopleDBResult,
+  PeopleDBResult,
   SocialsDBResult,
 } from "../types";
 
@@ -30,7 +30,7 @@ export async function getPersonByAlias(alias: string): Promise<Curator | undefin
 
 
 function processPeopleResults(result: {
-  People: peopleDBResult,
+  People: PeopleDBResult,
   Socials: SocialsDBResult
 }[]) {
   return result.reduce<Map<string, Curator>>(

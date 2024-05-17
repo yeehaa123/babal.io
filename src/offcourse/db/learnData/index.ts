@@ -1,11 +1,11 @@
 import type { Course, Curator } from "@/offcourse/types";
 import { getLearnDataByUserNameAndCourseIds } from "./queries";
 
-type GetLearnDataParams = {
+type LearnDataQueryParams = {
   userName: Curator['alias'],
   courseIds: Course['courseId'][]
 }
 
-export function getLearnData({ userName, courseIds }: GetLearnDataParams) {
+export function getLearnData({ userName, courseIds }: LearnDataQueryParams) {
   return getLearnDataByUserNameAndCourseIds({ userName, courseIds });
 }

@@ -8,5 +8,3 @@ export async function getTags() {
   const tags = new Set([...allTags]);
   return [...tags]
 }
-
-

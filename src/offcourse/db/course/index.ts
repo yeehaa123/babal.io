@@ -7,12 +7,12 @@ import {
   getAllCourses
 } from "./queries";
 
-type getCourseQueryParams = {
+type CourseQueryParams = {
   courseId?: Course['courseId'],
   habitat?: Course['habitat']
 }
 
-function getCourse({ courseId, habitat }: getCourseQueryParams) {
+function getCourse({ courseId, habitat }: CourseQueryParams) {
   if (courseId) {
     return getCourseById(courseId);
   } else if (habitat) {
@@ -21,12 +21,12 @@ function getCourse({ courseId, habitat }: getCourseQueryParams) {
   throw ("QUERY PARAMS ARE MANDATORY");
 }
 
-type getCoursesQueryParams = {
+type CoursesQueryParams = {
   tag?: Tag,
   curator?: Curator['alias']
 }
 
-function getCourses(params?: getCoursesQueryParams) {
+function getCourses(params?: CoursesQueryParams) {
   if (params) {
     const { tag, curator } = params;
     if (tag) {
