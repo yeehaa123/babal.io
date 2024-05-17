@@ -1,6 +1,6 @@
 import type {
   Course,
-} from "@/types";
+} from "@/offcourse/types";
 
 import type {
   CoursesDBResult,

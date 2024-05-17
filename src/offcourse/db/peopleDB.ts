@@ -1,7 +1,9 @@
 import { db, Socials, People, eq } from 'astro:db';
+
 import type {
   Curator,
-} from "@/types";
+} from "@/offcourse/types";
+
 import type {
   peopleDBResult,
   SocialsDBResult,
@@ -52,4 +54,3 @@ function processPeopleResults(result: {
     new Map()
   );
 }
-

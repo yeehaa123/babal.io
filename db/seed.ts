@@ -10,7 +10,7 @@ import {
   NoteData
 } from 'astro:db';
 import { readDir } from "./helpers"
-import type { Curator } from "@/types"
+import type { Curator } from "@/offcourse/types"
 import type { RawCourse } from "./prepCourses"
 import { prepCourses, prepCheckpoints, prepTags } from "./prepCourses"
 import { prepBookmarkData, prepCompletionData, prepNotesData } from "./prepLearnData"
