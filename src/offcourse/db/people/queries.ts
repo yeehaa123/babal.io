@@ -7,14 +7,10 @@ import type {
 import type {
   peopleDBResult,
   SocialsDBResult,
-} from "./types";
+} from "../types";
 
-export async function authenticate(userName: string) {
-  const curator = await getPeopleByAlias(userName);
-  return { userName: curator?.alias };
-}
 
-export async function getPeople() {
+export async function getAllPeople() {
   const dbResult = await db.select()
     .from(People)
     .innerJoin(Socials, eq(People.alias, Socials.alias))
@@ -23,7 +19,7 @@ export async function getPeople() {
   return Array.from(result, ([_, c]) => c)
 }
 
-export async function getPeopleByAlias(alias: string): Promise<Curator | undefined> {
+export async function getPersonByAlias(alias: string): Promise<Curator | undefined> {
   const dbResult = await db.select()
     .from(People)
     .where(eq(People.alias, alias))
