@@ -1,6 +1,5 @@
 import type { Course, Curator, Tag } from "@/offcourse/types";
 import {
-  getTags,
   getCoursesByTag,
   getCourseByHabitat,
   getCoursesByCurator,
@@ -41,6 +40,5 @@ function getCourses(params?: getCoursesQueryParams) {
 
 export {
   getCourse,
-  getTags,
   getCourses
 }

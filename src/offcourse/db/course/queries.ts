@@ -12,6 +12,18 @@ export async function getCourseById(courseId: string) {
   return result.get(courseId);
 }
 
+export async function getCourseByHabitat(postId: string) {
+  const index = await db.select({
+    courseId: Courses.courseId
+  }).from(Courses)
+    .where(eq(Courses.habitat, postId))
+
+  const courseId = index[0]?.courseId;
+  if (!courseId) { return }
+  return getCourseById(courseId)
+}
+
+
 export async function getAllCourses() {
   const dbResult = await db.select()
     .from(Courses)
@@ -43,28 +55,5 @@ export async function getCoursesByTag(tag: string) {
 
   const courseMap = processCourseResults(dbResult);
   return Array.from(courseMap, ([_, c]) => c)
-}
-
-export async function getTags() {
-  const dbResult = await db.select()
-    .from(Tags)
-
-  const allTags = dbResult.map(({ tag }) => tag);
-  const tags = new Set([...allTags]);
-  return [...tags]
-}
-
-
-export async function getCourseByHabitat(postId: string) {
-  const index = await db.select({
-    courseId: Courses.courseId
-  }).from(Courses)
-    .where(eq(Courses.habitat, postId))
-
-  const courseId = index[0]?.courseId;
-
-  if (!courseId) { return }
-
-  return getCourseById(courseId)
 }
 

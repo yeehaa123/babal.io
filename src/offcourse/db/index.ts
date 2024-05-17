@@ -1,8 +1,10 @@
 import { getLearnData } from './learnDataDB';
-import { authenticate, getPeople } from "./peopleDB";
-
 import {
-  getTags,
+  authenticate,
+  getPeople
+} from "./peopleDB";
+import { getTags } from "./tags"
+import {
   getCourse,
   getCourses
 } from "./course";
