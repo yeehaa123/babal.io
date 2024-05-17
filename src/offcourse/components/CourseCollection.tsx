@@ -1,4 +1,4 @@
-import type { Course } from "@/types";
+import type { Course } from "@/offcourse/types";
 import type { ReactElement } from 'react';
 import type { OffcourseStore } from "@/offcourse/stores/collection"
 

@@ -1,9 +1,10 @@
+import type { Course } from "@/offcourse/types";
+
 import { CourseContent, CourseCollection, Overlay } from "@/offcourse/components"
 import { OverlayModes } from "@/offcourse/stores/card/types";
 import { useCourseCardStore } from "@/offcourse/stores/card";
 
 import type { AuthData } from "@/stores/authState";
-import type { Course } from "@/types";
 
 type WrapperProps = {
   courseId: Course['courseId'],

@@ -1,5 +1,4 @@
-import type { Course } from "@/types";
-import type { AugmentedCourse, LearnData } from '@/offcourse/types';
+import type { Course, AugmentedCourse, LearnData } from '@/offcourse/types';
 
 import { createStore, useStore } from 'zustand'
 import { createContext, useContext } from "react"

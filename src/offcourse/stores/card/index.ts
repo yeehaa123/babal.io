@@ -1,8 +1,9 @@
-import { useOffcourseContext } from "@/offcourse/stores/collection";
-import { login, logout } from "@/stores/authState";
+import type { Course } from "@/offcourse/types";
 import type { AuthData } from "@/stores/authState";
 
-import type { Course } from "@/types";
+import { useOffcourseContext } from "@/offcourse/stores/collection";
+import { login, logout } from "@/stores/authState";
+
 import {
   determineRole,
   determineAffordances

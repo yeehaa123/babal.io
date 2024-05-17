@@ -1,4 +1,4 @@
-import type { Curator } from "@/types";
+import type { Curator } from "@/offcourse/types";
 
 import {
   GitHubLogoIcon,

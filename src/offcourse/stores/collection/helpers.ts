@@ -1,5 +1,4 @@
-import type { Course } from "@/types";
-import type { LearnData } from "@/offcourse/types";
+import type { LearnData, Course } from "@/offcourse/types";
 
 export function prepareCourse(
   { course, learnData }:
