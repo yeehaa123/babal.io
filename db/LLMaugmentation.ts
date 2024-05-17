@@ -5,7 +5,9 @@ import OpenAI from "openai";
 
 export async function getLLMDescription({ href, task, goal }: TempCheckpoint) {
   const openai = new OpenAI({ apiKey: import.meta.env.OPENAI_API_KEY });
+
   console.log("NOT CACHED ", href, goal);
+
   const num_words = 300;
   const num_chars = 400;
   const min_num_tags = 1;
