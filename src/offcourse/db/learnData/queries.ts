@@ -10,7 +10,7 @@ import {
 
 import type { LearnData } from '@/offcourse/types';
 
-export async function getLearnData({ userName, courseIds }:
+export async function getLearnDataByUserNameAndCourseIds({ userName, courseIds }:
   { userName: string, courseIds: string[] }) {
 
   const learnDataDBResult = await db

@@ -1,5 +1,3 @@
-import { db, Socials, People, eq } from 'astro:db';
-
 import type {
   Curator,
 } from "@/offcourse/types";
@@ -9,6 +7,7 @@ import type {
   SocialsDBResult,
 } from "../types";
 
+import { db, Socials, People, eq } from 'astro:db';
 
 export async function getAllPeople() {
   const dbResult = await db.select()

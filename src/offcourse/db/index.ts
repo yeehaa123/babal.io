@@ -1,12 +1,8 @@
-import { getLearnData } from './learnDataDB';
+import { authenticate } from "./authenticate";
+import { getCourse, getCourses } from "./course";
 import { getPerson, getPeople } from "./people";
 import { getTags } from "./tags"
-import { getCourse, getCourses } from "./course";
-
-async function authenticate(userName: string) {
-  const curator = await getPerson({ alias: userName });
-  return { userName: curator?.alias };
-}
+import { getLearnData } from './learnData';
 
 export {
   getCourse,
