@@ -3,8 +3,8 @@ import {
   CardHeader,
   CardFooter,
   CardTitle,
+  CardContent,
 } from "@/components/ui/card"
-import { CardChrome } from "@/offcourse/components";
 
 import type { CourseCardStore } from "@/offcourse/stores/card/types";
 
@@ -12,16 +12,17 @@ import type { CourseCardStore } from "@/offcourse/stores/card/types";
 export default function CheckpointOverlay({ actions }: CourseCardStore) {
   const { hideOverlay, showRegisterOverlay, authenticate } = actions;
   return (
-    <CardChrome>
+    <>
       <CardHeader className="flex flex-row gap-x-7 space-y-0 items-top">
         <CardTitle>Sign In</CardTitle>
       </CardHeader>
+      <CardContent className="flex grow" />
       <CardFooter className="flex w-full justify-between gap-x-2">
         <Button onClick={authenticate} className="w-full">Sign In</Button>
         <Button onClick={showRegisterOverlay} className="w-full">Sign Up</Button>
         <Button onClick={hideOverlay} className="w-full">Cancel</Button>
       </CardFooter>
-    </CardChrome>
+    </>
 
   )
 }

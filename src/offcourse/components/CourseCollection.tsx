@@ -34,8 +34,6 @@ const StoreProvider = ({ children, courses }: ProviderProps) => {
 function InnerCollection() {
   const courseIds = useOffcourseContext(
     useShallow((state) => Object.keys(state.courses)))
-
-
   return (
     <div
       className="grid justify-center items-start gap-4 gap-y-8 m-2 grid-cols-[repeat(auto-fit,minmax(340px,400px))]">

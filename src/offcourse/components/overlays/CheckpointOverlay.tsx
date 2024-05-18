@@ -11,7 +11,6 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import {
-  CardChrome,
   Checkbox,
   Tags
 } from "@/offcourse/components";
@@ -21,7 +20,7 @@ export default function CheckpointOverlay({ checkpoint, affordances, actions }: 
   const { courseId, isCompleted, task, description, href, tags } = checkpoint!;
   const { hideCheckpoint, toggleComplete } = actions;
   return (
-    <CardChrome>
+    <>
       <CardHeader className="flex flex-row gap-x-7 space-y-0 items-top">
         <CardTitle>{task}</CardTitle>
         <Checkbox id={`${courseId}-${task}`}
@@ -45,7 +44,6 @@ export default function CheckpointOverlay({ checkpoint, affordances, actions }: 
           hideCheckpoint(courseId)
         }} className="w-full">Close</Button>
       </CardFooter>
-    </CardChrome>
-
+    </>
   )
 }

@@ -1,7 +1,6 @@
 import type { Course } from "@/offcourse/types";
 
 import { CourseContent, CourseCollection, Overlay } from "@/offcourse/components"
-import { OverlayModes } from "@/offcourse/stores/card/types";
 import { useCourseCardStore } from "@/offcourse/stores/card";
 
 type WrapperProps = {
@@ -21,9 +20,11 @@ export function CourseCardWrapper({ courseId }: WrapperProps) {
     return <div>ERROR</div>
   }
 
-  return store.cardState.overlayMode === OverlayModes.NONE
-    ? <CourseContent {...store} />
-    : <Overlay {...store} />
+  return (
+    <div className="grid *:col-start-1 *:row-start-1" >
+      <Overlay {...store} />
+      <CourseContent {...store} />
+    </div >)
 }
 
 export default function CourseCard({ course, courseId }: CardProps) {

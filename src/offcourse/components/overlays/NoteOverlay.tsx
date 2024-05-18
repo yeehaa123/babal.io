@@ -7,7 +7,6 @@ import {
   CardTitle,
   CardContent,
 } from "@/components/ui/card"
-import { CardChrome } from "@/offcourse/components";
 import { NoteForm } from "../forms/NoteForm";
 
 export default function NoteOverlay({ course, cardState, actions }: CourseCardStore) {
@@ -18,7 +17,7 @@ export default function NoteOverlay({ course, cardState, actions }: CourseCardSt
   console.log(course.notes);
 
   return (
-    <CardChrome>
+    <>
       <CardHeader className="flex flex-row gap-x-7 space-y-0 items-top">
         <CardTitle>{overlayMode}</CardTitle>
       </CardHeader>
@@ -34,7 +33,6 @@ export default function NoteOverlay({ course, cardState, actions }: CourseCardSt
         <Button type="submit" form={formId} className="w-full">Add Note</Button>
         <Button onClick={hideCheckpoint} className="w-full">Close</Button>
       </CardFooter>
-    </CardChrome >
-
+    </>
   )
 }

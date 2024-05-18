@@ -7,6 +7,9 @@ import {
   CloneOverlay,
   NoteOverlay
 } from "@/offcourse/components/overlays";
+import {
+  CardChrome,
+} from "@/offcourse/components";
 
 export default function Overlay(props: CourseCardStore) {
   const overlayMode = props.cardState.overlayMode!
@@ -20,5 +23,8 @@ export default function Overlay(props: CourseCardStore) {
     [OverlayModes.CLONE]: CloneOverlay,
     [OverlayModes.CHECKPOINT]: CheckpointOverlay,
   }[overlayMode]
-  return <Overlay {...props} />
+  return (
+    <CardChrome overlayVisible={overlayMode !== OverlayModes.NONE}>
+      <Overlay {...props} />
+    </CardChrome>)
 }
