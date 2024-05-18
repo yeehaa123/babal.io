@@ -14,8 +14,6 @@ export default function NoteOverlay({ course, cardState, actions }: CourseCardSt
   const { overlayMode } = cardState;
   const { hideCheckpoint, addNote } = actions;
   const formId = `${courseId}-note-form`
-  console.log(course.notes);
-
   return (
     <>
       <CardHeader className="flex flex-row gap-x-7 space-y-0 items-top">

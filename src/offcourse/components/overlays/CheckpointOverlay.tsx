@@ -40,7 +40,6 @@ export default function CheckpointOverlay({ checkpoint, affordances, actions }: 
       </CardContent >
       <CardFooter className="flex w-full justify-between gap-x-2">
         <Button onClick={() => {
-          console.log(courseId)
           hideCheckpoint(courseId)
         }} className="w-full">Close</Button>
       </CardFooter>
