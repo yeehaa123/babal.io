@@ -1,11 +1,9 @@
 import type { StoreApi } from "zustand";
 import type { Course, CourseNote } from "@/offcourse/types";
-import type { OffcourseState } from "./"
+import type { OffcourseState, AuthData } from "./"
 
 import { produce } from 'immer';
 import { prepareCourse } from "./helpers";
-import type { AuthData } from "@/stores/authState";
-
 
 type OffcourseInitialState = Omit<OffcourseState, "actions">
 

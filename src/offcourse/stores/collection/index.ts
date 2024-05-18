@@ -4,7 +4,10 @@ import { createStore, useStore } from 'zustand'
 import { createContext, useContext } from "react"
 import { combine } from "zustand/middleware";
 import { StoreActions } from "./actions"
-import type { AuthData } from '@/stores/authState';
+
+export type AuthData = {
+  userName: string | undefined;
+}
 
 interface StoreProps { courses: Course[] }
 

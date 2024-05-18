@@ -1,7 +1,6 @@
 import type { AugmentedCourse } from "@/offcourse/types";
 import { CardRoleTypes } from "./types"
-import type { AuthData } from "@/stores/authState";
-
+import type { AuthData } from "@/offcourse/stores/collection";
 
 export type Affordances = ReturnType<typeof determineAffordances>
 
