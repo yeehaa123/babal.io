@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
+import { forwardRef } from "react"
 import type { ReactNode } from "react"
 
 type Props = {
@@ -7,9 +8,10 @@ type Props = {
   overlayVisible?: boolean,
 }
 
-export default function CardChrome({ children, overlayVisible }: Props) {
+
+export default forwardRef<HTMLDivElement, Props>(function({ children, overlayVisible }, ref) {
   return (
-    <Card className={cn("flex flex-col select-none h-full", { "z-10": overlayVisible })}>
+    <Card ref={ref} className={cn("flex flex-col select-none")}>
       {children}
     </Card >)
-}
+})

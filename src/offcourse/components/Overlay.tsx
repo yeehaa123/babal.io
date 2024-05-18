@@ -7,6 +7,7 @@ import {
   CloneOverlay,
   NoteOverlay
 } from "@/offcourse/components/overlays";
+import { Transition } from "@headlessui/react"
 import {
   CardChrome,
 } from "@/offcourse/components";
@@ -24,7 +25,15 @@ export default function Overlay(props: CourseCardStore) {
     [OverlayModes.CHECKPOINT]: CheckpointOverlay,
   }[overlayMode]
   return (
-    <CardChrome overlayVisible={overlayMode !== OverlayModes.NONE}>
+    <Transition
+      as={CardChrome}
+      show={overlayMode !== OverlayModes.NONE}
+      enter="ease-out duration-300"
+      enterFrom="translate-y-full"
+      enterTo="translate-y-0 z-10 opacity-95"
+      leave="ease-in duration-200"
+      leaveFrom="translate-y-0"
+      leaveTo="translate-y-full">
       <Overlay {...props} />
-    </CardChrome>)
+    </Transition>)
 }

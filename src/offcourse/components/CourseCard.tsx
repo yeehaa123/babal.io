@@ -21,7 +21,7 @@ export function CourseCardWrapper({ courseId }: WrapperProps) {
   }
 
   return (
-    <div className="grid *:col-start-1 *:row-start-1" >
+    <div className="grid *:col-start-1 *:row-start-1 overflow-hidden" >
       <Overlay {...store} />
       <CourseContent {...store} />
     </div >)
