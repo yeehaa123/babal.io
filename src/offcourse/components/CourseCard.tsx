@@ -4,22 +4,18 @@ import { CourseContent, CourseCollection, Overlay } from "@/offcourse/components
 import { OverlayModes } from "@/offcourse/stores/card/types";
 import { useCourseCardStore } from "@/offcourse/stores/card";
 
-import type { AuthData } from "@/stores/authState";
-
 type WrapperProps = {
   courseId: Course['courseId'],
-  authData: AuthData
 }
 
 export type CardProps = {
   course?: Course | undefined,
   courseId?: string,
-  authData?: AuthData
 }
 
 
-export function CourseCardWrapper({ courseId, authData }: WrapperProps) {
-  const store = useCourseCardStore({ courseId, authData });
+export function CourseCardWrapper({ courseId }: WrapperProps) {
+  const store = useCourseCardStore({ courseId });
 
   if (!store) {
     return <div>ERROR</div>
@@ -30,9 +26,9 @@ export function CourseCardWrapper({ courseId, authData }: WrapperProps) {
     : <Overlay {...store} />
 }
 
-export default function CourseCard({ course, courseId, authData }: CardProps) {
-  if (courseId && authData) {
-    return <CourseCardWrapper authData={authData} courseId={courseId} />
+export default function CourseCard({ course, courseId }: CardProps) {
+  if (courseId) {
+    return <CourseCardWrapper courseId={courseId} />
   }
 
   return course

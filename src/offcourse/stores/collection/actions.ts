@@ -4,6 +4,7 @@ import type { OffcourseState } from "./"
 
 import { produce } from 'immer';
 import { prepareCourse } from "./helpers";
+import type { AuthData } from "@/stores/authState";
 
 
 type OffcourseInitialState = Omit<OffcourseState, "actions">
@@ -27,6 +28,10 @@ class StoreActions {
 
   private get learnData() {
     return this.get().learnData;
+  }
+
+  private get userName() {
+    return this.get().authData.userName;
   }
 
   private get missingCourses() {
@@ -99,7 +104,24 @@ class StoreActions {
     this.augmentCourse({ courseId });
   }
 
-  fetchMissingLearnData = async ({ userName }: { userName: string | undefined }) => {
+  login = async () => {
+    const response = await fetch('/authenticate.json', { method: "POST" });
+    const { userName }: AuthData = await response.json();
+    console.log(userName);
+    this.set(produce((state) => {
+      state.authData.userName = userName;
+    }))
+    this.fetchMissingLearnData();
+  }
+
+  logout = async () => {
+    this.set(produce((state) => {
+      state.authData.userName = undefined;
+    }))
+  }
+
+  fetchMissingLearnData = async () => {
+    const userName = this.userName;
     if (userName) {
       const learnData = await fetchLearnData({ courseIds: this.missingCourses, userName })
       if (learnData) {

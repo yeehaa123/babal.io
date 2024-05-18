@@ -13,6 +13,7 @@ export function useCardState() {
     selectedCheckpoint: undefined,
     isMetaVisible: false,
   })
+
   const actions = {
     setOverlayMode: (overlayMode: OverlayModes) => {
       setState((state) => {

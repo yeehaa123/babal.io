@@ -1,8 +1,6 @@
 import type { Course } from "@/offcourse/types";
-import type { AuthData } from "@/stores/authState";
 
 import { useOffcourseContext } from "@/offcourse/stores/collection";
-import { login, logout } from "@/stores/authState";
 
 import {
   determineRole,
@@ -13,16 +11,19 @@ import { OverlayModes } from "./types";
 
 type StoreProps = {
   courseId: Course['courseId'],
-  authData: AuthData
 }
 
-export function useCourseCardStore({ courseId, authData }: StoreProps) {
+export function useCourseCardStore({ courseId }: StoreProps) {
 
+  const authData = useOffcourseContext((state) => state.authData);
+  console.log(authData);
   const course = useOffcourseContext((state) => state.courses[courseId]);
   const {
     toggleBookmark,
     toggleComplete,
     addNote,
+    login,
+    logout,
     ...storeActions
   } = useOffcourseContext((state) => state.actions);
 

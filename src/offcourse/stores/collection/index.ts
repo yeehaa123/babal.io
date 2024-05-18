@@ -4,6 +4,7 @@ import { createStore, useStore } from 'zustand'
 import { createContext, useContext } from "react"
 import { combine } from "zustand/middleware";
 import { StoreActions } from "./actions"
+import type { AuthData } from '@/stores/authState';
 
 interface StoreProps { courses: Course[] }
 
@@ -13,6 +14,7 @@ export type OffcourseStore = ReturnType<typeof createOffcourseStore>
 type LearnDataState = Record<string, LearnData>
 
 export type OffcourseState = {
+  authData: AuthData,
   courses: Record<string, AugmentedCourse>,
   learnData: LearnDataState,
   actions: StoreActions
@@ -24,6 +26,7 @@ export function createOffcourseStore({ courses }: StoreProps) {
   });
 
   const initialState = {
+    authData: { userName: undefined },
     courses: Object.fromEntries(storeEntries),
     learnData: {}
   }

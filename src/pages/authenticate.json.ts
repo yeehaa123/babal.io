@@ -16,7 +16,7 @@ export const GET: APIRoute = () => {
 }
 
 export const POST: APIRoute = async () => {
-  const userName = "Yeehaa"
+  const userName = "yeehaa"
   const people = await authenticate({ userName })
 
   return new Response(
