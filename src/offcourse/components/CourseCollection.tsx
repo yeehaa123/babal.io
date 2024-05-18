@@ -36,10 +36,12 @@ function InnerCollection() {
     useShallow((state) => Object.keys(state.courses)))
 
 
-  return <>
-    {courseIds.map((id) =>
-      <CourseCard key={id} courseId={id} />)}
-  </>
+  return (
+    <div
+      className="grid justify-center items-start gap-4 gap-y-8 m-2 grid-cols-[repeat(auto-fit,minmax(340px,400px))]">
+      {courseIds.map((id) =>
+        <CourseCard key={id} courseId={id} />)}
+    </div>)
 }
 
 export default function CourseCollection({ courses }: CollectionProps) {

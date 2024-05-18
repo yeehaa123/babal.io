@@ -1,13 +1,13 @@
 import type { Course } from "@/offcourse/types";
+import { OverlayModes } from "./types";
 
 import { useOffcourseContext } from "@/offcourse/stores/collection";
-
 import {
   determineRole,
   determineAffordances
 } from "./helpers"
+
 import { useCardState } from "./cardState";
-import { OverlayModes } from "./types";
 
 type StoreProps = {
   courseId: Course['courseId'],
@@ -15,9 +15,9 @@ type StoreProps = {
 
 export function useCourseCardStore({ courseId }: StoreProps) {
 
-  const authData = useOffcourseContext((state) => state.authData);
-  console.log(authData);
+  const { authData, actions } = useOffcourseContext((state) => state);
   const course = useOffcourseContext((state) => state.courses[courseId]);
+
   const {
     toggleBookmark,
     toggleComplete,
@@ -25,7 +25,7 @@ export function useCourseCardStore({ courseId }: StoreProps) {
     login,
     logout,
     ...storeActions
-  } = useOffcourseContext((state) => state.actions);
+  } = actions;
 
   if (!course) {
     return
@@ -42,18 +42,12 @@ export function useCourseCardStore({ courseId }: StoreProps) {
 
   const { selectedCheckpoint } = cardState
 
-
   const checkpoint = course.checkpoints.find(cp => cp.task === selectedCheckpoint)
   const role = determineRole({ course, authData });
   const affordances = determineAffordances(role);
 
-
   const signIn = () => {
     setOverlayMode(OverlayModes.AUTH);
-  }
-
-  const signOut = () => {
-    logout()
   }
 
   const authenticate = async () => {
@@ -83,14 +77,14 @@ export function useCourseCardStore({ courseId }: StoreProps) {
     hideOverlay();
   }
 
-  const actions = {
+  const boundActions = {
     hideOverlay,
     setOverlayMode,
     authenticate,
     signIn,
     cloneCourse,
     addNote,
-    signOut,
+    signOut: logout,
     showCloneOverlay,
     showRegisterOverlay,
     showNotesOverlay,
@@ -103,5 +97,5 @@ export function useCourseCardStore({ courseId }: StoreProps) {
     toggleBookmark
   }
 
-  return { course, checkpoint, cardState, affordances, actions }
+  return { course, checkpoint, cardState, affordances, actions: boundActions }
 }
