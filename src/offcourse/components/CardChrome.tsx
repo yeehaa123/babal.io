@@ -5,11 +5,10 @@ import type { ReactNode } from "react"
 
 type Props = {
   children: ReactNode,
-  overlayVisible?: boolean,
 }
 
 
-export default forwardRef<HTMLDivElement, Props>(function({ children, overlayVisible }, ref) {
+export default forwardRef<HTMLDivElement, Props>(function({ children }, ref) {
   return (
     <Card ref={ref} className={cn("flex flex-col select-none")}>
       {children}
