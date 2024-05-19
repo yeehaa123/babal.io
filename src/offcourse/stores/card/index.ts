@@ -14,16 +14,20 @@ type StoreProps = {
 }
 
 export function useCourseCardStore({ courseId }: StoreProps) {
-
-  const { authData, actions } = useOffcourseContext((state) => state);
+  const actions = useOffcourseContext((state) => state.actions);
+  const authData = useOffcourseContext((state) => state.authData);
   const course = useOffcourseContext((state) => state.courses[courseId]);
+  const cardState = useOffcourseContext((state) => state.cardStates[courseId])!;
 
   const {
     toggleBookmark,
     toggleComplete,
+    showCheckpoint,
+    hideCheckpoint,
     addNote,
-    login,
-    logout,
+    signIn,
+    authenticate,
+    signOut,
     ...storeActions
   } = actions;
 
@@ -32,28 +36,16 @@ export function useCourseCardStore({ courseId }: StoreProps) {
   }
 
   const {
-    cardState,
     setOverlayMode,
     hideOverlay,
-    showCheckpoint,
-    hideCheckpoint,
     toggleMetaVisible
   } = useCardState();
 
-  const { selectedCheckpoint } = cardState
-
-  const checkpoint = course.checkpoints.find(cp => cp.task === selectedCheckpoint)
+  const checkpoint = course.checkpoints.find(
+    cp => cp.checkpointId === cardState?.selectedCheckpoint)
   const role = determineRole({ course, authData });
   const affordances = determineAffordances(role);
 
-  const signIn = () => {
-    setOverlayMode(OverlayModes.AUTH);
-  }
-
-  const authenticate = async () => {
-    await login();
-    hideOverlay();
-  }
 
   const showCloneOverlay = () => {
     setOverlayMode(OverlayModes.CLONE)
@@ -82,9 +74,9 @@ export function useCourseCardStore({ courseId }: StoreProps) {
     setOverlayMode,
     authenticate,
     signIn,
+    signOut,
     cloneCourse,
     addNote,
-    signOut: logout,
     showCloneOverlay,
     showRegisterOverlay,
     showNotesOverlay,

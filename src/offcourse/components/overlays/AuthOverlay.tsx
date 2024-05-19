@@ -9,7 +9,8 @@ import {
 import type { CourseCardStore } from "@/offcourse/stores/card/types";
 
 
-export default function CheckpointOverlay({ actions }: CourseCardStore) {
+export default function AuthOverlay({ course, actions }: CourseCardStore) {
+  const { courseId } = course;
   const { hideOverlay, showRegisterOverlay, authenticate } = actions;
   return (
     <>
@@ -18,7 +19,7 @@ export default function CheckpointOverlay({ actions }: CourseCardStore) {
       </CardHeader>
       <CardContent className="flex grow" />
       <CardFooter className="flex w-full justify-between gap-x-2">
-        <Button onClick={authenticate} className="w-full">Sign In</Button>
+        <Button onClick={() => authenticate({ courseId })} className="w-full">Sign In</Button>
         <Button onClick={showRegisterOverlay} className="w-full">Sign Up</Button>
         <Button onClick={hideOverlay} className="w-full">Cancel</Button>
       </CardFooter>

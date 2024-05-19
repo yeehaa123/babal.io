@@ -33,6 +33,7 @@ export type Affordances = {
 
 export interface CardState {
   overlayMode: OverlayModes,
+  selectedCheckpoint: string | undefined,
   isMetaVisible: boolean
 }
 

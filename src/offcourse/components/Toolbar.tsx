@@ -10,10 +10,11 @@ import {
   Pencil1Icon,
   Pencil2Icon,
 } from '@radix-ui/react-icons'
+import type { Course, CourseQuery } from "../types"
 
 
 type Actions = {
-  signIn: () => void,
+  signIn: (query: CourseQuery) => void,
   signOut: () => void,
   showCloneOverlay: () => void,
   showShareOverlay: () => void,
@@ -22,12 +23,14 @@ type Actions = {
 }
 
 type Props = {
+  courseId: Course['courseId'],
   habitat?: string | undefined,
   actions: Actions,
   affordances: Affordances,
 }
 
 export default function Toolbar({
+  courseId,
   habitat,
   actions,
   affordances
@@ -49,7 +52,7 @@ export default function Toolbar({
   return (
     <div className="flex w-full justify-between">
       <div className="flex flex-start gap-x-4 ">
-        <EnterIcon onClick={signIn}
+        <EnterIcon onClick={() => signIn({ courseId })}
           className={cn("h-4 w-4 text-gray-500", { "hidden": !canAuthenticate })} />
         <ExitIcon onClick={signOut}
           className={cn("h-4 w-4 text-gray-500", { "hidden": canAuthenticate })} />

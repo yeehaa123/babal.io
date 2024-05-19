@@ -1,4 +1,6 @@
 import type { Course, AugmentedCourse, LearnData } from '@/offcourse/types';
+import type { CardState } from '../card/types';
+import { OverlayModes } from "../card/types";
 
 import { createStore, useStore } from 'zustand'
 import { createContext, useContext } from "react"
@@ -17,6 +19,7 @@ export type OffcourseStore = ReturnType<typeof createOffcourseStore>
 type LearnDataState = Record<string, LearnData>
 
 export type OffcourseState = {
+  cardStates: Record<string, CardState>
   authData: AuthData,
   courses: Record<string, AugmentedCourse>,
   learnData: LearnDataState,
@@ -28,7 +31,17 @@ export function createOffcourseStore({ courses }: StoreProps) {
     return [course.courseId, course]
   });
 
+  const cardEntries = courses.map(course => {
+    return [course.courseId, {
+      overlayMode: OverlayModes.NONE,
+      selectedCheckpoint: undefined,
+      isMetaVisible: false,
+    },
+    ]
+  })
+
   const initialState = {
+    cardStates: Object.fromEntries(cardEntries),
     authData: { userName: undefined },
     courses: Object.fromEntries(storeEntries),
     learnData: {}

@@ -1,21 +1,15 @@
 import type { StoreApi } from "zustand";
-import type { Course, CourseNote } from "@/offcourse/types";
+import type { CheckpointQuery, Course, CourseNote, CourseQuery } from "@/offcourse/types";
 import type { OffcourseState, AuthData } from "./"
 
 import { produce } from 'immer';
 import { prepareCourse } from "./helpers";
+import { OverlayModes } from "../card/types";
 
 type OffcourseInitialState = Omit<OffcourseState, "actions">
 
 type Api = StoreApi<OffcourseInitialState>;
 
-interface CourseQuery {
-  courseId: Course['courseId']
-}
-
-interface CheckpointQuery extends CourseQuery {
-  checkpointId: number
-}
 
 class StoreActions {
   constructor(private set: Api["setState"], private get: Api["getState"]) { }
@@ -62,6 +56,50 @@ class StoreActions {
     this.augmentCourse({ courseId: newId });
   }
 
+  signIn = ({ courseId }: CourseQuery) => {
+    this.set(produce((state) => {
+      state.cardStates[courseId].overlayMode = OverlayModes.AUTH;
+    }))
+  }
+
+  authenticate = async ({ courseId }: CourseQuery) => {
+    const response = await fetch('/authenticate.json', { method: "POST" });
+    const { userName }: AuthData = await response.json();
+    this.set(produce((state) => {
+      state.authData.userName = userName;
+      state.cardStates[courseId].overlayMode = OverlayModes.NONE;
+    }))
+    this.fetchMissingLearnData();
+  }
+
+  signOut = async () => {
+    this.set(produce((state) => {
+      state.authData.userName = undefined;
+    }))
+  }
+
+  hideOverlay = ({ courseId }: CourseQuery) => {
+    this.set(produce((state) => {
+      state.cardStates[courseId].overlayMode = OverlayModes.CHECKPOINT;
+    }))
+  };
+
+  showCheckpoint = (
+    { courseId, checkpointId }: CheckpointQuery) => {
+    this.set(produce((state) => {
+      state.cardStates[courseId].selectedCheckpoint = checkpointId;
+      state.cardStates[courseId].overlayMode = OverlayModes.CHECKPOINT;
+    }))
+  }
+
+  hideCheckpoint = (
+    { courseId }: CourseQuery) => {
+    this.set(produce((state) => {
+      state.cardStates[courseId].selectedCheckpoint = undefined;
+      state.cardStates[courseId].overlayMode = OverlayModes.NONE;
+    }))
+  }
+
   toggleBookmark = ({ courseId }: CourseQuery) => {
     this.set(produce((state) => {
       const learnData = this.learnData[courseId] || { tasksCompleted: [] };
@@ -85,38 +123,26 @@ class StoreActions {
 
   toggleComplete = ({ courseId, checkpointId }: CheckpointQuery) => {
     this.set(produce((state) => {
-      if (this.learnData[courseId]) {
-        const isComplete = this.learnData[courseId]?.tasksCompleted[checkpointId];
-        state.learnData[courseId].tasksCompleted[checkpointId] = !isComplete
+      const learnData = this.learnData[courseId];
+      if (learnData) {
+        const tasksCompleted = new Set([...learnData.tasksCompleted]);
+        tasksCompleted.has(checkpointId)
+          ? tasksCompleted.delete(checkpointId)
+          : tasksCompleted.add(checkpointId)
+        state.learnData[courseId].tasksCompleted = [...tasksCompleted];
       } else {
         const learnData = {
           isBookmarked: false,
-          tasksCompleted: [false, false, false, false],
+          tasksCompleted: [checkpointId],
           notes: []
         }
 
-        learnData.tasksCompleted[checkpointId] = true;
         state.learnData[courseId] = learnData;
       }
     }))
     this.augmentCourse({ courseId });
   }
 
-  login = async () => {
-    const response = await fetch('/authenticate.json', { method: "POST" });
-    const { userName }: AuthData = await response.json();
-    console.log(userName);
-    this.set(produce((state) => {
-      state.authData.userName = userName;
-    }))
-    this.fetchMissingLearnData();
-  }
-
-  logout = async () => {
-    this.set(produce((state) => {
-      state.authData.userName = undefined;
-    }))
-  }
 
   fetchMissingLearnData = async () => {
     const userName = this.userName;

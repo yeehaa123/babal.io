@@ -70,14 +70,14 @@ export default function CourseCard({
     <CardContent>
       <ul className="flex flex-col gap-2">
         {checkpoints.map((cp, index) => (
-          <Checkpoint toggleCheck={() => toggleComplete({ courseId, checkpointId: index })}
+          <Checkpoint toggleCheck={toggleComplete}
             showCheckpoint={showCheckpoint}
             canCheckComplete={canCheckComplete} key={index} {...cp} />))
         }
       </ul>
     </CardContent>
     <CardFooter className="flex flex-col gap-y-4">
-      <Toolbar affordances={affordances} actions={actions} habitat={habitat} />
+      <Toolbar courseId={courseId} affordances={affordances} actions={actions} habitat={habitat} />
     </CardFooter>
   </CardChrome>
 }

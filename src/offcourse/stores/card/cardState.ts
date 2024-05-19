@@ -1,11 +1,7 @@
 import { OverlayModes } from "./types";
+import type { CardState } from "./types";
 import { useState } from "react";
 
-type CardState = {
-  overlayMode: OverlayModes,
-  selectedCheckpoint: string | undefined,
-  isMetaVisible: boolean
-}
 
 export function useCardState() {
   const [cardState, setState] = useState<CardState>({
@@ -40,24 +36,6 @@ export function useCardState() {
         }
       })
     },
-    showCheckpoint: (checkpointId: string) => {
-      setState((state) => {
-        return {
-          ...state,
-          overlayMode: OverlayModes.CHECKPOINT,
-          selectedCheckpoint: checkpointId
-        }
-      })
-    },
-    hideCheckpoint: () => {
-      setState((state) => {
-        return {
-          ...state,
-          overlayMode: OverlayModes.NONE,
-          selectedCheckpoint: undefined
-        }
-      })
-    }
   }
   return { cardState, ...actions }
 }

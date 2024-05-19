@@ -1,17 +1,18 @@
-import type { AugmentedCheckpoint } from "@/offcourse/types";
+import type { AugmentedCheckpoint, CheckpointQuery } from "@/offcourse/types";
 
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/offcourse/components"
 
 interface Props extends AugmentedCheckpoint {
   canCheckComplete: boolean,
-  toggleCheck: () => void
-  showCheckpoint: (task: string) => void
+  toggleCheck: (query: CheckpointQuery) => void
+  showCheckpoint: (query: CheckpointQuery) => void
 }
 
 export default function Checkpoint({
   task,
   courseId,
+  checkpointId,
   isCompleted,
   toggleCheck,
   showCheckpoint,
@@ -23,9 +24,9 @@ export default function Checkpoint({
         checked={!!isCompleted}
         disabled={!canCheckComplete}
         id={`${courseId}-${task}`}
-        onClick={toggleCheck} />
+        onClick={() => toggleCheck({ courseId, checkpointId })} />
       <Label htmlFor={`${courseId}-${task}`}>
-        <button onClick={() => showCheckpoint(task)}>{task}</button>
+        <button onClick={() => showCheckpoint({ courseId, checkpointId })}>{task}</button>
       </Label>
     </li>
   )

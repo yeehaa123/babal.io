@@ -12,7 +12,7 @@ export type Course = {
 
 export type LearnData = {
   isBookmarked: boolean,
-  tasksCompleted: boolean[],
+  tasksCompleted: string[],
   notes: CourseNote[]
 }
 
@@ -46,4 +46,12 @@ export interface AugmentedCourse extends Omit<Course, 'checkpoints'> {
   isBookmarked?: boolean | undefined,
   notes: CourseNote[]
   checkpoints: AugmentedCheckpoint[]
+}
+
+export interface CourseQuery {
+  courseId: Course['courseId']
+}
+
+export interface CheckpointQuery extends CourseQuery {
+  checkpointId: Checkpoint['checkpointId']
 }
