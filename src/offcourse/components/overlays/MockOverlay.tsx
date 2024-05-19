@@ -8,7 +8,8 @@ import {
 
 import type { CourseCardStore } from "@/offcourse/stores/card/types";
 
-export default function MockOverlay({ cardState, actions }: CourseCardStore) {
+export default function MockOverlay({ course, cardState, actions }: CourseCardStore) {
+  const { courseId } = course;
   const { overlayMode } = cardState;
   const { hideCheckpoint } = actions;
 
@@ -19,7 +20,7 @@ export default function MockOverlay({ cardState, actions }: CourseCardStore) {
       </CardHeader>
       <CardContent className="flex grow" />
       <CardFooter className="flex w-full justify-between gap-x-2">
-        <Button onClick={hideCheckpoint} className="w-full">Cancel</Button>
+        <Button onClick={() => hideCheckpoint({ courseId })} className="w-full">Cancel</Button>
       </CardFooter>
     </>
   )

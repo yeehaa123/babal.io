@@ -63,8 +63,8 @@ export default function CourseCard({
       </CardTitle>
       <Curator {...curator} />
       {isMetaVisible
-        ? <CardMeta onClick={toggleMetaVisible} id={goal} />
-        : <CardDescription onClick={toggleMetaVisible}>{description}</CardDescription>}
+        ? <CardMeta onClick={() => toggleMetaVisible({ courseId })} id={goal} />
+        : <CardDescription onClick={() => toggleMetaVisible({ courseId })}>{description}</CardDescription>}
       <Tags tags={tags} />
     </CardHeader>
     <CardContent>

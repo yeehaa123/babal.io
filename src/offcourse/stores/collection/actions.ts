@@ -48,12 +48,54 @@ class StoreActions {
       if (!course) {
         throw ("TODO: ERROR")
       }
+
+      state.cardStates[courseId].overlayMode = OverlayModes.NONE;
       state.courses = {
         ...this.courses,
         [newId]: { ...course, courseId: newId, goal: "HURRAY" }
       };
+      state.cardStates[newId] = {
+        overlayMode: OverlayModes.NONE,
+        selectedCheckpoint: undefined,
+        isMetaVisible: false,
+      }
     }))
     this.augmentCourse({ courseId: newId });
+  }
+
+  hideOverlay = ({ courseId }: CourseQuery) => {
+    this.set(produce((state) => {
+      state.cardStates[courseId].overlayMode = OverlayModes.NONE;
+    }))
+  }
+
+  showCloneOverlay = ({ courseId }: CourseQuery) => {
+    this.set(produce((state) => {
+      state.cardStates[courseId].overlayMode = OverlayModes.CLONE;
+    }))
+  }
+
+  showEditOverlay = ({ courseId }: CourseQuery) => {
+    this.set(produce((state) => {
+      state.cardStates[courseId].overlayMode = OverlayModes.EDIT;
+    }))
+  }
+
+  showRegisterOverlay = ({ courseId }: CourseQuery) => {
+    this.set(produce((state) => {
+      state.cardStates[courseId].overlayMode = OverlayModes.REGISTER;
+    }))
+  }
+
+  showNotesOverlay = ({ courseId }: CourseQuery) => {
+    this.set(produce((state) => {
+      state.cardStates[courseId].overlayMode = OverlayModes.NOTE;
+    }))
+  }
+  showShareOverlay = ({ courseId }: CourseQuery) => {
+    this.set(produce((state) => {
+      state.cardStates[courseId].overlayMode = OverlayModes.SHARE;
+    }))
   }
 
   signIn = ({ courseId }: CourseQuery) => {
@@ -77,12 +119,6 @@ class StoreActions {
       state.authData.userName = undefined;
     }))
   }
-
-  hideOverlay = ({ courseId }: CourseQuery) => {
-    this.set(produce((state) => {
-      state.cardStates[courseId].overlayMode = OverlayModes.CHECKPOINT;
-    }))
-  };
 
   showCheckpoint = (
     { courseId, checkpointId }: CheckpointQuery) => {
@@ -143,6 +179,12 @@ class StoreActions {
     this.augmentCourse({ courseId });
   }
 
+  toggleMetaVisible = ({ courseId }: CourseQuery) => {
+    this.set(produce((state) => {
+      const isMetaVisible = this.get().cardStates[courseId]!.isMetaVisible;
+      state.cardStates[courseId].isMetaVisible = !isMetaVisible
+    }))
+  }
 
   fetchMissingLearnData = async () => {
     const userName = this.userName;

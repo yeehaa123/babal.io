@@ -17,7 +17,7 @@ import {
 
 export default function CheckpointOverlay({ checkpoint, affordances, actions }: CourseCardStore) {
   const { canCheckComplete } = affordances;
-  const { courseId, isCompleted, task, description, href, tags } = checkpoint!;
+  const { courseId, checkpointId, isCompleted, task, description, href, tags } = checkpoint!;
   const { hideCheckpoint, toggleComplete } = actions;
   return (
     <>
@@ -27,13 +27,13 @@ export default function CheckpointOverlay({ checkpoint, affordances, actions }: 
           checked={!!isCompleted}
           disabled={!canCheckComplete}
           className={cn("h-12 w-12 mt-0")}
-          onClick={toggleComplete} />
+          onClick={() => toggleComplete({ courseId, checkpointId })} />
       </CardHeader>
       <CardContent className="space-y-4 grow flex flex-col justify-center">
         <Tags tags={tags} />
         <CardDescription>{description}</CardDescription>
         <a href={href}
-          onClick={hideCheckpoint}
+          onClick={() => hideCheckpoint({ courseId })}
           className="flex text-xs items-center text-left text-gray-900">
           <ExternalLinkIcon className="mr-2 w-5 h-5" />
           <span className="break-words max-w-[90%]">{href}</span></a>

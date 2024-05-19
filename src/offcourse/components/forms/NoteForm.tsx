@@ -11,11 +11,7 @@ import {
 } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
 import { noteFormSchema } from "./schemas";
-
-export type CourseNote = {
-  timeStamp: Date,
-  message: string
-}
+import type { CourseNote } from "@/offcourse/types"
 
 export type Props = {
   onConfirm: (v: CourseNote) => void,
@@ -33,7 +29,7 @@ export function NoteForm({ onConfirm, formId }: Props) {
 
   function onSubmit({ note }: z.infer<typeof noteFormSchema>) {
     form.reset();
-    return onConfirm({ message: note, timeStamp: new Date });
+    return onConfirm({ message: note, createdAt: new Date });
   }
 
   return (

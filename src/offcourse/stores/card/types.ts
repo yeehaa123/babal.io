@@ -2,6 +2,7 @@ import type {
   AugmentedCourse,
   AugmentedCheckpoint
 } from "@/offcourse/types";
+import type { StoreActions } from "../collection/actions";
 
 export enum OverlayModes {
   NONE = "NONE",
@@ -40,7 +41,7 @@ export interface CardState {
 export type CourseCardStore = {
   course: AugmentedCourse,
   checkpoint: AugmentedCheckpoint | undefined,
-  actions: any,
+  actions: StoreActions,
   cardState: CardState,
   affordances: Affordances
 }

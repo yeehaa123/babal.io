@@ -20,8 +20,9 @@ export default function AuthOverlay({ course, actions }: CourseCardStore) {
       <CardContent className="flex grow" />
       <CardFooter className="flex w-full justify-between gap-x-2">
         <Button onClick={() => authenticate({ courseId })} className="w-full">Sign In</Button>
-        <Button onClick={showRegisterOverlay} className="w-full">Sign Up</Button>
-        <Button onClick={hideOverlay} className="w-full">Cancel</Button>
+        <Button onClick={() => showRegisterOverlay({ courseId })}
+          className="w-full">Sign Up</Button>
+        <Button onClick={() => hideOverlay({ courseId })} className="w-full">Cancel</Button>
       </CardFooter>
     </>
 

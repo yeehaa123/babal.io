@@ -12,7 +12,7 @@ import { NoteForm } from "../forms/NoteForm";
 export default function NoteOverlay({ course, cardState, actions }: CourseCardStore) {
   const { courseId, notes } = course;
   const { overlayMode } = cardState;
-  const { hideCheckpoint, addNote } = actions;
+  const { hideOverlay, addNote } = actions;
   const formId = `${courseId}-note-form`
   return (
     <>
@@ -29,7 +29,7 @@ export default function NoteOverlay({ course, cardState, actions }: CourseCardSt
       </CardContent>
       <CardFooter className="flex flex-col w-full justify-between gap-2">
         <Button type="submit" form={formId} className="w-full">Add Note</Button>
-        <Button onClick={hideCheckpoint} className="w-full">Close</Button>
+        <Button onClick={() => hideOverlay({ courseId })} className="w-full">Close</Button>
       </CardFooter>
     </>
   )

@@ -16,10 +16,10 @@ import type { Course, CourseQuery } from "../types"
 type Actions = {
   signIn: (query: CourseQuery) => void,
   signOut: () => void,
-  showCloneOverlay: () => void,
-  showShareOverlay: () => void,
-  showEditOverlay: () => void,
-  showNotesOverlay: () => void
+  showCloneOverlay: (query: CourseQuery) => void,
+  showShareOverlay: (query: CourseQuery) => void,
+  showEditOverlay: (query: CourseQuery) => void,
+  showNotesOverlay: (query: CourseQuery) => void
 }
 
 type Props = {
@@ -56,18 +56,18 @@ export default function Toolbar({
           className={cn("h-4 w-4 text-gray-500", { "hidden": !canAuthenticate })} />
         <ExitIcon onClick={signOut}
           className={cn("h-4 w-4 text-gray-500", { "hidden": canAuthenticate })} />
-        <Pencil1Icon onClick={showEditOverlay}
+        <Pencil1Icon onClick={() => showEditOverlay({ courseId })}
           className={cn("h-4 w-4 text-gray-500", { "hidden": !canEdit })} />
-        <Pencil2Icon onClick={showNotesOverlay}
+        <Pencil2Icon onClick={() => showNotesOverlay({ courseId })}
           className={cn("h-4 w-4 text-gray-500", { "hidden": !canTakeNotes })} />
-        <CopyIcon onClick={showCloneOverlay}
+        <CopyIcon onClick={() => showCloneOverlay({ courseId })}
           className={cn("h-4 w-4 text-gray-500", { "hidden": !canClone })} />
       </div>
       <div className="flex gap-x-4 ">
         <a href={habitat} className={cn("invisible", { "visible": habitat })}>
           <Crosshair1Icon className="h-4 w-4 text-gray-500" />
         </a>
-        <Share1Icon onClick={showShareOverlay} className="h-4 w-4 text-gray-500" />
+        <Share1Icon onClick={() => showShareOverlay({ courseId })} className="h-4 w-4 text-gray-500" />
       </div>
     </div>
   )
