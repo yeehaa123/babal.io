@@ -10,6 +10,10 @@ export type Course = {
   tags: Tag[]
 }
 
+export type AuthData = {
+  userName: string | undefined;
+}
+
 export type LearnData = {
   isBookmarked: boolean,
   tasksCompleted: string[],

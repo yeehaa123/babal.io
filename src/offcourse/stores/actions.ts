@@ -1,10 +1,10 @@
 import type { StoreApi } from "zustand";
-import type { CheckpointQuery, Course, CourseNote, CourseQuery } from "@/offcourse/types";
-import type { OffcourseState, AuthData } from "./"
+import type { CheckpointQuery, Course, CourseNote, CourseQuery, AuthData } from "@/offcourse/types";
+import type { OffcourseState } from "./context"
 
 import { produce } from 'immer';
 import { prepareCourse } from "./helpers";
-import { OverlayModes } from "../card/types";
+import { OverlayModes } from "./card/types";
 
 type OffcourseInitialState = Omit<OffcourseState, "actions">
 

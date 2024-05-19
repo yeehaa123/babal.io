@@ -1,10 +1,10 @@
 import type { Course } from "@/offcourse/types";
 import type { ReactElement } from 'react';
-import type { OffcourseStore } from "@/offcourse/stores/collection"
+import type { OffcourseStore } from "@/offcourse/stores"
 import { useRef } from "react"
 import { useShallow } from 'zustand/react/shallow'
-import { OffcourseContext, useOffcourseContext } from "@/offcourse/stores/collection";
-import { createOffcourseStore } from "@/offcourse/stores/collection"
+import { OffcourseContext, useOffcourseContext } from "@/offcourse/stores/context";
+import { createOffcourseStore } from "@/offcourse/stores"
 import { CourseCard } from "."
 
 

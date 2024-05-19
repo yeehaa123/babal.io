@@ -1,8 +1,24 @@
-import type { AugmentedCourse } from "@/offcourse/types";
-import { CardRoleTypes } from "./types"
-import type { AuthData } from "@/offcourse/stores/collection";
+import type { LearnData, Course, AugmentedCourse, AuthData } from "@/offcourse/types";
+import { CardRoleTypes } from "./card/types"
 
 export type Affordances = ReturnType<typeof determineAffordances>
+
+export function prepareCourse(
+  { course, learnData }:
+    { course: Course, learnData: LearnData | undefined }) {
+  return {
+    ...course, checkpoints: course.checkpoints.map((cp) => {
+      const isCompleted = learnData &&
+        new Set([...learnData.tasksCompleted]).has(cp.checkpointId);
+      return {
+        ...cp,
+        isCompleted
+      }
+    }),
+    isBookmarked: learnData?.isBookmarked,
+    notes: learnData?.notes || []
+  }
+}
 
 export function determineRole(
   { course, authData }:

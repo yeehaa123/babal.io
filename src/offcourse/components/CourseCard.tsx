@@ -1,7 +1,7 @@
 import type { Course } from "@/offcourse/types";
 
 import { CourseContent, CourseCollection, Overlay } from "@/offcourse/components"
-import { useCourseCardStore } from "@/offcourse/stores/card";
+import { useCourseCardStore } from "@/offcourse/stores";
 
 type WrapperProps = {
   courseId: Course['courseId'],

@@ -2,7 +2,7 @@ import type {
   AugmentedCourse,
   AugmentedCheckpoint
 } from "@/offcourse/types";
-import type { StoreActions } from "../collection/actions";
+import type { StoreActions } from "../actions";
 
 export enum OverlayModes {
   NONE = "NONE",
