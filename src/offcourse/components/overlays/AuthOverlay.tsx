@@ -1,4 +1,4 @@
-import type { CourseCardStore } from "@/offcourse/types";
+import type { CourseCardStore } from "@/offcourse/stores/types";
 
 import { Button } from "@/components/ui/button"
 import {
@@ -7,8 +7,6 @@ import {
   CardTitle,
   CardContent,
 } from "@/components/ui/card"
-
-
 
 export default function AuthOverlay({ course, actions }: CourseCardStore) {
   const { courseId } = course;

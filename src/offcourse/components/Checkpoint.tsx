@@ -1,12 +1,13 @@
-import type { AugmentedCheckpoint, CheckpointQuery } from "@/offcourse/types";
+import type { AugmentedCheckpoint } from "@/offcourse/types";
 
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/offcourse/components"
+import type { CourseCardStore } from "../stores/types";
 
 interface Props extends AugmentedCheckpoint {
-  canCheckComplete: boolean,
-  toggleCheck: (query: CheckpointQuery) => void
-  showCheckpoint: (query: CheckpointQuery) => void
+  canCheckComplete: CourseCardStore['affordances']['canCheckComplete'],
+  toggleComplete: CourseCardStore['actions']['toggleComplete']
+  showCheckpoint: CourseCardStore['actions']['showCheckpoint']
 }
 
 export default function Checkpoint({
@@ -14,7 +15,7 @@ export default function Checkpoint({
   courseId,
   checkpointId,
   isCompleted,
-  toggleCheck,
+  toggleComplete,
   showCheckpoint,
   canCheckComplete }: Props) {
   return (
@@ -24,7 +25,7 @@ export default function Checkpoint({
         checked={!!isCompleted}
         disabled={!canCheckComplete}
         id={`${courseId}-${task}`}
-        onClick={() => toggleCheck({ courseId, checkpointId })} />
+        onClick={() => toggleComplete({ courseId, checkpointId })} />
       <Label htmlFor={`${courseId}-${task}`}>
         <button onClick={() => showCheckpoint({ courseId, checkpointId })}>{task}</button>
       </Label>

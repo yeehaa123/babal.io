@@ -7,8 +7,7 @@ import type {
 
 import {
   CardRoleTypes
-} from "@/offcourse/types";
-
+} from "@/offcourse/stores/types";
 
 export function prepareCourse(
   { course, learnData }:

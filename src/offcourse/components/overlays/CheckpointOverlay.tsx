@@ -1,5 +1,4 @@
-import type { CourseCardStore } from "@/offcourse/types";
-
+import type { CourseCardStore } from "@/offcourse/stores/types";
 import { ExternalLinkIcon } from '@radix-ui/react-icons'
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -15,7 +14,8 @@ import {
   Tags
 } from "@/offcourse/components";
 
-export default function CheckpointOverlay({ checkpoint, affordances, actions }: CourseCardStore) {
+export default function CheckpointOverlay(
+  { checkpoint, affordances, actions }: CourseCardStore) {
   const { canCheckComplete } = affordances;
   const { courseId, checkpointId, isCompleted, task, description, href, tags } = checkpoint!;
   const { hideCheckpoint, toggleComplete } = actions;

@@ -1,4 +1,4 @@
-import type { CourseCardStore } from "@/offcourse/types";
+import type { CourseCardStore } from "@/offcourse/stores/types";
 
 import { Button } from "@/components/ui/button"
 import {

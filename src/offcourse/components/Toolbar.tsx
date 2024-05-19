@@ -1,4 +1,5 @@
-import type { Affordances } from "@/offcourse/types"
+import type { CourseCardStore } from "@/offcourse/stores/types"
+import type { Course } from "@/offcourse/types"
 
 import { cn } from "@/lib/utils"
 import {
@@ -10,23 +11,12 @@ import {
   Pencil1Icon,
   Pencil2Icon,
 } from '@radix-ui/react-icons'
-import type { Course, CourseQuery } from "../types"
-
-
-type Actions = {
-  signIn: (query: CourseQuery) => void,
-  signOut: () => void,
-  showCloneOverlay: (query: CourseQuery) => void,
-  showShareOverlay: (query: CourseQuery) => void,
-  showEditOverlay: (query: CourseQuery) => void,
-  showNotesOverlay: (query: CourseQuery) => void
-}
 
 type Props = {
   courseId: Course['courseId'],
-  habitat?: string | undefined,
-  actions: Actions,
-  affordances: Affordances,
+  habitat?: Course['habitat'],
+  actions: CourseCardStore['actions'],
+  affordances: CourseCardStore['affordances'];
 }
 
 export default function Toolbar({

@@ -9,7 +9,7 @@ type WrapperProps = {
 
 export type CardProps = {
   course?: Course | undefined,
-  courseId?: string,
+  courseId?: Course['courseId'],
 }
 
 

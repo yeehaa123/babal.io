@@ -1,5 +1,4 @@
-import type { CourseCardStore } from "@/offcourse/types";
-
+import type { CourseCardStore } from "@/offcourse/stores/types";
 import { Button } from "@/components/ui/button"
 import {
   CardHeader,
@@ -9,7 +8,9 @@ import {
 } from "@/components/ui/card"
 import { NoteForm } from "../forms/NoteForm";
 
-export default function NoteOverlay({ course, cardState, actions }: CourseCardStore) {
+export default function NoteOverlay(
+  { course, cardState, actions }: CourseCardStore
+) {
   const { courseId, notes } = course;
   const { overlayMode } = cardState;
   const { hideOverlay, addNote } = actions;

@@ -1,4 +1,5 @@
 import type { StoreApi } from "zustand";
+import type { OffcourseState } from "./types"
 import type {
   CheckpointQuery,
   Course,
@@ -6,9 +7,8 @@ import type {
   CourseQuery,
   AuthData
 } from "@/offcourse/types";
-import type { OffcourseState } from "./context"
-import { OverlayModes } from "@/offcourse/types";
 
+import { OverlayModes } from "./types";
 import { produce } from 'immer';
 import { prepareCourse } from "./helpers";
 
@@ -16,7 +16,7 @@ type OffcourseInitialState = Omit<OffcourseState, "actions">
 
 type Api = StoreApi<OffcourseInitialState>;
 
-class StoreActions {
+export class StoreActions {
   constructor(private set: Api["setState"], private get: Api["getState"]) { }
 
   private get courses() {
@@ -220,5 +220,3 @@ export async function fetchLearnData({ courseIds, userName }:
   }
 }
 
-
-export { StoreActions }

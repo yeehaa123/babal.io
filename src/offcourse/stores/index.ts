@@ -1,15 +1,10 @@
 import type { Course } from "@/offcourse/types";
 import { createStore } from 'zustand'
 import { combine } from "zustand/middleware";
-
+import { OverlayModes } from "@/offcourse/stores/types";
 import { useOffcourseContext } from "@/offcourse/stores/context";
-
-import { OverlayModes } from "@/offcourse/types";
 import { StoreActions } from "./actions"
-import {
-  determineRole,
-  determineAffordances
-} from "./helpers"
+import { determineRole, determineAffordances } from "./helpers"
 
 interface CoursesStoreProps { courses: Course[] }
 export type OffcourseStore = ReturnType<typeof createOffcourseStore>
@@ -38,7 +33,6 @@ export function createOffcourseStore({ courses }: CoursesStoreProps) {
     combine(initialState, (set, get) => ({ actions: new StoreActions(set, get) }))
   )
 }
-
 
 type CourseStoreProps = {
   courseId: Course['courseId'],

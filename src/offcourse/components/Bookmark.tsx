@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils"
 import { StarIcon, StarFilledIcon } from '@radix-ui/react-icons'
+
 type Props = {
   isBookmarked: boolean | undefined,
   canBookmark: boolean,
