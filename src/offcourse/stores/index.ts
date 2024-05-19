@@ -4,7 +4,7 @@ import { combine } from "zustand/middleware";
 
 import { useOffcourseContext } from "@/offcourse/stores/context";
 
-import { OverlayModes } from "./card/types";
+import { OverlayModes } from "@/offcourse/types";
 import { StoreActions } from "./actions"
 import {
   determineRole,

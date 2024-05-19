@@ -1,4 +1,4 @@
-import type { Affordances } from "@/offcourse/stores/card/types"
+import type { Affordances } from "@/offcourse/types"
 
 import { cn } from "@/lib/utils"
 import {

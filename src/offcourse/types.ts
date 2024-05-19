@@ -1,3 +1,5 @@
+import type { StoreActions } from "./stores/actions";
+
 export type Tag = string;
 
 export type Course = {
@@ -58,4 +60,45 @@ export interface CourseQuery {
 
 export interface CheckpointQuery extends CourseQuery {
   checkpointId: Checkpoint['checkpointId']
+}
+export enum OverlayModes {
+  NONE = "NONE",
+  AUTH = "AUTH",
+  REGISTER = "REGISTER",
+  EDIT = "EDIT",
+  NOTE = "NOTE",
+  CHECKPOINT = "CHECKPOINT",
+  SHARE = "SHARE",
+  CLONE = "CLONE"
+}
+
+
+export type Affordances = {
+  canAuthenticate: boolean,
+  canBookmark: boolean,
+  canTakeNotes: boolean
+  canCheckComplete: boolean,
+  canClone: boolean,
+  canEdit: boolean
+}
+
+export enum CardRoleTypes {
+  GUEST = "GUEST",
+  LEARNER = "LEARNER",
+  COLLECTOR = "COLLECTOR",
+  CURATOR = "CURATOR"
+}
+
+export interface CardState {
+  overlayMode: OverlayModes,
+  selectedCheckpoint: string | undefined,
+  isMetaVisible: boolean
+}
+
+export type CourseCardStore = {
+  course: AugmentedCourse,
+  checkpoint: AugmentedCheckpoint | undefined,
+  actions: StoreActions,
+  cardState: CardState,
+  affordances: Affordances
 }

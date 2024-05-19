@@ -1,4 +1,4 @@
-import type { CourseCardStore } from "@/offcourse/stores/card/types";
+import type { CourseCardStore } from "@/offcourse/types";
 
 import { ExternalLinkIcon } from '@radix-ui/react-icons'
 import { Button } from "@/components/ui/button"

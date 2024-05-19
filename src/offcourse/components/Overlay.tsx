@@ -1,5 +1,8 @@
-import type { CourseCardStore } from "@/offcourse/stores/card/types";
-import { OverlayModes } from "@/offcourse/stores/card/types";
+import type { CourseCardStore } from "@/offcourse/types";
+
+import { OverlayModes } from "@/offcourse/types";
+import { Transition } from "@headlessui/react"
+import { CardChrome } from "@/offcourse/components";
 import {
   CheckpointOverlay,
   AuthOverlay,
@@ -7,10 +10,7 @@ import {
   CloneOverlay,
   NoteOverlay
 } from "@/offcourse/components/overlays";
-import { Transition } from "@headlessui/react"
-import {
-  CardChrome,
-} from "@/offcourse/components";
+
 
 export default function Overlay(props: CourseCardStore) {
   const overlayMode = props.cardState.overlayMode!

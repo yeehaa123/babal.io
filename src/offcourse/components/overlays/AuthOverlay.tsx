@@ -1,3 +1,5 @@
+import type { CourseCardStore } from "@/offcourse/types";
+
 import { Button } from "@/components/ui/button"
 import {
   CardHeader,
@@ -6,7 +8,6 @@ import {
   CardContent,
 } from "@/components/ui/card"
 
-import type { CourseCardStore } from "@/offcourse/stores/card/types";
 
 
 export default function AuthOverlay({ course, actions }: CourseCardStore) {

@@ -1,7 +1,14 @@
-import type { LearnData, Course, AugmentedCourse, AuthData } from "@/offcourse/types";
-import { CardRoleTypes } from "./card/types"
+import type {
+  LearnData,
+  Course,
+  AugmentedCourse,
+  AuthData,
+} from "@/offcourse/types";
 
-export type Affordances = ReturnType<typeof determineAffordances>
+import {
+  CardRoleTypes
+} from "@/offcourse/types";
+
 
 export function prepareCourse(
   { course, learnData }:

@@ -1,4 +1,4 @@
-import type { CourseCardStore } from "@/offcourse/stores/card/types";
+import type { CourseCardStore } from "@/offcourse/types";
 
 import {
   CardDescription,
