@@ -2,6 +2,11 @@ import type { Course } from "@/offcourse/types";
 import type { ReactElement } from 'react';
 import type { OffcourseStore } from "@/offcourse/stores"
 
+
+import { ClerkProvider, SignIn } from '@clerk/clerk-react'
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
+
+
 import { useRef } from "react"
 import { useShallow } from 'zustand/react/shallow'
 import { OffcourseContext, useOffcourseContext } from "@/offcourse/stores/context";
@@ -21,13 +26,21 @@ interface ProviderProps {
 
 const StoreProvider = ({ children, courses }: ProviderProps) => {
   const storeRef = useRef<OffcourseStore>()
+  const PUBLISHABLE_KEY = import.meta.env.PUBLIC_CLERK_KEY;
+
+
+  if (!PUBLISHABLE_KEY) {
+    throw new Error("Missing Publishable Key")
+  }
 
   if (!storeRef.current) {
     storeRef.current = createOffcourseStore({ courses });
   }
   return (
     <OffcourseContext.Provider value={storeRef.current}>
-      {children}
+      <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+        {children}
+      </ClerkProvider>
     </OffcourseContext.Provider>
   )
 }
@@ -47,6 +60,12 @@ export default function CourseCollection({ courses }: CollectionProps) {
   return (
     <StoreProvider courses={courses}>
       <InnerCollection />
+      <SignedOut>
+        <SignIn />
+      </SignedOut>
+      <SignedIn>
+        <UserButton />
+      </SignedIn>
     </StoreProvider>
   )
 }
