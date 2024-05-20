@@ -36,6 +36,13 @@ export class StoreActions {
       (c !== Object.keys(this.learnData).find(cc => cc === c)));
   }
 
+  updateUser = (authData: AuthData) => {
+    this.set(produce((state) => {
+      state.authData = authData;
+    }))
+    this.fetchMissingLearnData();
+  }
+
   augmentCourse = ({ courseId }: CourseQuery) => {
     this.set(produce((state) => {
       const course = this.courses[courseId];
@@ -103,25 +110,9 @@ export class StoreActions {
     }))
   }
 
-  signIn = ({ courseId }: CourseQuery) => {
+  showAuthOverlay = ({ courseId }: CourseQuery) => {
     this.set(produce((state) => {
       state.cardStates[courseId].overlayMode = OverlayModes.AUTH;
-    }))
-  }
-
-  authenticate = async ({ courseId }: CourseQuery) => {
-    const response = await fetch('/authenticate.json', { method: "POST" });
-    const { userName }: AuthData = await response.json();
-    this.set(produce((state) => {
-      state.authData.userName = userName;
-      state.cardStates[courseId].overlayMode = OverlayModes.NONE;
-    }))
-    this.fetchMissingLearnData();
-  }
-
-  signOut = async () => {
-    this.set(produce((state) => {
-      state.authData.userName = undefined;
     }))
   }
 

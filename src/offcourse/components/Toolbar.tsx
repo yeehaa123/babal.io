@@ -32,8 +32,7 @@ export default function Toolbar({
     canClone
   } = affordances;
   const {
-    signIn,
-    signOut,
+    showAuthOverlay,
     showEditOverlay,
     showShareOverlay,
     showNotesOverlay,
@@ -42,9 +41,9 @@ export default function Toolbar({
   return (
     <div className="flex w-full justify-between">
       <div className="flex flex-start gap-x-4 ">
-        <EnterIcon onClick={() => signIn({ courseId })}
+        <EnterIcon onClick={() => showAuthOverlay({ courseId })}
           className={cn("h-4 w-4 text-gray-500", { "hidden": !canAuthenticate })} />
-        <ExitIcon onClick={signOut}
+        <ExitIcon onClick={() => showAuthOverlay({ courseId })}
           className={cn("h-4 w-4 text-gray-500", { "hidden": canAuthenticate })} />
         <Pencil1Icon onClick={() => showEditOverlay({ courseId })}
           className={cn("h-4 w-4 text-gray-500", { "hidden": !canEdit })} />
