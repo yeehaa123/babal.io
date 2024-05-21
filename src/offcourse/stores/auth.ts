@@ -10,6 +10,7 @@ export function useOffCourseAuth() {
   useEffect(() => {
     if (isSignedIn) {
       const userName = user.username || undefined;
+      console.log(user);
       updateUser({ userName });
     }
   }, [isLoaded, isSignedIn])

@@ -15,7 +15,7 @@ export const GET: APIRoute = () => {
   );
 }
 
-export const POST: APIRoute = async () => {
+export const POST: APIRoute = async ({ }) => {
   const userName = "yeehaa"
   const people = await authenticate({ userName })
 
