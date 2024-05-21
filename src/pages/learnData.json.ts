@@ -1,32 +1,29 @@
 export const prerender = false;
+
 import { getLearnData } from '@/offcourse/db';
-import { clerkClient } from '@clerk/clerk-sdk-node';
 
 import type { APIRoute } from 'astro';
 
-export const POST: APIRoute = async ({ request }) => {
-  const secretKey = import.meta.env.CLERK_SECRET_KEY;
-  const publishableKey = import.meta.env.PUBLIC_CLERK_KEY;
+export const POST: APIRoute = async ({ request, locals }) => {
 
-  const { isSignedIn } = await clerkClient.authenticateRequest(
-    request, { secretKey, publishableKey })
-  console.log(isSignedIn);
-
+  const { user } = locals.auth;
   if (request.headers.get("Content-Type") === "application/json") {
-    if (!isSignedIn) {
-      return new Response(JSON.stringify({
-        error: "unauthorized"
-      }), {
-        status: 404
-      })
-    }
     const body = await request.json();
     const { userName, courseIds } = body;
-    const learnData = await getLearnData({ userName, courseIds })
+
+    if (userName === user.username) {
+      const learnData = await getLearnData({ userName, courseIds })
+      return new Response(JSON.stringify({
+        learnData
+      }), {
+        status: 200
+      })
+    }
+
     return new Response(JSON.stringify({
-      learnData
+      error: "unauthorized"
     }), {
-      status: 200
+      status: 404
     })
   }
   return new Response(null, { status: 400 });
