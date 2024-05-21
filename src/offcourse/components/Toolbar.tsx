@@ -1,4 +1,5 @@
 import type { CourseCardStore } from "@/offcourse/stores/types"
+import { useOffCourseAuth } from "@/offcourse/stores/auth";
 import type { Course } from "@/offcourse/types"
 
 import { cn } from "@/lib/utils"
@@ -38,12 +39,13 @@ export default function Toolbar({
     showNotesOverlay,
     showCloneOverlay
   } = actions;
+  const { signOut } = useOffCourseAuth();
   return (
     <div className="flex w-full justify-between">
       <div className="flex flex-start gap-x-4 ">
         <EnterIcon onClick={() => showAuthOverlay({ courseId })}
           className={cn("h-4 w-4 text-gray-500", { "hidden": !canAuthenticate })} />
-        <ExitIcon onClick={() => showAuthOverlay({ courseId })}
+        <ExitIcon onClick={() => signOut()}
           className={cn("h-4 w-4 text-gray-500", { "hidden": canAuthenticate })} />
         <Pencil1Icon onClick={() => showEditOverlay({ courseId })}
           className={cn("h-4 w-4 text-gray-500", { "hidden": !canEdit })} />

@@ -9,10 +9,9 @@ type Props = {
   className?: string
 }
 
-export default function Checkbox({ id, checked, disabled, onClick, className }: Props) {
+export default function Checkbox({ checked, disabled, onClick, className }: Props) {
   return <CB
     className={cn("bg-gray-50", className, { "invisible": disabled, "bg-gray-800": checked })}
     checked={checked}
-    id={id}
     onClick={onClick} />
 }
