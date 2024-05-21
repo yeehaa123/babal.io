@@ -6,7 +6,7 @@ declare namespace App {
   interface Locals {
     auth: {
       isSignedIn: boolean
-      user: import('@clerk/clerk-sdk-node').User
+      userName: import('@clerk/clerk-sdk-node').User['username']
 
     }
   }

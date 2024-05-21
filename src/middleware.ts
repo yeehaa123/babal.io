@@ -11,8 +11,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
     const authData = toAuth();
     if (authData && authData.userId) {
-      const user = await clerkClient.users.getUser(authData.userId);
-      context.locals.auth = { isSignedIn, user }
+      const { username } = await clerkClient.users.getUser(authData.userId)
+      context.locals.auth = { isSignedIn, userName: username }
     }
   }
   next();
