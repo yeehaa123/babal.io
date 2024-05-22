@@ -10,8 +10,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
     const body = await request.json();
     const { userName, courseIds } = body;
-    console.log(locals.auth);
-
 
     if (userName && userName === locals.auth.userName) {
       const learnData = await getLearnData({ userName, courseIds })
