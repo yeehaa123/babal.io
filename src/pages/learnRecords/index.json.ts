@@ -1,6 +1,6 @@
 export const prerender = false;
 
-import { getLearnData } from '@/offcourse/db';
+import { getLearnRecords } from '@/offcourse/db';
 
 import type { APIRoute } from 'astro';
 
@@ -12,9 +12,9 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const { userName, courseIds } = body;
 
     if (userName && userName === locals.auth.userName) {
-      const learnData = await getLearnData({ userName, courseIds })
+      const learnRecords = await getLearnRecords({ userName, courseIds })
       return new Response(JSON.stringify({
-        learnData
+        learnRecords
       }), { status: 200 })
     }
 

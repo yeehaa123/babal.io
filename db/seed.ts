@@ -16,7 +16,7 @@ import {
 import { readDir } from "./helpers"
 import { prepCourses, prepCheckpoints, prepTags } from "./prepCourses"
 import { augmentCheckpoints } from "./augmentCheckpoints"
-import { prepBookmarkData, prepCompletionData, prepNotesData } from "./prepLearnData"
+import { prepBookmarkData, prepCompletionData, prepNotesData } from "./prepLearnRecords"
 
 function prepPeople(rawPeople: Curator[]) {
   return rawPeople.map(p => ({ alias: p.alias.toLowerCase() }));

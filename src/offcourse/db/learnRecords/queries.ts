@@ -8,7 +8,7 @@ import {
   NoteData
 } from 'astro:db';
 
-import type { LearnData } from '@/offcourse/types';
+import type { LearnRecord } from '@/offcourse/types';
 
 export async function getLearnDataByUserNameAndCourseIds({ userName, courseIds }:
   { userName: string, courseIds: string[] }) {
@@ -61,7 +61,7 @@ export async function getLearnDataByUserNameAndCourseIds({ userName, courseIds }
     }
 
     return acc;
-  }, new Map<string, LearnData>)
+  }, new Map<string, LearnRecord>)
 
   return Object.fromEntries(learnData);
 }

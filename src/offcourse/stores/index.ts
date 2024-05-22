@@ -27,7 +27,7 @@ export function createOffcourseStore({ courses }: CoursesStoreProps) {
     cardStates: Object.fromEntries(cardEntries),
     authData: { userName: undefined },
     courses: Object.fromEntries(storeEntries),
-    learnData: {}
+    learnRecords: {}
   }
   return createStore(
     combine(initialState, (set, get) => ({ actions: new StoreActions(set, get) }))

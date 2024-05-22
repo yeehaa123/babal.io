@@ -1,5 +1,5 @@
 import type {
-  LearnData,
+  LearnRecord,
   Course,
   AugmentedCourse,
   AuthData,
@@ -10,19 +10,19 @@ import {
 } from "@/offcourse/stores/types";
 
 export function prepareCourse(
-  { course, learnData }:
-    { course: Course, learnData: LearnData | undefined }) {
+  { course, learnRecord }:
+    { course: Course, learnRecord: LearnRecord | undefined }) {
   return {
     ...course, checkpoints: course.checkpoints.map((cp) => {
-      const isCompleted = learnData &&
-        new Set([...learnData.tasksCompleted]).has(cp.checkpointId);
+      const isCompleted = learnRecord &&
+        new Set([...learnRecord.tasksCompleted]).has(cp.checkpointId);
       return {
         ...cp,
         isCompleted
       }
     }),
-    isBookmarked: learnData?.isBookmarked,
-    notes: learnData?.notes || []
+    isBookmarked: learnRecord?.isBookmarked,
+    notes: learnRecord?.notes || []
   }
 }
 

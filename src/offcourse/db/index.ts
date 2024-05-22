@@ -1,13 +1,13 @@
 import { authenticate } from "./authenticate";
-import { getCourse, getCourses } from "./course";
+import { getCourse, getCourses } from "./courses";
 import { getPerson, getPeople } from "./people";
 import { getTags } from "./tags"
-import { getLearnData } from './learnData';
+import { getLearnRecords } from './learnRecords';
 
 export {
   getCourse,
   authenticate,
-  getLearnData,
+  getLearnRecords,
   getPerson,
   getPeople,
   getTags,

@@ -24,8 +24,8 @@ export class StoreActions {
     return this.get().courses;
   }
 
-  private get learnData() {
-    return this.get().learnData;
+  private get learnRecord() {
+    return this.get().learnRecords;
   }
 
   private get userName() {
@@ -34,7 +34,7 @@ export class StoreActions {
 
   private get missingCourses() {
     return Object.keys(this.courses).filter((c) =>
-      (c !== Object.keys(this.learnData).find(cc => cc === c)));
+      (c !== Object.keys(this.learnRecord).find(cc => cc === c)));
   }
 
   updateUser = (authData: AuthData) => {
@@ -47,9 +47,9 @@ export class StoreActions {
   augmentCourse = ({ courseId }: CourseQuery) => {
     this.set(produce((state) => {
       const course = this.courses[courseId];
-      const learnData = this.learnData[courseId];
+      const learnRecord = this.learnRecord[courseId];
       if (course) {
-        state.courses[courseId] = prepareCourse({ course, learnData });
+        state.courses[courseId] = prepareCourse({ course, learnRecord });
       }
     }))
   }
@@ -135,10 +135,10 @@ export class StoreActions {
 
   toggleBookmark = ({ courseId }: CourseQuery) => {
     this.set(produce((state) => {
-      const learnData = this.learnData[courseId] || { tasksCompleted: [] };
-      const isBookmarked = this.learnData[courseId]?.isBookmarked;
-      state.learnData[courseId] = {
-        ...learnData,
+      const learnRecord = this.learnRecord[courseId] || { tasksCompleted: [] };
+      const isBookmarked = this.learnRecord[courseId]?.isBookmarked;
+      state.learnRecords[courseId] = {
+        ...learnRecord,
         isBookmarked: !isBookmarked
       }
     }))
@@ -148,8 +148,8 @@ export class StoreActions {
   addNote = (courseNote: CourseNote & CourseQuery) => {
     const { courseId } = courseNote;
     this.set(produce((state) => {
-      const oldNotes = this.learnData[courseId]?.notes || [];
-      state.learnData[courseId].notes = [courseNote, ...oldNotes];
+      const oldNotes = this.learnRecord[courseId]?.notes || [];
+      state.learnRecords[courseId].notes = [courseNote, ...oldNotes];
     }))
     this.augmentCourse({ courseId });
   }
@@ -159,21 +159,21 @@ export class StoreActions {
     if (userName) {
       updateLearnData({ courseId, checkpointId, userName });
       this.set(produce((state) => {
-        const learnData = this.learnData[courseId];
-        if (learnData) {
-          const tasksCompleted = new Set([...learnData.tasksCompleted]);
+        const learnRecords = this.learnRecord[courseId];
+        if (learnRecords) {
+          const tasksCompleted = new Set([...learnRecords.tasksCompleted]);
           tasksCompleted.has(checkpointId)
             ? tasksCompleted.delete(checkpointId)
             : tasksCompleted.add(checkpointId)
-          state.learnData[courseId].tasksCompleted = [...tasksCompleted];
+          state.learnRecords[courseId].tasksCompleted = [...tasksCompleted];
         } else {
-          const learnData = {
+          const learnRecords = {
             isBookmarked: false,
             tasksCompleted: [checkpointId],
             notes: []
           }
 
-          state.learnData[courseId] = learnData;
+          state.learnRecords[courseId] = learnRecords;
         }
       }))
       this.augmentCourse({ courseId });
@@ -190,11 +190,11 @@ export class StoreActions {
   fetchMissingLearnData = async () => {
     const userName = this.userName;
     if (userName) {
-      const learnData = await fetchLearnData({ courseIds: this.missingCourses, userName })
-      if (learnData) {
-        for (const courseId of Object.keys(learnData)) {
+      const learnRecords = await fetchLearnData({ courseIds: this.missingCourses, userName })
+      if (learnRecords) {
+        for (const courseId of Object.keys(learnRecords)) {
           this.set(produce((state) => {
-            state.learnData[courseId] = learnData[courseId]
+            state.learnRecords[courseId] = learnRecords[courseId]
           }))
           this.augmentCourse({ courseId });
         }
@@ -204,7 +204,7 @@ export class StoreActions {
 }
 export async function updateLearnData({ courseId, checkpointId, userName }:
   { courseId: Course['courseId'], userName: string, checkpointId: Checkpoint['checkpointId'] }) {
-  return await fetch(`/learnData/${courseId}.json`, {
+  return await fetch(`/learnRecords/${courseId}.json`, {
     method: "POST",
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ courseId, checkpointId, userName })
@@ -216,13 +216,13 @@ export async function updateLearnData({ courseId, checkpointId, userName }:
 export async function fetchLearnData({ courseIds, userName }:
   { courseIds: Course['courseId'][], userName: string }) {
   if (courseIds.length > 0) {
-    const response = await fetch('/learnData.json', {
+    const response = await fetch('/learnRecords.json', {
       method: "POST",
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ courseIds, userName })
     });
     const data = await response.json();
-    return data.learnData;
+    return data.learnRecords;
   }
 }
 

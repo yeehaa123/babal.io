@@ -1,7 +1,7 @@
 import type { StoreActions } from "./actions";
 import type {
   AuthData,
-  LearnData,
+  LearnRecord,
   AugmentedCourse,
   AugmentedCheckpoint
 } from "@/offcourse/types"
@@ -32,7 +32,7 @@ export type CardState = {
   isMetaVisible: boolean
 }
 
-type LearnDataState = Record<string, LearnData>
+type LearnRecordsState = Record<string, LearnRecord>
 
 export enum CardRoleTypes {
   GUEST = "GUEST",
@@ -45,7 +45,7 @@ export type OffcourseState = {
   cardStates: Record<string, CardState>
   authData: AuthData,
   courses: Record<string, AugmentedCourse>,
-  learnData: LearnDataState,
+  learnRecords: LearnRecordsState,
   actions: StoreActions
 }
 

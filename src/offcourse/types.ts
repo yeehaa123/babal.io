@@ -14,7 +14,7 @@ export type AuthData = {
   userName: string | undefined;
 }
 
-export type LearnData = {
+export type LearnRecord = {
   isBookmarked: boolean,
   tasksCompleted: string[],
   notes: CourseNote[]

@@ -6,6 +6,6 @@ type LearnDataQueryParams = {
   courseIds: Course['courseId'][]
 }
 
-export function getLearnData({ userName, courseIds }: LearnDataQueryParams) {
+export function getLearnRecords({ userName, courseIds }: LearnDataQueryParams) {
   return getLearnDataByUserNameAndCourseIds({ userName, courseIds });
 }
