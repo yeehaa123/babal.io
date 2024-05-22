@@ -19,7 +19,7 @@ export function prepareCourse(
         ...cp,
         isCompleted
       }
-    }),
+    }).sort(({ order }) => order),
     isBookmarked: learnRecord?.isBookmarked,
     notes: learnRecord?.notes || []
   }

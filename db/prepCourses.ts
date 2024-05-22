@@ -29,9 +29,9 @@ export function prepCourses(courses: RawCourse[]): TempCourse[] {
 
 export function prepCheckpoints(courses: TempCourse[]) {
   const flatCheckpoints = courses.flatMap(({ courseId, goal, checkpoints }) => {
-    return checkpoints.map((checkpoint) => {
+    return checkpoints.map((checkpoint, index) => {
       const checkpointId = nanoid();
-      return { courseId, goal, checkpointId, ...checkpoint }
+      return { courseId, goal, checkpointId, order: index, ...checkpoint }
     })
   })
   return flatCheckpoints;

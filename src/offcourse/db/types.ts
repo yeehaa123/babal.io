@@ -16,6 +16,7 @@ export type PeopleDBResult = {
 }
 
 export interface CheckpointsDBResult {
+  order: number,
   courseId: string,
   checkpointId: string,
   task: string,

@@ -16,6 +16,7 @@ const Courses = defineTable({
 
 const Checkpoints = defineTable({
   columns: {
+    order: column.number(),
     checkpointId: column.text({ primaryKey: true }),
     courseId: column.text({ references: () => Courses.columns.courseId }),
     task: column.text(),

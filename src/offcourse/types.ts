@@ -31,6 +31,7 @@ export type Curator = {
 }
 
 export interface Checkpoint {
+  order: number,
   courseId: string,
   checkpointId: string,
   task: string,
