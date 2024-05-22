@@ -18,6 +18,7 @@ export default function Checkpoint({
   toggleComplete,
   showCheckpoint,
   canCheckComplete }: Props) {
+  const taskId = `${courseId}-${task}`
   return (
     <li className="group flex align-middle bg-gray-100 
     hover:bg-gray-900 hover:text-white p-3 flex items-center space-x-2">
@@ -26,7 +27,7 @@ export default function Checkpoint({
         disabled={!canCheckComplete}
         id={`${courseId}-${task}`}
         onClick={() => toggleComplete({ courseId, checkpointId })} />
-      <Label htmlFor={`${courseId}-${task}`}>
+      <Label htmlFor={taskId}>
         <button onClick={() => showCheckpoint({ courseId, checkpointId })}>{task}</button>
       </Label>
     </li>
