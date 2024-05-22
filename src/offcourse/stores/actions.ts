@@ -23,7 +23,6 @@ export class StoreActions {
   private get courses() {
     return this.get().courses;
   }
-
   private get learnRecord() {
     return this.get().learnRecords;
   }
@@ -157,19 +156,16 @@ export class StoreActions {
   toggleComplete = async ({ courseId, checkpointId }: CheckpointQuery) => {
     const userName = this.userName;
     if (userName) {
-      updateLearnData({ courseId, checkpointId, userName });
+      const learnRecord = this.learnRecord[courseId];
+      const taskCompleted = learnRecord?.tasksCompleted[checkpointId] ? undefined : new Date;
+      updateLearnData({ courseId, checkpointId, userName, taskCompleted });
       this.set(produce((state) => {
-        const learnRecords = this.learnRecord[courseId];
-        if (learnRecords) {
-          const tasksCompleted = new Set([...learnRecords.tasksCompleted]);
-          tasksCompleted.has(checkpointId)
-            ? tasksCompleted.delete(checkpointId)
-            : tasksCompleted.add(checkpointId)
-          state.learnRecords[courseId].tasksCompleted = [...tasksCompleted];
+        if (learnRecord) {
+          state.learnRecords[courseId].tasksCompleted[checkpointId] = taskCompleted
         } else {
           const learnRecords = {
             isBookmarked: false,
-            tasksCompleted: [checkpointId],
+            tasksCompleted: { [checkpointId]: new Date },
             notes: []
           }
 
@@ -202,12 +198,17 @@ export class StoreActions {
     }
   }
 }
-export async function updateLearnData({ courseId, checkpointId, userName }:
-  { courseId: Course['courseId'], userName: string, checkpointId: Checkpoint['checkpointId'] }) {
+export async function updateLearnData({ courseId, checkpointId, userName, taskCompleted }:
+  {
+    courseId: Course['courseId'],
+    userName: string,
+    checkpointId: Checkpoint['checkpointId'],
+    taskCompleted: Date | undefined
+  }) {
   return await fetch(`/learnRecords/${courseId}.json`, {
     method: "POST",
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ courseId, checkpointId, userName })
+    body: JSON.stringify({ courseId, checkpointId, userName, taskCompleted })
   });
 }
 

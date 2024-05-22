@@ -50,7 +50,7 @@ export async function getLearnRecordByUserNameAndCourseIds({ userName, courseIds
       const isBookmarked = bookmarkDataDBResult.find(c => c.courseId === courseId);
       acc.set(courseId, {
         isBookmarked: !!isBookmarked,
-        tasksCompleted: [checkpointId],
+        tasksCompleted: { [checkpointId]: completedAt },
         notes: noteDataDBResult ? noteDataDBResult.map(
           ({ message, createdAt }) => {
             return { message, createdAt }
@@ -59,10 +59,9 @@ export async function getLearnRecordByUserNameAndCourseIds({ userName, courseIds
 
       return acc;
     } else {
-      const tasksCompleted = new Set([...ld.tasksCompleted]);
-      completedAt && tasksCompleted.add(checkpointId);
+      const tasksCompleted = ld.tasksCompleted;
       acc.set(courseId,
-        { ...ld, tasksCompleted: [...tasksCompleted] })
+        { ...ld, tasksCompleted: { [checkpointId]: completedAt, ...tasksCompleted } })
     }
 
     return acc;

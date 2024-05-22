@@ -14,8 +14,7 @@ export function prepareCourse(
     { course: Course, learnRecord: LearnRecord | undefined }) {
   return {
     ...course, checkpoints: course.checkpoints.map((cp) => {
-      const isCompleted = learnRecord &&
-        new Set([...learnRecord.tasksCompleted]).has(cp.checkpointId);
+      const isCompleted = learnRecord?.tasksCompleted[cp.checkpointId];
       return {
         ...cp,
         isCompleted

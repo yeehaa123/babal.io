@@ -50,13 +50,13 @@ const Socials = defineTable({
 
 const CompletionData = defineTable({
   columns: {
-    courseId: column.text({ references: () => Courses.columns.courseId }),
     checkpointId: column.text({ references: () => Checkpoints.columns.checkpointId }),
+    courseId: column.text({ references: () => Courses.columns.courseId }),
     userName: column.text({ references: () => People.columns.alias }),
-    completedAt: column.date()
+    completedAt: column.date({ optional: true })
   },
   indexes: [
-    { on: ["courseId", "userName"] },
+    { on: ["checkpointId", "userName"], unique: true },
   ]
 })
 

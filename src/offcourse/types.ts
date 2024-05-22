@@ -16,7 +16,7 @@ export type AuthData = {
 
 export type LearnRecord = {
   isBookmarked: boolean,
-  tasksCompleted: string[],
+  tasksCompleted: Record<Checkpoint['checkpointId'], Date | undefined>,
   notes: CourseNote[]
 }
 
