@@ -5,7 +5,8 @@ import type {
   Course,
   CourseNote,
   CourseQuery,
-  AuthData
+  AuthData,
+  Checkpoint
 } from "@/offcourse/types";
 
 import { OverlayModes } from "./types";
@@ -153,26 +154,30 @@ export class StoreActions {
     this.augmentCourse({ courseId });
   }
 
-  toggleComplete = ({ courseId, checkpointId }: CheckpointQuery) => {
-    this.set(produce((state) => {
-      const learnData = this.learnData[courseId];
-      if (learnData) {
-        const tasksCompleted = new Set([...learnData.tasksCompleted]);
-        tasksCompleted.has(checkpointId)
-          ? tasksCompleted.delete(checkpointId)
-          : tasksCompleted.add(checkpointId)
-        state.learnData[courseId].tasksCompleted = [...tasksCompleted];
-      } else {
-        const learnData = {
-          isBookmarked: false,
-          tasksCompleted: [checkpointId],
-          notes: []
-        }
+  toggleComplete = async ({ courseId, checkpointId }: CheckpointQuery) => {
+    const userName = this.userName;
+    if (userName) {
+      updateLearnData({ courseId, checkpointId, userName });
+      this.set(produce((state) => {
+        const learnData = this.learnData[courseId];
+        if (learnData) {
+          const tasksCompleted = new Set([...learnData.tasksCompleted]);
+          tasksCompleted.has(checkpointId)
+            ? tasksCompleted.delete(checkpointId)
+            : tasksCompleted.add(checkpointId)
+          state.learnData[courseId].tasksCompleted = [...tasksCompleted];
+        } else {
+          const learnData = {
+            isBookmarked: false,
+            tasksCompleted: [checkpointId],
+            notes: []
+          }
 
-        state.learnData[courseId] = learnData;
-      }
-    }))
-    this.augmentCourse({ courseId });
+          state.learnData[courseId] = learnData;
+        }
+      }))
+      this.augmentCourse({ courseId });
+    }
   }
 
   toggleMetaVisible = ({ courseId }: CourseQuery) => {
@@ -197,6 +202,16 @@ export class StoreActions {
     }
   }
 }
+export async function updateLearnData({ courseId, checkpointId, userName }:
+  { courseId: Course['courseId'], userName: string, checkpointId: Checkpoint['checkpointId'] }) {
+  return await fetch(`/learnData/${courseId}.json`, {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ courseId, checkpointId, userName })
+  });
+}
+
+
 
 export async function fetchLearnData({ courseIds, userName }:
   { courseIds: Course['courseId'][], userName: string }) {

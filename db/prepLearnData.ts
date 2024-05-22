@@ -11,7 +11,7 @@ export function prepCompletionData({ people, checkpoints }:
       return { userName, courseId, checkpointId, completedAt };
     })
   })
-  return shuffle(all).slice(0, 7);
+  return shuffle(all).slice(0, 12);
 }
 
 export function prepBookmarkData({ people, courses }:
