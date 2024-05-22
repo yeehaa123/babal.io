@@ -8,12 +8,17 @@ import {
   NoteData
 } from 'astro:db';
 
-import type { LearnRecord } from '@/offcourse/types';
+import type { Course, LearnRecord } from '@/offcourse/types';
+export async function getLearnRecordByUserNameAndCourseId({ userName, courseId }:
+  { userName: string, courseId: Course['courseId'] }) {
+  const results = await getLearnRecordByUserNameAndCourseIds({ userName, courseIds: [courseId] });
+  return results[courseId];
+}
 
-export async function getLearnDataByUserNameAndCourseIds({ userName, courseIds }:
+export async function getLearnRecordByUserNameAndCourseIds({ userName, courseIds }:
   { userName: string, courseIds: string[] }) {
 
-  const learnDataDBResult = await db
+  const learnRecordsDBResult = await db
     .select()
     .from(CompletionData)
     .where((and(
@@ -37,7 +42,7 @@ export async function getLearnDataByUserNameAndCourseIds({ userName, courseIds }
       inArray(NoteData.courseId, courseIds)
     )))
 
-  const learnData = learnDataDBResult.reduce((acc, row) => {
+  const learnRecords = learnRecordsDBResult.reduce((acc, row) => {
     const { courseId, checkpointId, completedAt } = row;
     const ld = acc.get(courseId);
 
@@ -63,5 +68,5 @@ export async function getLearnDataByUserNameAndCourseIds({ userName, courseIds }
     return acc;
   }, new Map<string, LearnRecord>)
 
-  return Object.fromEntries(learnData);
+  return Object.fromEntries(learnRecords);
 }
