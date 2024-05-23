@@ -97,9 +97,9 @@ export class StoreActions extends BaseStoreActions {
   }
 
   toggleBookmark = ({ courseId }: CourseQuery) => {
+    const learnRecord = this.learnRecord[courseId] || { tasksCompleted: [] };
+    const isBookmarked = this.learnRecord[courseId]?.isBookmarked;
     this.set(produce((state) => {
-      const learnRecord = this.learnRecord[courseId] || { tasksCompleted: [] };
-      const isBookmarked = this.learnRecord[courseId]?.isBookmarked;
       state.learnRecords[courseId] = {
         ...learnRecord,
         isBookmarked: !isBookmarked
@@ -131,8 +131,8 @@ export class StoreActions extends BaseStoreActions {
   }
 
   toggleMetaVisible = ({ courseId }: CourseQuery) => {
+    const isMetaVisible = this.get().cardStates[courseId]!.isMetaVisible;
     this.set(produce((state) => {
-      const isMetaVisible = this.get().cardStates[courseId]!.isMetaVisible;
       state.cardStates[courseId].isMetaVisible = !isMetaVisible
     }))
   }
@@ -140,7 +140,8 @@ export class StoreActions extends BaseStoreActions {
   fetchMissingLearnData = async () => {
     const userName = this.userName;
     if (userName) {
-      const learnRecords = await fetchLearnData({ courseIds: this.missingCourses, userName })
+      const courseIds = this.missingCourses;
+      const learnRecords = await fetchLearnData({ courseIds, userName })
       if (learnRecords) {
         for (const courseId of Object.keys(learnRecords)) {
           this.set(produce((state) => {
