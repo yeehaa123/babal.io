@@ -1,3 +1,4 @@
+import type { CardState } from "../models/cardState"
 import type { StoreActions } from "./actions";
 import type {
   AuthData,
@@ -15,22 +16,6 @@ export type Affordances = {
   canEdit: boolean
 }
 
-export enum OverlayModes {
-  NONE = "NONE",
-  AUTH = "AUTH",
-  REGISTER = "REGISTER",
-  EDIT = "EDIT",
-  NOTE = "NOTE",
-  CHECKPOINT = "CHECKPOINT",
-  SHARE = "SHARE",
-  CLONE = "CLONE"
-}
-
-export type CardState = {
-  overlayMode: OverlayModes,
-  selectedCheckpoint: string | undefined,
-  isMetaVisible: boolean
-}
 
 type LearnRecordsState = Record<string, LearnRecord>
 

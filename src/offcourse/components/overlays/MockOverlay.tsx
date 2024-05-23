@@ -9,10 +9,9 @@ import {
 } from "@/components/ui/card"
 
 
-export default function MockOverlay({ course, cardState, actions }: CourseCardStore) {
-  const { courseId } = course;
+export default function MockOverlay({ cardState, actions }: CourseCardStore) {
   const { overlayMode } = cardState;
-  const { hideCheckpoint } = actions;
+  const { hideOverlay } = actions;
 
   return (
     <>
@@ -21,7 +20,7 @@ export default function MockOverlay({ course, cardState, actions }: CourseCardSt
       </CardHeader>
       <CardContent className="flex grow" />
       <CardFooter className="flex w-full justify-between gap-x-2">
-        <Button onClick={() => hideCheckpoint({ courseId })} className="w-full">Cancel</Button>
+        <Button onClick={() => hideOverlay} className="w-full">Cancel</Button>
       </CardFooter>
     </>
   )

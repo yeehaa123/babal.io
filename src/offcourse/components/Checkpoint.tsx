@@ -7,7 +7,7 @@ import type { CourseCardStore } from "../stores/types";
 interface Props extends AugmentedCheckpoint {
   canCheckComplete: CourseCardStore['affordances']['canCheckComplete'],
   toggleComplete: CourseCardStore['actions']['toggleComplete']
-  showCheckpoint: CourseCardStore['actions']['showCheckpoint']
+  showCheckpoint: CourseCardStore['actions']['showCheckpointOverlay']
 }
 
 export default function Checkpoint({

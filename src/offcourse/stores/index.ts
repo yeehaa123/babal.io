@@ -1,12 +1,13 @@
 import type { Course } from "@/offcourse/types";
 import { createStore } from 'zustand'
 import { combine } from "zustand/middleware";
-import { OverlayModes } from "@/offcourse/stores/types";
 import { useOffcourseContext } from "@/offcourse/stores/context";
 import { StoreActions } from "./actions"
 import { determineRole, determineAffordances } from "./helpers"
+import { initialCardState } from "../models/cardState";
 
 interface CoursesStoreProps { courses: Course[] }
+
 export type OffcourseStore = ReturnType<typeof createOffcourseStore>
 
 export function createOffcourseStore({ courses }: CoursesStoreProps) {
@@ -15,12 +16,7 @@ export function createOffcourseStore({ courses }: CoursesStoreProps) {
   });
 
   const cardEntries = courses.map(course => {
-    return [course.courseId, {
-      overlayMode: OverlayModes.NONE,
-      selectedCheckpoint: undefined,
-      isMetaVisible: false,
-    },
-    ]
+    return [course.courseId, initialCardState]
   })
 
   const initialState = {
@@ -29,6 +25,7 @@ export function createOffcourseStore({ courses }: CoursesStoreProps) {
     courses: Object.fromEntries(storeEntries),
     learnRecords: {}
   }
+
   return createStore(
     combine(initialState, (set, get) => ({ actions: new StoreActions(set, get) }))
   )

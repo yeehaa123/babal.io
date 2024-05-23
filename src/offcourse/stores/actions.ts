@@ -1,40 +1,19 @@
-import type { StoreApi } from "zustand";
-import type { OffcourseState } from "./types"
 import type {
   CheckpointQuery,
-  Course,
   CourseNote,
   CourseQuery,
   AuthData,
-  Checkpoint
 } from "@/offcourse/types";
 
-import { OverlayModes } from "./types";
+import { OverlayModes } from "../types";
 import { produce } from 'immer';
 import { prepareCourse } from "./helpers";
+import { updateLearnData, fetchLearnData } from "./apiActions";
+import { toggleTask } from "../models/learnData";
+import { BaseStoreActions } from "./baseActions";
+import { initialCardState } from "../models/cardState";
 
-type OffcourseInitialState = Omit<OffcourseState, "actions">
-
-type Api = StoreApi<OffcourseInitialState>;
-
-export class StoreActions {
-  constructor(private set: Api["setState"], private get: Api["getState"]) { }
-
-  private get courses() {
-    return this.get().courses;
-  }
-  private get learnRecord() {
-    return this.get().learnRecords;
-  }
-
-  private get userName() {
-    return this.get().authData.userName;
-  }
-
-  private get missingCourses() {
-    return Object.keys(this.courses).filter((c) =>
-      (c !== Object.keys(this.learnRecord).find(cc => cc === c)));
-  }
+export class StoreActions extends BaseStoreActions {
 
   updateUser = (authData: AuthData) => {
     this.set(produce((state) => {
@@ -44,13 +23,14 @@ export class StoreActions {
   }
 
   augmentCourse = ({ courseId }: CourseQuery) => {
-    this.set(produce((state) => {
-      const course = this.courses[courseId];
-      const learnRecord = this.learnRecord[courseId];
-      if (course) {
+    const course = this.courses[courseId];
+    const learnRecord = this.learnRecord[courseId];
+    if (course && learnRecord) {
+      this.set(produce((state) => {
         state.courses[courseId] = prepareCourse({ course, learnRecord });
       }
-    }))
+      ))
+    }
   }
 
   cloneCourse = ({ courseId }: CourseQuery) => {
@@ -66,70 +46,54 @@ export class StoreActions {
         ...this.courses,
         [newId]: { ...course, courseId: newId, goal: "HURRAY" }
       };
-      state.cardStates[newId] = {
-        overlayMode: OverlayModes.NONE,
-        selectedCheckpoint: undefined,
-        isMetaVisible: false,
-      }
+
+      state.cardStates[newId] = initialCardState
+
     }))
     this.augmentCourse({ courseId: newId });
   }
 
   hideOverlay = ({ courseId }: CourseQuery) => {
-    this.set(produce((state) => {
-      state.cardStates[courseId].overlayMode = OverlayModes.NONE;
-    }))
+    this.setOverlayMode(courseId, OverlayModes.NONE);
   }
 
   showCloneOverlay = ({ courseId }: CourseQuery) => {
-    this.set(produce((state) => {
-      state.cardStates[courseId].overlayMode = OverlayModes.CLONE;
-    }))
+    this.setOverlayMode(courseId, OverlayModes.CLONE);
   }
 
   showEditOverlay = ({ courseId }: CourseQuery) => {
-    this.set(produce((state) => {
-      state.cardStates[courseId].overlayMode = OverlayModes.EDIT;
-    }))
+    this.setOverlayMode(courseId, OverlayModes.EDIT)
   }
 
   showRegisterOverlay = ({ courseId }: CourseQuery) => {
-    this.set(produce((state) => {
-      state.cardStates[courseId].overlayMode = OverlayModes.REGISTER;
-    }))
+    this.setOverlayMode(courseId, OverlayModes.REGISTER)
   }
 
   showNotesOverlay = ({ courseId }: CourseQuery) => {
-    this.set(produce((state) => {
-      state.cardStates[courseId].overlayMode = OverlayModes.NOTE;
-    }))
+    this.setOverlayMode(courseId, OverlayModes.NOTE)
   }
   showShareOverlay = ({ courseId }: CourseQuery) => {
-    this.set(produce((state) => {
-      state.cardStates[courseId].overlayMode = OverlayModes.SHARE;
-    }))
+    this.setOverlayMode(courseId, OverlayModes.SHARE)
   }
 
   showAuthOverlay = ({ courseId }: CourseQuery) => {
-    this.set(produce((state) => {
-      state.cardStates[courseId].overlayMode = OverlayModes.AUTH;
-    }))
+    this.setOverlayMode(courseId, OverlayModes.AUTH)
   }
 
-  showCheckpoint = (
+  showCheckpointOverlay = (
     { courseId, checkpointId }: CheckpointQuery) => {
     this.set(produce((state) => {
       state.cardStates[courseId].selectedCheckpoint = checkpointId;
-      state.cardStates[courseId].overlayMode = OverlayModes.CHECKPOINT;
     }))
+    this.setOverlayMode(courseId, OverlayModes.CHECKPOINT)
   }
 
-  hideCheckpoint = (
+  hideCheckpointOverlay = (
     { courseId }: CourseQuery) => {
     this.set(produce((state) => {
       state.cardStates[courseId].selectedCheckpoint = undefined;
-      state.cardStates[courseId].overlayMode = OverlayModes.NONE;
     }))
+    this.hideOverlay({ courseId });
   }
 
   toggleBookmark = ({ courseId }: CourseQuery) => {
@@ -156,22 +120,12 @@ export class StoreActions {
   toggleComplete = async ({ courseId, checkpointId }: CheckpointQuery) => {
     const userName = this.userName;
     if (userName) {
-      const learnRecord = this.learnRecord[courseId];
-      const taskCompleted = learnRecord?.tasksCompleted[checkpointId] ? undefined : new Date;
-      updateLearnData({ courseId, checkpointId, userName, taskCompleted });
+      const learnRecord = toggleTask(this.learnRecord[courseId], checkpointId);
       this.set(produce((state) => {
-        if (learnRecord) {
-          state.learnRecords[courseId].tasksCompleted[checkpointId] = taskCompleted
-        } else {
-          const learnRecords = {
-            isBookmarked: false,
-            tasksCompleted: { [checkpointId]: new Date },
-            notes: []
-          }
-
-          state.learnRecords[courseId] = learnRecords;
-        }
+        state.learnRecords[courseId] = learnRecord;
       }))
+      const taskCompleted = learnRecord.tasksCompleted[checkpointId];
+      updateLearnData({ courseId, checkpointId, userName, taskCompleted });
       this.augmentCourse({ courseId });
     }
   }
@@ -198,32 +152,3 @@ export class StoreActions {
     }
   }
 }
-export async function updateLearnData({ courseId, checkpointId, userName, taskCompleted }:
-  {
-    courseId: Course['courseId'],
-    userName: string,
-    checkpointId: Checkpoint['checkpointId'],
-    taskCompleted: Date | undefined
-  }) {
-  return await fetch(`/learnRecords/${courseId}.json`, {
-    method: "POST",
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ courseId, checkpointId, userName, taskCompleted })
-  });
-}
-
-
-
-export async function fetchLearnData({ courseIds, userName }:
-  { courseIds: Course['courseId'][], userName: string }) {
-  if (courseIds.length > 0) {
-    const response = await fetch('/learnRecords.json', {
-      method: "POST",
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ courseIds, userName })
-    });
-    const data = await response.json();
-    return data.learnRecords;
-  }
-}
-

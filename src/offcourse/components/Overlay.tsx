@@ -1,6 +1,6 @@
 import type { CourseCardStore } from "@/offcourse/stores/types";
 
-import { OverlayModes } from "@/offcourse/stores/types";
+import { OverlayModes } from "@/offcourse/types";
 import { Transition } from "@headlessui/react"
 import { CardChrome } from "@/offcourse/components";
 import {

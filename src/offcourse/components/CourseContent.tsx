@@ -45,7 +45,7 @@ export default function CourseCard({
   } = affordances;
 
   const {
-    showCheckpoint,
+    showCheckpointOverlay,
     toggleComplete,
     toggleBookmark,
     toggleMetaVisible
@@ -74,7 +74,7 @@ export default function CourseCard({
         <ul className="flex flex-col gap-2">
           {checkpoints.map((cp, index) => (
             <Checkpoint toggleComplete={toggleComplete}
-              showCheckpoint={showCheckpoint}
+              showCheckpoint={showCheckpointOverlay}
               canCheckComplete={canCheckComplete}
               key={index}
               {...cp} />))
