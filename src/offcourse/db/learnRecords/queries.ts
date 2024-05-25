@@ -10,15 +10,14 @@ import {
   NoteData
 } from 'astro:db';
 
-export async function getLearnRecordByUserNameAndCourseId({ userName, courseId }:
-  { userName: string, courseId: Course['courseId'] }) {
+export async function getLearnRecordByUserNameAndCourseId(
+  { userName, courseId }: { userName: string, courseId: Course['courseId'] }) {
   const results = await getLearnRecordByUserNameAndCourseIds({ userName, courseIds: [courseId] });
   return results[courseId];
 }
 
-export async function getLearnRecordByUserNameAndCourseIds({ userName, courseIds }:
-  { userName: string, courseIds: string[] }) {
-
+export async function getLearnRecordByUserNameAndCourseIds(
+  { userName, courseIds }: { userName: string, courseIds: string[] }) {
   const learnRecordsDBResult = await db
     .select()
     .from(CompletionData)
@@ -42,16 +41,21 @@ export async function getLearnRecordByUserNameAndCourseIds({ userName, courseIds
       eq(NoteData.userName, userName),
       inArray(NoteData.courseId, courseIds)
     )))
+
   const allNotes = noteDataDBResult ? noteDataDBResult : []
 
   const learnRecords = learnRecordsDBResult.reduce((acc, row) => {
     const { courseId, checkpointId, completedAt } = row;
-    const ld = acc.get(courseId);
 
-    if (!ld) {
-      const isBookmarked = !!bookmarkDataDBResult.find(c => c.courseId === courseId && c.bookmarkedAt);
+    const isBookmarked = !!bookmarkDataDBResult
+      .filter(({ bookmarkedAt }) => bookmarkedAt)
+      .find(({ courseId: id }) => id === courseId);
+
+    const notes = allNotes.filter(note => note.courseId === courseId)
+
+    const learnRecord = acc.get(courseId);
+    if (!learnRecord) {
       const tasksCompleted = { [checkpointId]: !!completedAt }
-      const notes = allNotes.filter(note => note.courseId === courseId)
       acc.set(courseId, {
         courseId,
         isBookmarked,
@@ -60,10 +64,11 @@ export async function getLearnRecordByUserNameAndCourseIds({ userName, courseIds
       })
       return acc;
     } else {
+      const { tasksCompleted } = learnRecord;
       acc.set(courseId, {
-        ...ld,
+        ...learnRecord,
         tasksCompleted: {
-          ...ld.tasksCompleted,
+          ...tasksCompleted,
           [checkpointId]: !!completedAt
         }
       })
