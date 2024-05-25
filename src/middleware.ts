@@ -4,7 +4,7 @@ import { createClerkClient } from '@clerk/clerk-sdk-node';
 export const onRequest = defineMiddleware(async (context, next) => {
   const secretKey = import.meta.env.CLERK_SECRET_KEY;
   const publishableKey = import.meta.env.PUBLIC_CLERK_KEY;
-  const authRoutes = ['/learnRecords'];
+  const authRoutes = ['/offcourse/learnRecords', '/offcourse/tasks', '/offcourse/bookmarks'];
   const isAuthenticatedRoute = authRoutes.find(route => context.url.pathname.startsWith(route))
   if (isAuthenticatedRoute) {
     console.log(context.url.pathname);

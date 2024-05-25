@@ -3,27 +3,38 @@ import type {
   Checkpoint
 } from "@/offcourse/types";
 
-export async function updateLearnData({ courseId, checkpointId, userName, taskCompleted }:
+export async function updateBookmarkStatus({ courseId, isBookmarked }:
   {
     courseId: Course['courseId'],
-    userName: string,
-    checkpointId: Checkpoint['checkpointId'],
-    taskCompleted: Date | undefined
+    isBookmarked: boolean
   }) {
-  return await fetch(`/learnRecords/${courseId}.json`, {
+  return await fetch(`/offcourse/bookmarks/${courseId}.json`, {
     method: "POST",
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ courseId, checkpointId, userName, taskCompleted })
+    body: JSON.stringify({ courseId, isBookmarked })
   });
 }
 
-export async function fetchLearnData({ courseIds, userName }:
+export async function updateTaskStatus({ courseId, checkpointId, taskCompleted }:
+  {
+    courseId: Course['courseId'],
+    checkpointId: Checkpoint['checkpointId'],
+    taskCompleted: boolean
+  }) {
+  return await fetch(`/offcourse/tasks/${courseId}/${checkpointId}.json`, {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ courseId, checkpointId, taskCompleted })
+  });
+}
+
+export async function fetchLearnData({ courseIds }:
   { courseIds: Course['courseId'][], userName: string }) {
   if (courseIds.length > 0) {
-    const response = await fetch('/learnRecords.json', {
+    const response = await fetch('/offcourse/learnRecords.json', {
       method: "POST",
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ courseIds, userName })
+      body: JSON.stringify({ courseIds })
     });
     const data = await response.json();
     return data.learnRecords;

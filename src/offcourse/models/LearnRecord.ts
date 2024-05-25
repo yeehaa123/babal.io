@@ -3,7 +3,7 @@ import type { Checkpoint, CourseQuery, Course, CourseNote } from "../types";
 export type LearnRecord = {
   courseId: Course['courseId'],
   isBookmarked: boolean,
-  tasksCompleted: Record<Checkpoint['checkpointId'], Date | undefined>,
+  tasksCompleted: Record<Checkpoint['checkpointId'], boolean>,
   notes: CourseNote[]
 }
 
@@ -24,7 +24,7 @@ export function toggleTask(
     ...learnRecord,
     tasksCompleted: {
       ...tasksCompleted,
-      [checkpointId]: tasksCompleted[checkpointId] ? undefined : new Date
+      [checkpointId]: !tasksCompleted[checkpointId]
     }
   }
 }

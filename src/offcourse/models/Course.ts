@@ -1,4 +1,5 @@
 import type { LearnRecord } from "../models/LearnRecord"
+import { nanoid } from 'nanoid'
 import type { Checkpoint, Curator, Tag } from "../types";
 
 export type Course = {
@@ -27,9 +28,11 @@ export function augment({ course, learnRecord }:
 }
 
 export function clone(course: Course, userName: string) {
-  const newId = "dfadsfljk998fdaslk";
+  const courseId = nanoid();
   const curator = { alias: userName, socials: {} }
-  const checkpoints = course.checkpoints.map(cp => { return { ...cp, courseId: newId } });
-  return { ...course, curator, courseId: newId, checkpoints, goal: "HURRAY" }
+  const checkpoints = course.checkpoints.map(cp => {
+    return { ...cp, courseId }
+  });
+  return { ...course, curator, courseId, checkpoints, goal: "HURRAY" }
 
 }

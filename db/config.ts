@@ -65,10 +65,10 @@ const BookmarkData = defineTable({
   columns: {
     courseId: column.text({ references: () => Courses.columns.courseId }),
     userName: column.text({ references: () => People.columns.alias }),
-    bookmarkedAt: column.date()
+    bookmarkedAt: column.date({ optional: true })
   },
   indexes: [
-    { on: ["courseId", "userName"] },
+    { on: ["courseId", "userName"], unique: true },
   ]
 })
 

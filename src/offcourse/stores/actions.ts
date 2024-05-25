@@ -1,8 +1,7 @@
 import type {
   CheckpointQuery,
   CourseNote,
-  CourseQuery,
-  AuthData,
+  CourseQuery, AuthData,
 } from "@/offcourse/types";
 
 import { OverlayModes } from "../types";
@@ -15,10 +14,9 @@ import {
   toggleTask
 } from "@/offcourse/models/LearnRecord";
 import { initCardState, toggleMetaVisible } from "../models/CardState";
-import { updateLearnData, fetchLearnData } from "./apiActions";
+import { fetchLearnData, updateBookmarkStatus, updateTaskStatus } from "./apiActions";
 
 export class StoreActions extends BaseStoreActions {
-
   updateUser = (authData: AuthData) => {
     this.setAuthData(authData);
     const userName = authData.userName;
@@ -39,8 +37,6 @@ export class StoreActions extends BaseStoreActions {
     const initialCardState = initCardState(clonedCourse);
     const initialLearnRecord = initLearnRecord(clonedCourse);
 
-    console.log(initialLearnRecord);
-
     this.setCourse(clonedCourse);
     this.setCardState(initialCardState);
     this.setLearnRecord(initialLearnRecord);
@@ -52,6 +48,7 @@ export class StoreActions extends BaseStoreActions {
     if (userName) {
       const oldLearnRecord = this.learnRecord[courseId] || initLearnRecord({ courseId });
       const learnRecord = toggleBookmark(oldLearnRecord);
+      updateBookmarkStatus(learnRecord);
       this.setLearnRecord(learnRecord);
     }
   }
@@ -70,11 +67,10 @@ export class StoreActions extends BaseStoreActions {
     const userName = this.userName;
     if (userName) {
       const learnRecord = this.learnRecord[courseId] || initLearnRecord({ courseId });
-      console.log(learnRecord);
       const newLearnRecord = toggleTask(learnRecord, checkpointId);
-      const taskCompleted = newLearnRecord.tasksCompleted[checkpointId];
+      const taskCompleted = !!newLearnRecord.tasksCompleted[checkpointId];
       this.setLearnRecord(newLearnRecord);
-      updateLearnData({ courseId, checkpointId, userName, taskCompleted });
+      updateTaskStatus({ courseId, checkpointId, taskCompleted });
     }
   }
 
