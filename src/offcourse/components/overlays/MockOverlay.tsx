@@ -1,5 +1,4 @@
 import type { CourseCardStore } from "@/offcourse/stores/types";
-
 import { Button } from "@/components/ui/button"
 import {
   CardHeader,
@@ -12,7 +11,6 @@ import {
 export default function MockOverlay({ cardState, actions }: CourseCardStore) {
   const { courseId, overlayMode } = cardState;
   const { hideOverlay } = actions;
-
   return (
     <>
       <CardHeader className="flex flex-row gap-x-7 space-y-0 items-top">

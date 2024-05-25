@@ -1,17 +1,19 @@
 import type {
   CheckpointQuery,
   CourseNote,
-  CourseQuery, AuthData,
+  CourseQuery,
+  AuthData,
 } from "@/offcourse/types";
-
 import { OverlayModes } from "../types";
 import { BaseStoreActions } from "./baseActions";
+
 import * as Course from "@/offcourse/models/Course";
 import * as LearnRecord from "@/offcourse/models/LearnRecord";
 import * as CardState from "@/offcourse/models/CardState";
 import * as Api from "./apiActions";
 
 export class StoreActions extends BaseStoreActions {
+
   updateUser = (authData: AuthData) => {
     this.setAuthData(authData);
     const userName = authData.userName;
@@ -48,7 +50,7 @@ export class StoreActions extends BaseStoreActions {
     }
   }
 
-  addNote = (courseNote: CourseNote & CourseQuery) => {
+  addNote = (courseNote: CourseNote) => {
     const userName = this.userName;
     if (userName) {
       const { courseId } = courseNote;
@@ -84,14 +86,12 @@ export class StoreActions extends BaseStoreActions {
     }
   }
 
-  showCheckpointOverlay = (
-    { courseId, checkpointId }: CheckpointQuery) => {
+  showCheckpointOverlay = ({ courseId, checkpointId }: CheckpointQuery) => {
     this.setSelectedCheckpoint({ courseId, checkpointId });
     this.setOverlayMode(courseId, OverlayModes.CHECKPOINT)
   }
 
-  hideCheckpointOverlay = (
-    { courseId }: CourseQuery) => {
+  hideCheckpointOverlay = ({ courseId }: CourseQuery) => {
     this.setSelectedCheckpoint({ courseId });
     this.hideOverlay({ courseId });
   }

@@ -42,28 +42,31 @@ export async function getLearnRecordByUserNameAndCourseIds({ userName, courseIds
       eq(NoteData.userName, userName),
       inArray(NoteData.courseId, courseIds)
     )))
+  const allNotes = noteDataDBResult ? noteDataDBResult : []
 
   const learnRecords = learnRecordsDBResult.reduce((acc, row) => {
     const { courseId, checkpointId, completedAt } = row;
     const ld = acc.get(courseId);
 
     if (!ld) {
-      const isBookmarked = bookmarkDataDBResult.find(c => c.courseId === courseId && c.bookmarkedAt);
+      const isBookmarked = !!bookmarkDataDBResult.find(c => c.courseId === courseId && c.bookmarkedAt);
+      const tasksCompleted = { [checkpointId]: !!completedAt }
+      const notes = allNotes.filter(note => note.courseId === courseId)
       acc.set(courseId, {
         courseId,
-        isBookmarked: !!isBookmarked,
-        tasksCompleted: { [checkpointId]: !!completedAt },
-        notes: noteDataDBResult ? noteDataDBResult.map(
-          ({ message, createdAt }) => {
-            return { message, createdAt }
-          }) : []
+        isBookmarked,
+        tasksCompleted,
+        notes
       })
-
       return acc;
     } else {
-      const tasksCompleted = ld.tasksCompleted;
-      acc.set(courseId,
-        { ...ld, tasksCompleted: { [checkpointId]: !!completedAt, ...tasksCompleted } })
+      acc.set(courseId, {
+        ...ld,
+        tasksCompleted: {
+          ...ld.tasksCompleted,
+          [checkpointId]: !!completedAt
+        }
+      })
     }
 
     return acc;

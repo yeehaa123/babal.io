@@ -26,6 +26,7 @@ export type AuthData = {
 }
 
 export interface CourseNote {
+  courseId: Course['courseId'],
   createdAt: Date,
   message: string
 }

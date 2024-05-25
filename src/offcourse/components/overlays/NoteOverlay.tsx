@@ -29,7 +29,7 @@ export default function NoteOverlay(
             {note.message}
           </div>)
         )}</div>
-        <NoteForm formId={formId} onConfirm={(note) => addNote({ courseId, ...note })} />
+        <NoteForm courseId={courseId} formId={formId} onConfirm={(note) => addNote(note)} />
       </CardContent>
       <CardFooter className="flex flex-col w-full justify-between gap-2">
         <Button type="submit" form={formId} className="w-full">Add Note</Button>

@@ -11,15 +11,16 @@ import {
 } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
 import { noteFormSchema } from "./schemas";
-import type { CourseNote } from "@/offcourse/types"
+import type { Course, CourseNote } from "@/offcourse/types"
 
 export type Props = {
+  courseId: Course['courseId'],
   onConfirm: (v: CourseNote) => void,
   formId: string;
 
 }
 
-export function NoteForm({ onConfirm, formId }: Props) {
+export function NoteForm({ onConfirm, formId, courseId }: Props) {
   const form = useForm<z.infer<typeof noteFormSchema>>({
     resolver: zodResolver(noteFormSchema),
     defaultValues: {
@@ -29,7 +30,7 @@ export function NoteForm({ onConfirm, formId }: Props) {
 
   function onSubmit({ note }: z.infer<typeof noteFormSchema>) {
     form.reset();
-    return onConfirm({ message: note, createdAt: new Date });
+    return onConfirm({ courseId, message: note, createdAt: new Date });
   }
 
   return (
