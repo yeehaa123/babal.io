@@ -1,6 +1,4 @@
-import type {
-  Course,
-} from "@/offcourse/types";
+import type { Course } from "@/offcourse/types";
 
 import type {
   CoursesDBResult,
