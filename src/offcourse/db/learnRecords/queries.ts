@@ -24,6 +24,7 @@ export async function getLearnRecordByUserNameAndCourseId(
 export async function getLearnRecordByUserNameAndCourseIds(
   { userName, courseIds }: { userName: string, courseIds: string[] }) {
 
+  const timeStart = Date.now();
   const learnRecordsDBResult = await db
     .select({
       courseId: CompletionData.courseId,
@@ -33,6 +34,10 @@ export async function getLearnRecordByUserNameAndCourseIds(
       note: NoteData
     })
     .from(CompletionData)
+    .where((and(
+      eq(CompletionData.userName, userName),
+      inArray(CompletionData.courseId, courseIds)
+    )))
     .leftJoin(BookmarkData, and(
       eq(BookmarkData.userName, userName),
       eq(CompletionData.courseId, BookmarkData.courseId)))
@@ -40,12 +45,9 @@ export async function getLearnRecordByUserNameAndCourseIds(
       eq(NoteData.userName, userName),
       eq(CompletionData.courseId, NoteData.courseId)
     ))
-    .where((and(
-      eq(CompletionData.userName, userName),
-      inArray(CompletionData.courseId, courseIds)
-    )))
 
-  console.log(learnRecordsDBResult.length);
+  const delta = Date.now() - timeStart;
+  console.log(`${delta} ms`);
 
   const learnRecords = learnRecordsDBResult.reduce((acc, row) => {
     const { courseId, checkpointId, completedAt, bookmarkedAt, note } = row;
