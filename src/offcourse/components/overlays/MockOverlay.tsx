@@ -10,7 +10,7 @@ import {
 
 
 export default function MockOverlay({ cardState, actions }: CourseCardStore) {
-  const { overlayMode } = cardState;
+  const { courseId, overlayMode } = cardState;
   const { hideOverlay } = actions;
 
   return (
@@ -20,7 +20,7 @@ export default function MockOverlay({ cardState, actions }: CourseCardStore) {
       </CardHeader>
       <CardContent className="flex grow" />
       <CardFooter className="flex w-full justify-between gap-x-2">
-        <Button onClick={() => hideOverlay} className="w-full">Cancel</Button>
+        <Button onClick={() => hideOverlay({ courseId })} className="w-full">Cancel</Button>
       </CardFooter>
     </>
   )
