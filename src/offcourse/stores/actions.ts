@@ -24,7 +24,6 @@ export class StoreActions extends BaseStoreActions {
     this.fetchMissingLearnData();
   }
 
-
   cloneCourse = ({ courseId }: CourseQuery) => {
     const oldCourse = this.courses[courseId];
     const userName = this.userName;
@@ -41,16 +40,22 @@ export class StoreActions extends BaseStoreActions {
   }
 
   toggleBookmark = ({ courseId }: CourseQuery) => {
-    const oldLearnRecord = this.learnRecord[courseId] || initLearnRecord({ courseId });
-    const learnRecord = toggleBookmark(oldLearnRecord);
-    this.setLearnRecord(learnRecord);
+    const userName = this.userName;
+    if (userName) {
+      const oldLearnRecord = this.learnRecord[courseId] || initLearnRecord({ courseId });
+      const learnRecord = toggleBookmark(oldLearnRecord);
+      this.setLearnRecord(learnRecord);
+    }
   }
 
   addNote = (courseNote: CourseNote & CourseQuery) => {
-    const { courseId } = courseNote;
-    const oldLearnRecord = this.learnRecord[courseId] || initLearnRecord({ courseId });
-    const learnRecord = addNote(oldLearnRecord, courseNote);
-    this.setLearnRecord(learnRecord);
+    const userName = this.userName;
+    if (userName) {
+      const { courseId } = courseNote;
+      const oldLearnRecord = this.learnRecord[courseId] || initLearnRecord({ courseId });
+      const learnRecord = addNote(oldLearnRecord, courseNote);
+      this.setLearnRecord(learnRecord);
+    }
   }
 
   toggleComplete = async ({ courseId, checkpointId }: CheckpointQuery) => {
@@ -75,10 +80,8 @@ export class StoreActions extends BaseStoreActions {
     if (userName) {
       const courseIds = this.missingCourses;
       const learnRecords = await fetchLearnData({ courseIds, userName })
-      if (learnRecords) {
-        for (const courseId of Object.keys(learnRecords)) {
-          this.setLearnRecord(learnRecords[courseId]);
-        }
+      for (const courseId of Object.keys(learnRecords)) {
+        this.setLearnRecord(learnRecords[courseId]);
       }
     }
   }

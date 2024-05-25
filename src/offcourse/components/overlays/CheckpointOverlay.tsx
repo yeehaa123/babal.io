@@ -16,20 +16,21 @@ import {
 
 export default function CheckpointOverlay(
   { checkpoint, learnRecord, affordances, actions }: CourseCardStore) {
+
   if (!checkpoint) {
     return <div>ERROR</div>
   }
 
+  const { hideCheckpointOverlay, toggleComplete } = actions;
   const { canCheckComplete } = affordances;
   const { courseId, checkpointId, task, description, href, tags } = checkpoint;
-  const isCompleted = learnRecord?.tasksCompleted[checkpointId]
-  const { hideCheckpointOverlay, toggleComplete } = actions;
+  const isCompleted = !!learnRecord?.tasksCompleted[checkpointId]
   return (
     <>
       <CardHeader className="flex flex-row gap-x-7 space-y-0 items-top">
         <CardTitle>{task}</CardTitle>
         <Checkbox id={`${courseId}-${task}`}
-          checked={!!isCompleted}
+          checked={isCompleted}
           disabled={!canCheckComplete}
           className={cn("h-12 w-12 mt-0")}
           onClick={() => toggleComplete({ courseId, checkpointId })} />
