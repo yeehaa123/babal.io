@@ -6,15 +6,10 @@ import type {
 
 import { OverlayModes } from "../types";
 import { BaseStoreActions } from "./baseActions";
-import { clone } from "@/offcourse/models/Course";
-import {
-  addNote,
-  initLearnRecord,
-  toggleBookmark,
-  toggleTask
-} from "@/offcourse/models/LearnRecord";
-import { initCardState, toggleMetaVisible } from "../models/CardState";
-import * as api from "./apiActions";
+import * as Course from "@/offcourse/models/Course";
+import * as LearnRecord from "@/offcourse/models/LearnRecord";
+import * as CardState from "@/offcourse/models/CardState";
+import * as Api from "./apiActions";
 
 export class StoreActions extends BaseStoreActions {
   updateUser = (authData: AuthData) => {
@@ -33,9 +28,9 @@ export class StoreActions extends BaseStoreActions {
       throw ("TODO: ERROR")
     }
 
-    const clonedCourse = clone(oldCourse, userName);
-    const initialCardState = initCardState(clonedCourse);
-    const initialLearnRecord = initLearnRecord(clonedCourse);
+    const clonedCourse = Course.clone(oldCourse, userName);
+    const initialCardState = CardState.init(clonedCourse);
+    const initialLearnRecord = LearnRecord.init(clonedCourse);
 
     this.setCourse(clonedCourse);
     this.setCardState(initialCardState);
@@ -46,9 +41,9 @@ export class StoreActions extends BaseStoreActions {
   toggleBookmark = ({ courseId }: CourseQuery) => {
     const userName = this.userName;
     if (userName) {
-      const oldLearnRecord = this.learnRecord[courseId] || initLearnRecord({ courseId });
-      const learnRecord = toggleBookmark(oldLearnRecord);
-      api.updateBookmarkStatus(learnRecord);
+      const oldLearnRecord = this.learnRecord[courseId] || LearnRecord.init({ courseId });
+      const learnRecord = LearnRecord.toggleBookmark(oldLearnRecord);
+      Api.updateBookmarkStatus(learnRecord);
       this.setLearnRecord(learnRecord);
     }
   }
@@ -57,9 +52,9 @@ export class StoreActions extends BaseStoreActions {
     const userName = this.userName;
     if (userName) {
       const { courseId } = courseNote;
-      const oldLearnRecord = this.learnRecord[courseId] || initLearnRecord({ courseId });
-      const learnRecord = addNote(oldLearnRecord, courseNote);
-      api.addNote(courseNote);
+      const oldLearnRecord = this.learnRecord[courseId] || LearnRecord.init({ courseId });
+      const learnRecord = LearnRecord.addNote(oldLearnRecord, courseNote);
+      Api.addNote(courseNote);
       this.setLearnRecord(learnRecord);
     }
   }
@@ -67,23 +62,23 @@ export class StoreActions extends BaseStoreActions {
   toggleComplete = async ({ courseId, checkpointId }: CheckpointQuery) => {
     const userName = this.userName;
     if (userName) {
-      const learnRecord = this.learnRecord[courseId] || initLearnRecord({ courseId });
-      const newLearnRecord = toggleTask(learnRecord, checkpointId);
+      const learnRecord = this.learnRecord[courseId] || LearnRecord.init({ courseId });
+      const newLearnRecord = LearnRecord.toggleTask(learnRecord, checkpointId);
       const taskCompleted = !!newLearnRecord.tasksCompleted[checkpointId];
+      Api.updateTaskStatus({ courseId, checkpointId, taskCompleted });
       this.setLearnRecord(newLearnRecord);
-      api.updateTaskStatus({ courseId, checkpointId, taskCompleted });
     }
   }
 
   toggleMetaVisible = ({ courseId }: CourseQuery) => {
-    const oldCardState = this.get().cardStates[courseId] || initCardState({ courseId });
-    const cardState = toggleMetaVisible(oldCardState);
+    const oldCardState = this.get().cardStates[courseId] || CardState.init({ courseId });
+    const cardState = CardState.toggleMetaVisible(oldCardState);
     this.setCardState(cardState);
   }
 
   fetchMissingLearnData = async (userName: string) => {
     const courseIds = this.missingCourses;
-    const learnRecords = await api.fetchLearnData({ courseIds, userName })
+    const learnRecords = await Api.fetchLearnData({ courseIds, userName })
     for (const courseId of Object.keys(learnRecords)) {
       this.setLearnRecord(learnRecords[courseId]);
     }

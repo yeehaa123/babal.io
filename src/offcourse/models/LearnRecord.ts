@@ -7,7 +7,7 @@ export type LearnRecord = {
   notes: CourseNote[]
 }
 
-export function initLearnRecord({ courseId }: CourseQuery): LearnRecord {
+export function init({ courseId }: CourseQuery): LearnRecord {
   return {
     courseId,
     isBookmarked: false,

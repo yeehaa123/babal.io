@@ -8,7 +8,7 @@ export type CardState = {
   isMetaVisible: boolean
 }
 
-export function initCardState({ courseId }: CourseQuery) {
+export function init({ courseId }: CourseQuery) {
   return {
     courseId,
     overlayMode: OverlayModes.NONE,
