@@ -42,25 +42,11 @@ export class StoreActions extends BaseStoreActions {
       throw ("TODO: ERROR")
     }
 
-    const course = clone(oldCourse, userName);
-
-    const initialCardState = initCardState(course);
-
+    const clonedCourse = clone(oldCourse, userName);
+    const initialCardState = initCardState(clonedCourse);
     this.setCardState(initialCardState);
-    this.setCourse(course);
-    this.hideOverlay({ courseId });
-    this.augmentCourse({ courseId: course.courseId });
-  }
-
-  showCheckpointOverlay = (
-    { courseId, checkpointId }: CheckpointQuery) => {
-    this.setSelectedCheckpoint({ courseId, checkpointId });
-    this.setOverlayMode(courseId, OverlayModes.CHECKPOINT)
-  }
-
-  hideCheckpointOverlay = (
-    { courseId }: CourseQuery) => {
-    this.setSelectedCheckpoint({ courseId });
+    this.setCourse(clonedCourse);
+    this.augmentCourse(clonedCourse);
     this.hideOverlay({ courseId });
   }
 
@@ -109,6 +95,18 @@ export class StoreActions extends BaseStoreActions {
         }
       }
     }
+  }
+
+  showCheckpointOverlay = (
+    { courseId, checkpointId }: CheckpointQuery) => {
+    this.setSelectedCheckpoint({ courseId, checkpointId });
+    this.setOverlayMode(courseId, OverlayModes.CHECKPOINT)
+  }
+
+  hideCheckpointOverlay = (
+    { courseId }: CourseQuery) => {
+    this.setSelectedCheckpoint({ courseId });
+    this.hideOverlay({ courseId });
   }
 
   hideOverlay = ({ courseId }: CourseQuery) => {
