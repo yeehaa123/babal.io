@@ -14,7 +14,6 @@ export const POST: APIRoute = async ({ params, request, locals }) => {
     if (courseId && userName) {
       try {
         const bookmarkedAt = isBookmarked ? new Date : null;
-        console.log(bookmarkedAt);
         await db
           .insert(BookmarkData)
           .values({ userName, courseId, bookmarkedAt })

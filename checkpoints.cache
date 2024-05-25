@@ -1,8 +1,8 @@
 {
   "c1fe19e1801a25dec22a1b99133de3bb": {
-    "courseId": "iXqiBdLLdqsj3Y-TJNdm0",
+    "courseId": "u1o9ZYUouocM5WX14BXGW",
     "goal": "Disrupt Education",
-    "checkpointId": "GB05hubYVMVb_ceREvK9S",
+    "checkpointId": "9uRU1_lAqpMWptKrmJ03E",
     "order": 3,
     "task": "Formulate your critical ask",
     "href": "https://www.42workspace.com/guide/superconnectors-in-rotterdam/",
@@ -11,9 +11,9 @@
     "tags": "network,innovation"
   },
   "e746d524981a0ca1fd3516396fe12b22": {
-    "courseId": "mj80E_aU-Cvm8RjZ65eVs",
+    "courseId": "l6IknuRzQXZzmzi54KaGQ",
     "goal": "Engineer breakthroughs",
-    "checkpointId": "r5nMyOF6Emj5Ni6XEwKGs",
+    "checkpointId": "pKp0fA5xzp4DVOTRvI1IJ",
     "order": 0,
     "task": "Discover your personal strengths",
     "href": "https://80000hours.org/articles/personal-strengths/",
@@ -22,9 +22,9 @@
     "tags": "self,skills,growth"
   },
   "be724e5ed0335c917ded60d657b8d351": {
-    "courseId": "mj80E_aU-Cvm8RjZ65eVs",
+    "courseId": "l6IknuRzQXZzmzi54KaGQ",
     "goal": "Engineer breakthroughs",
-    "checkpointId": "hIAjSYj47InYWHwKB-dNS",
+    "checkpointId": "k83zBCZFvVgJg0oJ3yDQ8",
     "order": 3,
     "task": "Formulate your critical ask",
     "href": "https://www.42workspace.com/guide/superconnectors-in-rotterdam/",
@@ -33,9 +33,9 @@
     "tags": "network, support, growth"
   },
   "6adb3e8a15792c35cbfc258fd206c84a": {
-    "courseId": "iXqiBdLLdqsj3Y-TJNdm0",
+    "courseId": "u1o9ZYUouocM5WX14BXGW",
     "goal": "Disrupt Education",
-    "checkpointId": "DUYZW0amwXipi2BOYiw5I",
+    "checkpointId": "l--EyFbK8MO7wkU22UIU2",
     "order": 2,
     "task": "Do a SWOT analysis of your startup",
     "href": "https://fullscale.io/blog/swot-analysis-for-startups/",
@@ -44,9 +44,9 @@
     "tags": "swot, guide"
   },
   "ae4c4b37d6fd7fc06cbdde9fbaaf1ca3": {
-    "courseId": "iXqiBdLLdqsj3Y-TJNdm0",
+    "courseId": "u1o9ZYUouocM5WX14BXGW",
     "goal": "Disrupt Education",
-    "checkpointId": "Jx4o_qyg3imEcOAvio7mF",
+    "checkpointId": "mMBIdfVPgk_h6MZBexo5D",
     "order": 4,
     "task": "Meet The Grahams",
     "href": "https://www.youtube.com/watch?v=2QiFl9Dc7D0",
@@ -55,9 +55,9 @@
     "tags": "innovate,teach"
   },
   "e2bacb033e418b4ea59da76c8c343465": {
-    "courseId": "iXqiBdLLdqsj3Y-TJNdm0",
+    "courseId": "u1o9ZYUouocM5WX14BXGW",
     "goal": "Disrupt Education",
-    "checkpointId": "f_tszhWejZPM0kn9SAY6a",
+    "checkpointId": "DluM0ZGreatNjlCMzVB3_",
     "order": 5,
     "task": "Simple Made Easy",
     "href": "https://www.youtube.com/watch?v=SxdOUGdseq4",
@@ -66,9 +66,9 @@
     "tags": "simplicity, clarity"
   },
   "2beda50ab666045b2a6d37eeb505968c": {
-    "courseId": "mj80E_aU-Cvm8RjZ65eVs",
+    "courseId": "l6IknuRzQXZzmzi54KaGQ",
     "goal": "Engineer breakthroughs",
-    "checkpointId": "RDcYvJ-flM-gcYW-sNngl",
+    "checkpointId": "6amwe3Cij2r451teIQKsq",
     "order": 2,
     "task": "Do a SWOT analysis of your startup",
     "href": "https://fullscale.io/blog/swot-analysis-for-startups/",
@@ -77,9 +77,9 @@
     "tags": "swot,growth,plan"
   },
   "141af590944a80afe7ee192724a86972": {
-    "courseId": "iXqiBdLLdqsj3Y-TJNdm0",
+    "courseId": "u1o9ZYUouocM5WX14BXGW",
     "goal": "Disrupt Education",
-    "checkpointId": "MvlrwhcxLwsXYBHefwqxr",
+    "checkpointId": "uMtBA1OqOCpM3Znn53noY",
     "order": 1,
     "task": "Embrace your weaknesses",
     "href": "https://maven.com/articles/identifying-greatest-weakness",
@@ -88,9 +88,9 @@
     "tags": "growth,reflect"
   },
   "031d08948a1c63882008d78839cf4d7e": {
-    "courseId": "mj80E_aU-Cvm8RjZ65eVs",
+    "courseId": "l6IknuRzQXZzmzi54KaGQ",
     "goal": "Engineer breakthroughs",
-    "checkpointId": "GgAOMZXHYexVkJfw-ZiXl",
+    "checkpointId": "azwybPv5879lkH0rLAwwj",
     "order": 1,
     "task": "Embrace your weaknesses",
     "href": "https://maven.com/articles/identifying-greatest-weakness",
@@ -99,9 +99,9 @@
     "tags": "growth, goals, SWOT, mindset"
   },
   "49a1756a8dcab8b539fbea74c1cd8beb": {
-    "courseId": "iXqiBdLLdqsj3Y-TJNdm0",
+    "courseId": "u1o9ZYUouocM5WX14BXGW",
     "goal": "Disrupt Education",
-    "checkpointId": "I8WwUiPYVFY1hjPA2oNqx",
+    "checkpointId": "wg53C0WxD56dq-7ryapBM",
     "order": 0,
     "task": "Discover your personal strengths",
     "href": "https://80000hours.org/articles/personal-strengths/",
