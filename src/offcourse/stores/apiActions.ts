@@ -11,7 +11,7 @@ export async function updateBookmarkStatus({ courseId, isBookmarked }:
   return await fetch(`/offcourse/bookmarks/${courseId}.json`, {
     method: "POST",
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ courseId, isBookmarked })
+    body: JSON.stringify({ isBookmarked })
   });
 }
 
@@ -24,7 +24,7 @@ export async function updateTaskStatus({ courseId, checkpointId, taskCompleted }
   return await fetch(`/offcourse/tasks/${courseId}/${checkpointId}.json`, {
     method: "POST",
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ courseId, checkpointId, taskCompleted })
+    body: JSON.stringify({ taskCompleted })
   });
 }
 

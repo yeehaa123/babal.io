@@ -10,10 +10,10 @@ export const POST: APIRoute = async ({ params, request, locals }) => {
   if (request.headers.get("Content-Type") === "application/json") {
     const { courseId, checkpointId } = params;
     const { userName } = locals.auth;
+    const { taskCompleted } = await request.json();
     if (courseId && checkpointId && userName) {
-      const { taskCompleted } = await request.json();
       try {
-        const completedAt = taskCompleted && new Date(taskCompleted) || null
+        const completedAt = taskCompleted && new Date || null
         await db
           .insert(CompletionData)
           .values({ userName, courseId, checkpointId, completedAt })

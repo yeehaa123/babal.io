@@ -10,10 +10,11 @@ export const POST: APIRoute = async ({ params, request, locals }) => {
   if (request.headers.get("Content-Type") === "application/json") {
     const { courseId } = params;
     const { userName } = locals.auth;
+    const { isBookmarked } = await request.json();
     if (courseId && userName) {
-      const { isBookmarked } = await request.json();
       try {
-        const bookmarkedAt = isBookmarked ? new Date() : null;
+        const bookmarkedAt = isBookmarked ? new Date : null;
+        console.log(bookmarkedAt);
         await db
           .insert(BookmarkData)
           .values({ userName, courseId, bookmarkedAt })
@@ -23,7 +24,6 @@ export const POST: APIRoute = async ({ params, request, locals }) => {
           });
         return new Response(JSON.stringify({ courseId, isBookmarked }), { status: 200 });
       } catch (e) {
-        console.log(e);
         return new Response(JSON.stringify({}), { status: 401 });
       }
     }
