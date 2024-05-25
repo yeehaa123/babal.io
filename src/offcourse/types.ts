@@ -43,7 +43,6 @@ export interface Checkpoint {
   href: string,
   description: string | undefined,
   tags: string[],
-  isCompleted?: boolean
 }
 
 export interface CourseQuery {

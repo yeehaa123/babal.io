@@ -5,6 +5,7 @@ import { Checkbox } from "@/offcourse/components"
 import type { CourseCardStore } from "../stores/types";
 
 interface Props extends Checkpoint {
+  isCompleted: boolean,
   canCheckComplete: CourseCardStore['affordances']['canCheckComplete'],
   toggleComplete: CourseCardStore['actions']['toggleComplete']
   showCheckpoint: CourseCardStore['actions']['showCheckpointOverlay']

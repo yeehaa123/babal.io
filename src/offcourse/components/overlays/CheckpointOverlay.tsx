@@ -15,13 +15,14 @@ import {
 } from "@/offcourse/components";
 
 export default function CheckpointOverlay(
-  { checkpoint, affordances, actions }: CourseCardStore) {
+  { checkpoint, learnRecord, affordances, actions }: CourseCardStore) {
   if (!checkpoint) {
     return <div>ERROR</div>
   }
 
   const { canCheckComplete } = affordances;
-  const { courseId, checkpointId, isCompleted, task, description, href, tags } = checkpoint;
+  const { courseId, checkpointId, task, description, href, tags } = checkpoint;
+  const isCompleted = learnRecord?.tasksCompleted[checkpointId]
   const { hideCheckpointOverlay, toggleComplete } = actions;
   return (
     <>
