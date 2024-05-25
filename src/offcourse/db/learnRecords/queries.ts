@@ -42,24 +42,25 @@ export async function getLearnRecordByUserNameAndCourseIds(
 
   const learnRecords = learnRecordsDBResult.reduce((acc, row) => {
     const { courseId, checkpointId, completedAt, bookmarkedAt, note } = row;
-
     const isBookmarked = !!bookmarkedAt;
-
     const learnRecord = acc.get(courseId);
+
     if (!learnRecord) {
       const notes = note ? [note] : [];
       const tasksCompleted = { [checkpointId]: !!completedAt }
+
       acc.set(courseId, {
         courseId,
         isBookmarked,
         tasksCompleted,
         notes
       })
-      return acc;
+
     } else {
       const { tasksCompleted, notes: oldNotes } = learnRecord;
       const noteExists = note && oldNotes.find(({ noteId }) => note.noteId === noteId);
       const notes = note ? [note, ...oldNotes] : oldNotes;
+
       acc.set(courseId, {
         ...learnRecord,
         notes: noteExists ? oldNotes : notes,

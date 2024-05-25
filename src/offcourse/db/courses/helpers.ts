@@ -18,12 +18,12 @@ export function processCourseResults(result: {
       const { courseId, curator: name, habitat, ...course } = row.Courses;
       const entry = acc.get(courseId);
       let curator = { alias: name, socials: {} };
-      const { description, tags, ...cp } = row.Checkpoints;
+      const { description, tags, ...rawCheckpoint } = row.Checkpoints;
 
       const checkpoint = {
+        ...rawCheckpoint,
         tags: tags?.split(",").map(t => t.trim()) || [],
-        description: description ? description : undefined,
-        ...cp
+        description: description ? description : undefined
       }
 
       if (!entry) {
@@ -40,15 +40,14 @@ export function processCourseResults(result: {
           habitat: habitat ? habitat : undefined,
           checkpoints: [checkpoint]
         })
-      }
 
-      if (entry) {
-        const { ...old } = entry;
-        const tags = [...new Set([...old.tags, ...checkpoint.tags])];
+      } else {
+        const { tags, checkpoints } = entry;
+
         acc.set(courseId, {
-          ...old,
-          tags,
-          checkpoints: [...old.checkpoints, checkpoint]
+          ...entry,
+          tags: [...new Set([...tags, ...checkpoint.tags])],
+          checkpoints: [...checkpoints, checkpoint]
         })
       }
       return acc;
