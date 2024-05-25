@@ -1,10 +1,10 @@
-import type { AugmentedCheckpoint } from "@/offcourse/types";
+import type { Checkpoint } from "@/offcourse/types";
 
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/offcourse/components"
 import type { CourseCardStore } from "../stores/types";
 
-interface Props extends AugmentedCheckpoint {
+interface Props extends Checkpoint {
   canCheckComplete: CourseCardStore['affordances']['canCheckComplete'],
   toggleComplete: CourseCardStore['actions']['toggleComplete']
   showCheckpoint: CourseCardStore['actions']['showCheckpointOverlay']

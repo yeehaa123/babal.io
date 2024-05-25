@@ -1,10 +1,10 @@
 import type { CardState } from "../models/CardState"
+import type { Course } from "../models/Course";
 import type { LearnRecord } from "../models/LearnRecord"
 import type { StoreActions } from "./actions";
 import type {
   AuthData,
-  AugmentedCourse,
-  AugmentedCheckpoint
+  Checkpoint,
 } from "@/offcourse/types"
 
 export type Affordances = {
@@ -29,14 +29,15 @@ export enum CardRoleTypes {
 export type OffcourseState = {
   cardStates: Record<string, CardState>
   authData: AuthData,
-  courses: Record<string, AugmentedCourse>,
+  courses: Record<string, Course>,
   learnRecords: LearnRecordsState,
   actions: StoreActions
 }
 
 export type CourseCardStore = {
-  course: AugmentedCourse,
-  checkpoint: AugmentedCheckpoint | undefined,
+  course: Course,
+  learnRecord: LearnRecord | undefined,
+  checkpoint: Checkpoint | undefined,
   actions: OffcourseState['actions'],
   cardState: CardState,
   affordances: Affordances

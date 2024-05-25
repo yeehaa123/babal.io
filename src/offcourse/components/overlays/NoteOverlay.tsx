@@ -9,9 +9,12 @@ import {
 import { NoteForm } from "../forms/NoteForm";
 
 export default function NoteOverlay(
-  { course, cardState, actions }: CourseCardStore
+  { learnRecord, cardState, actions }: CourseCardStore
 ) {
-  const { courseId, notes } = course;
+  if (!learnRecord) {
+    return <div>ERROR</div>
+  }
+  const { courseId, notes } = learnRecord;
   const { overlayMode } = cardState;
   const { hideOverlay, addNote } = actions;
   const formId = `${courseId}-note-form`

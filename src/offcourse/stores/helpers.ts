@@ -1,5 +1,6 @@
+import type { Course } from "@/offcourse/models/Course";
+import type { LearnRecord } from "@/offcourse/models/LearnRecord";
 import type {
-  AugmentedCourse,
   AuthData,
 } from "@/offcourse/types";
 
@@ -8,16 +9,15 @@ import {
 } from "@/offcourse/stores/types";
 
 export function determineRole(
-  { course, authData }:
-    { course: AugmentedCourse, authData: AuthData }) {
+  { course, learnRecord, authData }:
+    { course: Course, learnRecord: LearnRecord | undefined, authData: AuthData }) {
   const { userName } = authData;
-  const { isBookmarked } = course;
   const isAuthenticated = !!userName;
   const isCurator = !!(course?.curator && userName === course.curator.alias);
   if (isAuthenticated) {
     if (isCurator) {
       return CardRoleTypes.CURATOR;
-    } else if (isBookmarked) {
+    } else if (learnRecord?.isBookmarked) {
       return CardRoleTypes.COLLECTOR;
     } else {
       return CardRoleTypes.LEARNER;

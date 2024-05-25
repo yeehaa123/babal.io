@@ -42,18 +42,8 @@ export interface Checkpoint {
   task: string,
   href: string,
   description: string | undefined,
-  tags: string[]
-}
-
-export interface AugmentedCheckpoint extends Checkpoint {
-  isCompleted?: boolean | undefined;
-}
-
-export interface AugmentedCourse extends Omit<Course, 'checkpoints'> {
   tags: string[],
-  isBookmarked?: boolean | undefined,
-  notes: CourseNote[]
-  checkpoints: AugmentedCheckpoint[]
+  isCompleted?: boolean
 }
 
 export interface CourseQuery {

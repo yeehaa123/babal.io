@@ -7,7 +7,7 @@ import type {
 
 import { OverlayModes } from "../types";
 import { BaseStoreActions } from "./baseActions";
-import { augment, clone } from "@/offcourse/models/Course";
+import { clone } from "@/offcourse/models/Course";
 import {
   addNote,
   initLearnRecord,
@@ -24,15 +24,6 @@ export class StoreActions extends BaseStoreActions {
     this.fetchMissingLearnData();
   }
 
-  augmentCourse = ({ courseId }: CourseQuery) => {
-    const course = this.courses[courseId];
-    const learnRecord = this.learnRecord[courseId];
-
-    if (course && learnRecord) {
-      const augmentedCourse = augment({ course, learnRecord });
-      this.setCourse(augmentedCourse);
-    }
-  }
 
   cloneCourse = ({ courseId }: CourseQuery) => {
     const oldCourse = this.courses[courseId];
@@ -46,7 +37,6 @@ export class StoreActions extends BaseStoreActions {
     const initialCardState = initCardState(clonedCourse);
     this.setCardState(initialCardState);
     this.setCourse(clonedCourse);
-    this.augmentCourse(clonedCourse);
     this.hideOverlay({ courseId });
   }
 
@@ -54,7 +44,6 @@ export class StoreActions extends BaseStoreActions {
     const oldLearnRecord = this.learnRecord[courseId] || initLearnRecord({ courseId });
     const learnRecord = toggleBookmark(oldLearnRecord);
     this.setLearnRecord(learnRecord);
-    this.augmentCourse({ courseId });
   }
 
   addNote = (courseNote: CourseNote & CourseQuery) => {
@@ -62,7 +51,6 @@ export class StoreActions extends BaseStoreActions {
     const oldLearnRecord = this.learnRecord[courseId] || initLearnRecord({ courseId });
     const learnRecord = addNote(oldLearnRecord, courseNote);
     this.setLearnRecord(learnRecord);
-    this.augmentCourse({ courseId });
   }
 
   toggleComplete = async ({ courseId, checkpointId }: CheckpointQuery) => {
@@ -73,7 +61,6 @@ export class StoreActions extends BaseStoreActions {
       const taskCompleted = newLearnRecord.tasksCompleted[checkpointId];
       this.setLearnRecord(newLearnRecord);
       updateLearnData({ courseId, checkpointId, userName, taskCompleted });
-      this.augmentCourse({ courseId });
     }
   }
 
@@ -91,7 +78,6 @@ export class StoreActions extends BaseStoreActions {
       if (learnRecords) {
         for (const courseId of Object.keys(learnRecords)) {
           this.setLearnRecord(learnRecords[courseId]);
-          this.augmentCourse({ courseId });
         }
       }
     }

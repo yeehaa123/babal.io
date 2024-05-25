@@ -39,6 +39,7 @@ export function useCourseCardStore({ courseId }: CourseStoreProps) {
   const authData = useOffcourseContext((state) => state.authData);
   const course = useOffcourseContext((state) => state.courses[courseId]);
   const cardState = useOffcourseContext((state) => state.cardStates[courseId])!;
+  const learnRecord = useOffcourseContext((state) => state.learnRecords[courseId]);
 
   if (!course) {
     return
@@ -46,8 +47,8 @@ export function useCourseCardStore({ courseId }: CourseStoreProps) {
 
   const checkpoint = course.checkpoints.find(
     cp => cp.checkpointId === cardState.selectedCheckpoint)
-  const role = determineRole({ course, authData });
+  const role = determineRole({ course, learnRecord, authData });
   const affordances = determineAffordances(role);
 
-  return { course, checkpoint, cardState, affordances, actions }
+  return { course, learnRecord, checkpoint, cardState, affordances, actions }
 }

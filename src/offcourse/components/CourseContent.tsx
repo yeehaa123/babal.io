@@ -20,6 +20,7 @@ import {
 
 export default function CourseCard({
   course,
+  learnRecord,
   cardState,
   actions,
   affordances,
@@ -29,7 +30,6 @@ export default function CourseCard({
   } = cardState;
 
   const {
-    isBookmarked,
     courseId,
     goal,
     curator,
@@ -59,7 +59,7 @@ export default function CourseCard({
           <Bookmark onClick={() => {
             toggleBookmark({ courseId })
           }}
-            isBookmarked={isBookmarked}
+            isBookmarked={learnRecord?.isBookmarked}
             canBookmark={canBookmark} />
         </CardTitle>
         <Curator {...curator} />
@@ -73,7 +73,9 @@ export default function CourseCard({
       <CardContent>
         <ul className="flex flex-col gap-2">
           {checkpoints.map((cp, index) => (
-            <Checkpoint toggleComplete={toggleComplete}
+            <Checkpoint
+              isCompleted={!!learnRecord?.tasksCompleted[cp.checkpointId]}
+              toggleComplete={toggleComplete}
               showCheckpoint={showCheckpointOverlay}
               canCheckComplete={canCheckComplete}
               key={index}
