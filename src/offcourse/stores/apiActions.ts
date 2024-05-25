@@ -3,6 +3,18 @@ import type {
   Checkpoint
 } from "@/offcourse/types";
 
+export async function addNote({ courseId, message }:
+  {
+    courseId: Course['courseId'],
+    message: string,
+  }) {
+  return await fetch(`/offcourse/notes/${courseId}.json`, {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message })
+  });
+}
+
 export async function updateBookmarkStatus({ courseId, isBookmarked }:
   {
     courseId: Course['courseId'],

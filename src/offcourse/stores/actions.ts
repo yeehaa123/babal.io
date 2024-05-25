@@ -14,7 +14,7 @@ import {
   toggleTask
 } from "@/offcourse/models/LearnRecord";
 import { initCardState, toggleMetaVisible } from "../models/CardState";
-import { fetchLearnData, updateBookmarkStatus, updateTaskStatus } from "./apiActions";
+import * as api from "./apiActions";
 
 export class StoreActions extends BaseStoreActions {
   updateUser = (authData: AuthData) => {
@@ -48,7 +48,7 @@ export class StoreActions extends BaseStoreActions {
     if (userName) {
       const oldLearnRecord = this.learnRecord[courseId] || initLearnRecord({ courseId });
       const learnRecord = toggleBookmark(oldLearnRecord);
-      updateBookmarkStatus(learnRecord);
+      api.updateBookmarkStatus(learnRecord);
       this.setLearnRecord(learnRecord);
     }
   }
@@ -59,6 +59,7 @@ export class StoreActions extends BaseStoreActions {
       const { courseId } = courseNote;
       const oldLearnRecord = this.learnRecord[courseId] || initLearnRecord({ courseId });
       const learnRecord = addNote(oldLearnRecord, courseNote);
+      api.addNote(courseNote);
       this.setLearnRecord(learnRecord);
     }
   }
@@ -70,7 +71,7 @@ export class StoreActions extends BaseStoreActions {
       const newLearnRecord = toggleTask(learnRecord, checkpointId);
       const taskCompleted = !!newLearnRecord.tasksCompleted[checkpointId];
       this.setLearnRecord(newLearnRecord);
-      updateTaskStatus({ courseId, checkpointId, taskCompleted });
+      api.updateTaskStatus({ courseId, checkpointId, taskCompleted });
     }
   }
 
@@ -82,7 +83,7 @@ export class StoreActions extends BaseStoreActions {
 
   fetchMissingLearnData = async (userName: string) => {
     const courseIds = this.missingCourses;
-    const learnRecords = await fetchLearnData({ courseIds, userName })
+    const learnRecords = await api.fetchLearnData({ courseIds, userName })
     for (const courseId of Object.keys(learnRecords)) {
       this.setLearnRecord(learnRecords[courseId]);
     }
