@@ -1,6 +1,8 @@
 import type { Course } from "@/offcourse/types";
+import { useEffect, } from "react"
 import type { ReactElement } from 'react';
 import { ClerkProvider } from '@clerk/clerk-react'
+import { useUser } from '@clerk/clerk-react'
 import type { OffcourseStore } from "@/offcourse/stores"
 import { useRef } from "react"
 import { useShallow } from 'zustand/react/shallow'
@@ -33,6 +35,14 @@ const StoreProvider = ({ children, courses }: ProviderProps) => {
 
 function InnerCollection() {
   const courseIds = useOffcourseContext(useShallow((state) => Object.keys(state.courses)))
+  const { isSignedIn, user, isLoaded } = useUser();
+  const { updateUser } = useOffcourseContext((state) => state.actions);
+  const userName = user?.username || undefined;
+  useEffect(() => {
+    if (isSignedIn) {
+      updateUser({ userName });
+    }
+  }, [isLoaded, isSignedIn, userName])
   return (
     <div
       className="grid justify-center items-start gap-4 gap-y-8 m-2 

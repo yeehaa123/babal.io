@@ -21,7 +21,10 @@ export class StoreActions extends BaseStoreActions {
 
   updateUser = (authData: AuthData) => {
     this.setAuthData(authData);
-    this.fetchMissingLearnData();
+    const userName = authData.userName;
+    if (userName) {
+      this.fetchMissingLearnData(userName);
+    }
   }
 
   cloneCourse = ({ courseId }: CourseQuery) => {
@@ -34,8 +37,13 @@ export class StoreActions extends BaseStoreActions {
 
     const clonedCourse = clone(oldCourse, userName);
     const initialCardState = initCardState(clonedCourse);
-    this.setCardState(initialCardState);
+    const initialLearnRecord = initLearnRecord(clonedCourse);
+
+    console.log(initialLearnRecord);
+
     this.setCourse(clonedCourse);
+    this.setCardState(initialCardState);
+    this.setLearnRecord(initialLearnRecord);
     this.hideOverlay({ courseId });
   }
 
@@ -62,6 +70,7 @@ export class StoreActions extends BaseStoreActions {
     const userName = this.userName;
     if (userName) {
       const learnRecord = this.learnRecord[courseId] || initLearnRecord({ courseId });
+      console.log(learnRecord);
       const newLearnRecord = toggleTask(learnRecord, checkpointId);
       const taskCompleted = newLearnRecord.tasksCompleted[checkpointId];
       this.setLearnRecord(newLearnRecord);
@@ -75,14 +84,11 @@ export class StoreActions extends BaseStoreActions {
     this.setCardState(cardState);
   }
 
-  fetchMissingLearnData = async () => {
-    const userName = this.userName;
-    if (userName) {
-      const courseIds = this.missingCourses;
-      const learnRecords = await fetchLearnData({ courseIds, userName })
-      for (const courseId of Object.keys(learnRecords)) {
-        this.setLearnRecord(learnRecords[courseId]);
-      }
+  fetchMissingLearnData = async (userName: string) => {
+    const courseIds = this.missingCourses;
+    const learnRecords = await fetchLearnData({ courseIds, userName })
+    for (const courseId of Object.keys(learnRecords)) {
+      this.setLearnRecord(learnRecords[courseId]);
     }
   }
 

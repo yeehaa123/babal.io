@@ -29,6 +29,7 @@ export function augment({ course, learnRecord }:
 export function clone(course: Course, userName: string) {
   const newId = "dfadsfljk998fdaslk";
   const curator = { alias: userName, socials: {} }
-  return { ...course, curator, courseId: newId, goal: "HURRAY" }
+  const checkpoints = course.checkpoints.map(cp => { return { ...cp, courseId: newId } });
+  return { ...course, curator, courseId: newId, checkpoints, goal: "HURRAY" }
 
 }

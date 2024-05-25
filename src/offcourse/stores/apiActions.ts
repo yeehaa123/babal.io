@@ -26,7 +26,6 @@ export async function fetchLearnData({ courseIds, userName }:
       body: JSON.stringify({ courseIds, userName })
     });
     const data = await response.json();
-    console.log(data);
     return data.learnRecords;
   }
 }
