@@ -12,7 +12,12 @@ import {
 
 export async function getLearnRecordByUserNameAndCourseId(
   { userName, courseId }: { userName: string, courseId: Course['courseId'] }) {
-  const results = await getLearnRecordByUserNameAndCourseIds({ userName, courseIds: [courseId] });
+
+  const results = await getLearnRecordByUserNameAndCourseIds({
+    userName,
+    courseIds: [courseId]
+  });
+
   return results[courseId];
 }
 
@@ -28,10 +33,6 @@ export async function getLearnRecordByUserNameAndCourseIds(
       note: NoteData
     })
     .from(CompletionData)
-    .where((and(
-      eq(CompletionData.userName, userName),
-      inArray(CompletionData.courseId, courseIds)
-    )))
     .leftJoin(BookmarkData, and(
       eq(BookmarkData.userName, userName),
       eq(CompletionData.courseId, BookmarkData.courseId)))
@@ -39,6 +40,12 @@ export async function getLearnRecordByUserNameAndCourseIds(
       eq(NoteData.userName, userName),
       eq(CompletionData.courseId, NoteData.courseId)
     ))
+    .where((and(
+      eq(CompletionData.userName, userName),
+      inArray(CompletionData.courseId, courseIds)
+    )))
+
+  console.log(learnRecordsDBResult.length);
 
   const learnRecords = learnRecordsDBResult.reduce((acc, row) => {
     const { courseId, checkpointId, completedAt, bookmarkedAt, note } = row;
