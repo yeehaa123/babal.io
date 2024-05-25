@@ -18,43 +18,36 @@ export async function getLearnRecordByUserNameAndCourseId(
 
 export async function getLearnRecordByUserNameAndCourseIds(
   { userName, courseIds }: { userName: string, courseIds: string[] }) {
+
   const learnRecordsDBResult = await db
-    .select()
+    .select({
+      courseId: CompletionData.courseId,
+      checkpointId: CompletionData.checkpointId,
+      completedAt: CompletionData.completedAt,
+      bookmarkedAt: BookmarkData.bookmarkedAt,
+      note: NoteData
+    })
     .from(CompletionData)
     .where((and(
       eq(CompletionData.userName, userName),
       inArray(CompletionData.courseId, courseIds)
     )))
-
-  const bookmarkDataDBResult = await db
-    .select()
-    .from(BookmarkData)
-    .where((and(
+    .leftJoin(BookmarkData, and(
       eq(BookmarkData.userName, userName),
-      inArray(BookmarkData.courseId, courseIds)
-    )))
-
-  const noteDataDBResult = await db
-    .select()
-    .from(NoteData)
-    .where((and(
+      eq(CompletionData.courseId, BookmarkData.courseId)))
+    .leftJoin(NoteData, and(
       eq(NoteData.userName, userName),
-      inArray(NoteData.courseId, courseIds)
-    )))
-
-  const allNotes = noteDataDBResult ? noteDataDBResult : []
+      eq(CompletionData.courseId, NoteData.courseId)
+    ))
 
   const learnRecords = learnRecordsDBResult.reduce((acc, row) => {
-    const { courseId, checkpointId, completedAt } = row;
+    const { courseId, checkpointId, completedAt, bookmarkedAt, note } = row;
 
-    const isBookmarked = !!bookmarkDataDBResult
-      .filter(({ bookmarkedAt }) => bookmarkedAt)
-      .find(({ courseId: id }) => id === courseId);
-
-    const notes = allNotes.filter(note => note.courseId === courseId)
+    const isBookmarked = !!bookmarkedAt;
 
     const learnRecord = acc.get(courseId);
     if (!learnRecord) {
+      const notes = note ? [note] : [];
       const tasksCompleted = { [checkpointId]: !!completedAt }
       acc.set(courseId, {
         courseId,
@@ -64,9 +57,12 @@ export async function getLearnRecordByUserNameAndCourseIds(
       })
       return acc;
     } else {
-      const { tasksCompleted } = learnRecord;
+      const { tasksCompleted, notes: oldNotes } = learnRecord;
+      const noteExists = note && oldNotes.find(({ noteId }) => note.noteId === noteId);
+      const notes = note ? [note, ...oldNotes] : oldNotes;
       acc.set(courseId, {
         ...learnRecord,
+        notes: noteExists ? oldNotes : notes,
         tasksCompleted: {
           ...tasksCompleted,
           [checkpointId]: !!completedAt

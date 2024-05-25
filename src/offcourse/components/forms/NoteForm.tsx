@@ -1,4 +1,5 @@
 import { z } from "zod"
+import { nanoid } from 'nanoid'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import {
@@ -30,7 +31,8 @@ export function NoteForm({ onConfirm, formId, courseId }: Props) {
 
   function onSubmit({ note }: z.infer<typeof noteFormSchema>) {
     form.reset();
-    return onConfirm({ courseId, message: note, createdAt: new Date });
+    const noteId = nanoid();
+    return onConfirm({ noteId, courseId, message: note, createdAt: new Date });
   }
 
   return (

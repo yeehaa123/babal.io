@@ -74,6 +74,7 @@ const BookmarkData = defineTable({
 
 const NoteData = defineTable({
   columns: {
+    noteId: column.text({ primaryKey: true }),
     courseId: column.text({ references: () => Courses.columns.courseId }),
     userName: column.text({ references: () => People.columns.alias }),
     createdAt: column.date(),

@@ -1,7 +1,4 @@
-import type {
-  Course,
-  Checkpoint
-} from "@/offcourse/types";
+import type { Course, Checkpoint } from "@/offcourse/types";
 
 export async function addNote({ courseId, message }:
   {
@@ -41,7 +38,10 @@ export async function updateTaskStatus({ courseId, checkpointId, taskCompleted }
 }
 
 export async function fetchLearnData({ courseIds }:
-  { courseIds: Course['courseId'][], userName: string }) {
+  {
+    courseIds: Course['courseId'][],
+    userName: string
+  }) {
   if (courseIds.length > 0) {
     const response = await fetch('/offcourse/learnRecords.json', {
       method: "POST",

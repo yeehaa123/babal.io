@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid'
 import type { TempCourse } from "./prepCourses"
 import { shuffle } from "./helpers"
 import type { CheckpointsDBResult } from "@/offcourse/db/types";
@@ -39,9 +40,10 @@ export function prepNotesData({ people, courses }:
   const all = people.flatMap(({ alias }) => {
     return courses.flatMap(({ courseId }) => {
       return shuffle(messages).slice(0, 3).map((message: string) => {
+        const noteId = nanoid();
         const userName = alias;
         const createdAt = new Date;
-        return { userName, courseId, message, createdAt };
+        return { noteId, userName, courseId, message, createdAt };
       })
     })
   })
