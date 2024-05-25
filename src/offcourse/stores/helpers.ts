@@ -1,6 +1,4 @@
-import type { LearnRecord } from "../models/LearnRecord"
 import type {
-  Course,
   AugmentedCourse,
   AuthData,
 } from "@/offcourse/types";
@@ -8,22 +6,6 @@ import type {
 import {
   CardRoleTypes
 } from "@/offcourse/stores/types";
-
-export function prepareCourse(
-  { course, learnRecord }:
-    { course: Course, learnRecord: LearnRecord | undefined }) {
-  return {
-    ...course, checkpoints: course.checkpoints.map((cp) => {
-      const isCompleted = learnRecord?.tasksCompleted[cp.checkpointId];
-      return {
-        ...cp,
-        isCompleted
-      }
-    }).sort(({ order }) => order),
-    isBookmarked: learnRecord?.isBookmarked,
-    notes: learnRecord?.notes || []
-  }
-}
 
 export function determineRole(
   { course, authData }:

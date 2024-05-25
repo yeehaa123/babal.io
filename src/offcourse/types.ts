@@ -25,7 +25,6 @@ export type AuthData = {
   userName: string | undefined;
 }
 
-
 export interface CourseNote {
   createdAt: Date,
   message: string

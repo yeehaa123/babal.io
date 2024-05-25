@@ -16,3 +16,10 @@ export function initCardState({ courseId }: CourseQuery) {
     isMetaVisible: false,
   }
 }
+
+export function toggleMetaVisible({ isMetaVisible, ...cardState }: CardState) {
+  return {
+    ...cardState,
+    isMetaVisible: !isMetaVisible
+  }
+}

@@ -6,49 +6,51 @@ import type {
 } from "@/offcourse/types";
 
 import { OverlayModes } from "../types";
-import { produce } from 'immer';
-import { prepareCourse } from "./helpers";
-import { updateLearnData, fetchLearnData } from "./apiActions";
-import { initLearnRecord, toggleBookmark, toggleTask } from "../models/LearnRecord";
 import { BaseStoreActions } from "./baseActions";
-import { initCardState } from "../models/CardState";
+import { augment, clone } from "@/offcourse/models/Course";
+import {
+  addNote,
+  initLearnRecord,
+  toggleBookmark,
+  toggleTask
+} from "@/offcourse/models/LearnRecord";
+import { initCardState, toggleMetaVisible } from "../models/CardState";
+import { updateLearnData, fetchLearnData } from "./apiActions";
 
 export class StoreActions extends BaseStoreActions {
 
   updateUser = (authData: AuthData) => {
-    this.set(produce((state) => {
-      state.authData = authData;
-    }))
+    this.setAuthData(authData);
     this.fetchMissingLearnData();
   }
 
   augmentCourse = ({ courseId }: CourseQuery) => {
     const course = this.courses[courseId];
     const learnRecord = this.learnRecord[courseId];
+
     if (course && learnRecord) {
-      const augmentedCourse = prepareCourse({ course, learnRecord });
+      const augmentedCourse = augment({ course, learnRecord });
       this.setCourse(augmentedCourse);
     }
   }
 
   cloneCourse = ({ courseId }: CourseQuery) => {
-    const course = this.courses[courseId];
+    const oldCourse = this.courses[courseId];
+    const userName = this.userName;
 
-    if (!course) {
+    if (!oldCourse || !userName) {
       throw ("TODO: ERROR")
     }
 
-    const newId = "dfadsfljk998fdaslk";
-    const newCourse = { ...course, courseId: newId, goal: "HURRAY" }
+    const course = clone(oldCourse, userName);
 
-    const initialCardState = initCardState(newCourse);
+    const initialCardState = initCardState(course);
 
     this.setCardState(initialCardState);
-    this.setCourse(newCourse);
+    this.setCourse(course);
     this.hideOverlay({ courseId });
-    this.augmentCourse({ courseId: newId });
+    this.augmentCourse({ courseId: course.courseId });
   }
-
 
   showCheckpointOverlay = (
     { courseId, checkpointId }: CheckpointQuery) => {
@@ -63,18 +65,17 @@ export class StoreActions extends BaseStoreActions {
   }
 
   toggleBookmark = ({ courseId }: CourseQuery) => {
-    const learnRecord = this.learnRecord[courseId] || initLearnRecord({ courseId });
-    const newLearnRecord = toggleBookmark(learnRecord);
-    this.setLearnRecord(newLearnRecord);
+    const oldLearnRecord = this.learnRecord[courseId] || initLearnRecord({ courseId });
+    const learnRecord = toggleBookmark(oldLearnRecord);
+    this.setLearnRecord(learnRecord);
     this.augmentCourse({ courseId });
   }
 
   addNote = (courseNote: CourseNote & CourseQuery) => {
     const { courseId } = courseNote;
-    this.set(produce((state) => {
-      const oldNotes = this.learnRecord[courseId]?.notes || [];
-      state.learnRecords[courseId].notes = [courseNote, ...oldNotes];
-    }))
+    const oldLearnRecord = this.learnRecord[courseId] || initLearnRecord({ courseId });
+    const learnRecord = addNote(oldLearnRecord, courseNote);
+    this.setLearnRecord(learnRecord);
     this.augmentCourse({ courseId });
   }
 
@@ -91,10 +92,9 @@ export class StoreActions extends BaseStoreActions {
   }
 
   toggleMetaVisible = ({ courseId }: CourseQuery) => {
-    const isMetaVisible = this.get().cardStates[courseId]!.isMetaVisible;
-    this.set(produce((state) => {
-      state.cardStates[courseId].isMetaVisible = !isMetaVisible
-    }))
+    const oldCardState = this.get().cardStates[courseId] || initCardState({ courseId });
+    const cardState = toggleMetaVisible(oldCardState);
+    this.setCardState(cardState);
   }
 
   fetchMissingLearnData = async () => {

@@ -28,11 +28,21 @@ export function toggleTask(
     }
   }
 }
+
 export function toggleBookmark(
   { isBookmarked, ...learnRecord }: LearnRecord
 ) {
   return {
     ...learnRecord,
     isBookmarked: !isBookmarked
+  }
+}
+
+export function addNote(
+  { notes, ...learnRecord }: LearnRecord
+  , newNote: CourseNote) {
+  return {
+    ...learnRecord,
+    notes: [newNote, ...notes]
   }
 }

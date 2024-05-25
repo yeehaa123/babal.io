@@ -1,6 +1,6 @@
 import type { LearnRecord } from "@/offcourse/models/LearnRecord"
 import type { CardState } from "@/offcourse/models/CardState";
-import type { Course, CourseQuery } from "../types";
+import type { AuthData, Course, CourseQuery } from "../types";
 import type { OffcourseState } from "./types"
 import { OverlayModes } from "../types"
 import type { StoreApi } from "zustand";
@@ -26,6 +26,12 @@ export class BaseStoreActions {
   protected get missingCourses() {
     return Object.keys(this.courses).filter((c) =>
       (c !== Object.keys(this.learnRecord).find(cc => cc === c)));
+  }
+
+  protected setAuthData(authData: AuthData) {
+    this.set(produce((state) => {
+      state.authData = authData;
+    }))
   }
 
   protected setOverlayMode(courseId: Course['courseId'], overlayMode: OverlayModes) {
