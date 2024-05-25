@@ -1,5 +1,5 @@
+import type { LearnRecord } from "../models/LearnRecord"
 import type {
-  LearnRecord,
   Course,
   AugmentedCourse,
   AuthData,

@@ -25,11 +25,6 @@ export type AuthData = {
   userName: string | undefined;
 }
 
-export type LearnRecord = {
-  isBookmarked: boolean,
-  tasksCompleted: Record<Checkpoint['checkpointId'], Date | undefined>,
-  notes: CourseNote[]
-}
 
 export interface CourseNote {
   createdAt: Date,
@@ -63,7 +58,8 @@ export interface AugmentedCourse extends Omit<Course, 'checkpoints'> {
 }
 
 export interface CourseQuery {
-  courseId: Course['courseId']
+  courseId: Course['courseId'],
+  checkpointId?: Checkpoint['checkpointId']
 }
 
 export interface CheckpointQuery extends CourseQuery {

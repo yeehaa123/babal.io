@@ -9,9 +9,9 @@ import { OverlayModes } from "../types";
 import { produce } from 'immer';
 import { prepareCourse } from "./helpers";
 import { updateLearnData, fetchLearnData } from "./apiActions";
-import { toggleTask } from "../models/learnData";
+import { initLearnRecord, toggleBookmark, toggleTask } from "../models/LearnRecord";
 import { BaseStoreActions } from "./baseActions";
-import { initialCardState } from "../models/cardState";
+import { initCardState } from "../models/CardState";
 
 export class StoreActions extends BaseStoreActions {
 
@@ -26,31 +26,89 @@ export class StoreActions extends BaseStoreActions {
     const course = this.courses[courseId];
     const learnRecord = this.learnRecord[courseId];
     if (course && learnRecord) {
-      this.set(produce((state) => {
-        state.courses[courseId] = prepareCourse({ course, learnRecord });
-      }
-      ))
+      const augmentedCourse = prepareCourse({ course, learnRecord });
+      this.setCourse(augmentedCourse);
     }
   }
 
   cloneCourse = ({ courseId }: CourseQuery) => {
+    const course = this.courses[courseId];
+
+    if (!course) {
+      throw ("TODO: ERROR")
+    }
+
     const newId = "dfadsfljk998fdaslk";
-    this.set(produce((state) => {
-      const course = this.courses[courseId];
-      if (!course) {
-        throw ("TODO: ERROR")
-      }
+    const newCourse = { ...course, courseId: newId, goal: "HURRAY" }
 
-      state.cardStates[courseId].overlayMode = OverlayModes.NONE;
-      state.courses = {
-        ...this.courses,
-        [newId]: { ...course, courseId: newId, goal: "HURRAY" }
-      };
+    const initialCardState = initCardState(newCourse);
 
-      state.cardStates[newId] = initialCardState
-
-    }))
+    this.setCardState(initialCardState);
+    this.setCourse(newCourse);
+    this.hideOverlay({ courseId });
     this.augmentCourse({ courseId: newId });
+  }
+
+
+  showCheckpointOverlay = (
+    { courseId, checkpointId }: CheckpointQuery) => {
+    this.setSelectedCheckpoint({ courseId, checkpointId });
+    this.setOverlayMode(courseId, OverlayModes.CHECKPOINT)
+  }
+
+  hideCheckpointOverlay = (
+    { courseId }: CourseQuery) => {
+    this.setSelectedCheckpoint({ courseId });
+    this.hideOverlay({ courseId });
+  }
+
+  toggleBookmark = ({ courseId }: CourseQuery) => {
+    const learnRecord = this.learnRecord[courseId] || initLearnRecord({ courseId });
+    const newLearnRecord = toggleBookmark(learnRecord);
+    this.setLearnRecord(newLearnRecord);
+    this.augmentCourse({ courseId });
+  }
+
+  addNote = (courseNote: CourseNote & CourseQuery) => {
+    const { courseId } = courseNote;
+    this.set(produce((state) => {
+      const oldNotes = this.learnRecord[courseId]?.notes || [];
+      state.learnRecords[courseId].notes = [courseNote, ...oldNotes];
+    }))
+    this.augmentCourse({ courseId });
+  }
+
+  toggleComplete = async ({ courseId, checkpointId }: CheckpointQuery) => {
+    const userName = this.userName;
+    if (userName) {
+      const learnRecord = this.learnRecord[courseId] || initLearnRecord({ courseId });
+      const newLearnRecord = toggleTask(learnRecord, checkpointId);
+      const taskCompleted = newLearnRecord.tasksCompleted[checkpointId];
+      this.setLearnRecord(newLearnRecord);
+      updateLearnData({ courseId, checkpointId, userName, taskCompleted });
+      this.augmentCourse({ courseId });
+    }
+  }
+
+  toggleMetaVisible = ({ courseId }: CourseQuery) => {
+    const isMetaVisible = this.get().cardStates[courseId]!.isMetaVisible;
+    this.set(produce((state) => {
+      state.cardStates[courseId].isMetaVisible = !isMetaVisible
+    }))
+  }
+
+  fetchMissingLearnData = async () => {
+    const userName = this.userName;
+    if (userName) {
+      const courseIds = this.missingCourses;
+      const learnRecords = await fetchLearnData({ courseIds, userName })
+      if (learnRecords) {
+        for (const courseId of Object.keys(learnRecords)) {
+          this.setLearnRecord(learnRecords[courseId]);
+          this.augmentCourse({ courseId });
+        }
+      }
+    }
   }
 
   hideOverlay = ({ courseId }: CourseQuery) => {
@@ -78,78 +136,5 @@ export class StoreActions extends BaseStoreActions {
 
   showAuthOverlay = ({ courseId }: CourseQuery) => {
     this.setOverlayMode(courseId, OverlayModes.AUTH)
-  }
-
-  showCheckpointOverlay = (
-    { courseId, checkpointId }: CheckpointQuery) => {
-    this.set(produce((state) => {
-      state.cardStates[courseId].selectedCheckpoint = checkpointId;
-    }))
-    this.setOverlayMode(courseId, OverlayModes.CHECKPOINT)
-  }
-
-  hideCheckpointOverlay = (
-    { courseId }: CourseQuery) => {
-    this.set(produce((state) => {
-      state.cardStates[courseId].selectedCheckpoint = undefined;
-    }))
-    this.hideOverlay({ courseId });
-  }
-
-  toggleBookmark = ({ courseId }: CourseQuery) => {
-    const learnRecord = this.learnRecord[courseId] || { tasksCompleted: [] };
-    const isBookmarked = this.learnRecord[courseId]?.isBookmarked;
-    this.set(produce((state) => {
-      state.learnRecords[courseId] = {
-        ...learnRecord,
-        isBookmarked: !isBookmarked
-      }
-    }))
-    this.augmentCourse({ courseId });
-  }
-
-  addNote = (courseNote: CourseNote & CourseQuery) => {
-    const { courseId } = courseNote;
-    this.set(produce((state) => {
-      const oldNotes = this.learnRecord[courseId]?.notes || [];
-      state.learnRecords[courseId].notes = [courseNote, ...oldNotes];
-    }))
-    this.augmentCourse({ courseId });
-  }
-
-  toggleComplete = async ({ courseId, checkpointId }: CheckpointQuery) => {
-    const userName = this.userName;
-    if (userName) {
-      const learnRecord = toggleTask(this.learnRecord[courseId], checkpointId);
-      this.set(produce((state) => {
-        state.learnRecords[courseId] = learnRecord;
-      }))
-      const taskCompleted = learnRecord.tasksCompleted[checkpointId];
-      updateLearnData({ courseId, checkpointId, userName, taskCompleted });
-      this.augmentCourse({ courseId });
-    }
-  }
-
-  toggleMetaVisible = ({ courseId }: CourseQuery) => {
-    const isMetaVisible = this.get().cardStates[courseId]!.isMetaVisible;
-    this.set(produce((state) => {
-      state.cardStates[courseId].isMetaVisible = !isMetaVisible
-    }))
-  }
-
-  fetchMissingLearnData = async () => {
-    const userName = this.userName;
-    if (userName) {
-      const courseIds = this.missingCourses;
-      const learnRecords = await fetchLearnData({ courseIds, userName })
-      if (learnRecords) {
-        for (const courseId of Object.keys(learnRecords)) {
-          this.set(produce((state) => {
-            state.learnRecords[courseId] = learnRecords[courseId]
-          }))
-          this.augmentCourse({ courseId });
-        }
-      }
-    }
   }
 }

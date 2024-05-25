@@ -4,7 +4,7 @@ import { combine } from "zustand/middleware";
 import { useOffcourseContext } from "@/offcourse/stores/context";
 import { StoreActions } from "./actions"
 import { determineRole, determineAffordances } from "./helpers"
-import { initialCardState } from "../models/cardState";
+import { initCardState } from "../models/CardState";
 
 interface CoursesStoreProps { courses: Course[] }
 
@@ -16,7 +16,7 @@ export function createOffcourseStore({ courses }: CoursesStoreProps) {
   });
 
   const cardEntries = courses.map(course => {
-    return [course.courseId, initialCardState]
+    return [course.courseId, initCardState(course)]
   })
 
   const initialState = {

@@ -1,4 +1,6 @@
-import type { Course } from "../types";
+import type { LearnRecord } from "@/offcourse/models/LearnRecord"
+import type { CardState } from "@/offcourse/models/CardState";
+import type { Course, CourseQuery } from "../types";
 import type { OffcourseState } from "./types"
 import { OverlayModes } from "../types"
 import type { StoreApi } from "zustand";
@@ -29,6 +31,33 @@ export class BaseStoreActions {
   protected setOverlayMode(courseId: Course['courseId'], overlayMode: OverlayModes) {
     this.set(produce((state) => {
       state.cardStates[courseId].overlayMode = overlayMode
+    }))
+  }
+
+  protected setCourse(course: Course) {
+    const { courseId } = course;
+    this.set(produce((state) => {
+      state.courses[courseId] = course;
+    }))
+  }
+
+  protected setLearnRecord(learnRecord: LearnRecord) {
+    const { courseId } = learnRecord;
+    this.set(produce((state) => {
+      state.learnRecords[courseId] = learnRecord;
+    }))
+  }
+
+  protected setCardState(cardState: CardState) {
+    const { courseId } = cardState;
+    this.set(produce((state) => {
+      state.cardStates[courseId] = cardState
+    }))
+  }
+
+  protected setSelectedCheckpoint({ courseId, checkpointId }: CourseQuery) {
+    this.set(produce((state) => {
+      state.cardStates[courseId].selectedCheckpoint = checkpointId;
     }))
   }
 }

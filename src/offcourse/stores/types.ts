@@ -1,8 +1,8 @@
-import type { CardState } from "../models/cardState"
+import type { CardState } from "../models/CardState"
+import type { LearnRecord } from "../models/LearnRecord"
 import type { StoreActions } from "./actions";
 import type {
   AuthData,
-  LearnRecord,
   AugmentedCourse,
   AugmentedCheckpoint
 } from "@/offcourse/types"

@@ -1,3 +1,5 @@
+import type { LearnRecord } from "@/offcourse/models/LearnRecord"
+import type { Course } from '@/offcourse/types';
 import {
   db,
   inArray,
@@ -8,7 +10,6 @@ import {
   NoteData
 } from 'astro:db';
 
-import type { Course, LearnRecord } from '@/offcourse/types';
 export async function getLearnRecordByUserNameAndCourseId({ userName, courseId }:
   { userName: string, courseId: Course['courseId'] }) {
   const results = await getLearnRecordByUserNameAndCourseIds({ userName, courseIds: [courseId] });
@@ -49,6 +50,7 @@ export async function getLearnRecordByUserNameAndCourseIds({ userName, courseIds
     if (!ld) {
       const isBookmarked = bookmarkDataDBResult.find(c => c.courseId === courseId);
       acc.set(courseId, {
+        courseId,
         isBookmarked: !!isBookmarked,
         tasksCompleted: { [checkpointId]: completedAt || undefined },
         notes: noteDataDBResult ? noteDataDBResult.map(

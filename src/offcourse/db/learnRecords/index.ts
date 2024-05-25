@@ -1,5 +1,8 @@
-import type { Course, Curator, LearnRecord } from "@/offcourse/types";
-import { getLearnRecordByUserNameAndCourseIds, getLearnRecordByUserNameAndCourseId } from "./queries";
+import type { Course, Curator } from "@/offcourse/types";
+import {
+  getLearnRecordByUserNameAndCourseIds,
+  getLearnRecordByUserNameAndCourseId
+} from "./queries";
 
 type LearnRecordQueryParams = {
   userName: Curator['alias'],
@@ -16,10 +19,4 @@ type LearnRecordsQueryParams = {
 
 export function getLearnRecords({ userName, courseIds }: LearnRecordsQueryParams) {
   return getLearnRecordByUserNameAndCourseIds({ userName, courseIds });
-}
-
-export const initialLearnRecord: LearnRecord = {
-  isBookmarked: false,
-  tasksCompleted: {},
-  notes: []
 }
