@@ -2,13 +2,14 @@ export type Tag = string;
 
 export enum OverlayModes {
   NONE = "NONE",
-  AUTH = "AUTH",
+  SIGNIN = "SIGNIN",
   REGISTER = "REGISTER",
   EDIT = "EDIT",
   NOTE = "NOTE",
   CHECKPOINT = "CHECKPOINT",
   SHARE = "SHARE",
-  CLONE = "CLONE"
+  CLONE = "CLONE",
+  USER = "USER",
 }
 
 export type Course = {

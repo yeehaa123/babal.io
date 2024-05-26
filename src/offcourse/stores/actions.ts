@@ -115,11 +115,15 @@ export class StoreActions extends BaseStoreActions {
   showNotesOverlay = ({ courseId }: CourseQuery) => {
     this.setOverlayMode(courseId, OverlayModes.NOTE)
   }
+
+  showUserOverlay = ({ courseId }: CourseQuery) => {
+    this.setOverlayMode(courseId, OverlayModes.USER)
+  }
   showShareOverlay = ({ courseId }: CourseQuery) => {
     this.setOverlayMode(courseId, OverlayModes.SHARE)
   }
 
   showAuthOverlay = ({ courseId }: CourseQuery) => {
-    this.setOverlayMode(courseId, OverlayModes.AUTH)
+    this.setOverlayMode(courseId, OverlayModes.SIGNIN)
   }
 }

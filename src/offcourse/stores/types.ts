@@ -16,7 +16,6 @@ export type Affordances = {
   canEdit: boolean
 }
 
-
 type LearnRecordsState = Record<string, LearnRecord>
 
 export enum CardRoleTypes {
@@ -35,6 +34,7 @@ export type OffcourseState = {
 }
 
 export type CourseCardStore = {
+  authData: AuthData,
   course: Course,
   learnRecord: LearnRecord | undefined,
   checkpoint: Checkpoint | undefined,

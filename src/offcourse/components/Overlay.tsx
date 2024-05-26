@@ -8,7 +8,8 @@ import {
   AuthOverlay,
   MockOverlay,
   CloneOverlay,
-  NoteOverlay
+  NoteOverlay,
+  UserOverlay
 } from "@/offcourse/components/overlays";
 
 export default function Overlay(props: CourseCardStore) {
@@ -17,7 +18,8 @@ export default function Overlay(props: CourseCardStore) {
     [OverlayModes.NONE]: MockOverlay,
     [OverlayModes.NOTE]: NoteOverlay,
     [OverlayModes.REGISTER]: MockOverlay,
-    [OverlayModes.AUTH]: AuthOverlay,
+    [OverlayModes.SIGNIN]: AuthOverlay,
+    [OverlayModes.USER]: UserOverlay,
     [OverlayModes.EDIT]: MockOverlay,
     [OverlayModes.SHARE]: MockOverlay,
     [OverlayModes.CLONE]: CloneOverlay,

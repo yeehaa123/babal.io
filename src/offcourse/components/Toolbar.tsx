@@ -1,11 +1,10 @@
 import type { CourseCardStore } from "@/offcourse/stores/types"
-import { useOffCourseAuth } from "@/offcourse/stores/auth";
+import Logo from "@/offcourse/components/Logo"
 import type { Course } from "@/offcourse/types"
 
 import { cn } from "@/lib/utils"
 import {
   EnterIcon,
-  ExitIcon,
   Share1Icon,
   Crosshair1Icon,
   CopyIcon,
@@ -34,19 +33,21 @@ export default function Toolbar({
   } = affordances;
   const {
     showAuthOverlay,
+    showUserOverlay,
     showEditOverlay,
     showShareOverlay,
     showNotesOverlay,
     showCloneOverlay
   } = actions;
-  const { signOut } = useOffCourseAuth();
   return (
     <div className="flex w-full justify-between">
       <div className="flex flex-start gap-x-4 ">
         <EnterIcon onClick={() => showAuthOverlay({ courseId })}
           className={cn("h-4 w-4 text-gray-500", { "hidden": !canAuthenticate })} />
-        <ExitIcon onClick={() => signOut()}
+        <Logo onClick={() => showUserOverlay({ courseId })}
           className={cn("h-4 w-4 text-gray-500", { "hidden": canAuthenticate })} />
+      </div>
+      <div className="flex gap-x-4 ">
         <Pencil1Icon onClick={() => showEditOverlay({ courseId })}
           className={cn("h-4 w-4 text-gray-500", { "hidden": !canEdit })} />
         <Pencil2Icon onClick={() => showNotesOverlay({ courseId })}

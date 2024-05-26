@@ -13,7 +13,7 @@ import {
 export async function getLearnRecordByUserNameAndCourseId(
   { userName, courseId }: { userName: string, courseId: Course['courseId'] }) {
 
-  const results = await getLearnRecordByUserNameAndCourseIds({
+  const results = await getLearnRecordsByUserNameAndCourseIds({
     userName,
     courseIds: [courseId]
   });
@@ -21,10 +21,9 @@ export async function getLearnRecordByUserNameAndCourseId(
   return results[courseId];
 }
 
-export async function getLearnRecordByUserNameAndCourseIds(
+export async function getLearnRecordsByUserNameAndCourseIds(
   { userName, courseIds }: { userName: string, courseIds: string[] }) {
 
-  const timeStart = Date.now();
   const learnRecordsDBResult = await db
     .select({
       courseId: CompletionData.courseId,
@@ -46,8 +45,6 @@ export async function getLearnRecordByUserNameAndCourseIds(
       eq(CompletionData.courseId, NoteData.courseId)
     ))
 
-  const delta = Date.now() - timeStart;
-  console.log(`${delta} ms`);
 
   const learnRecords = learnRecordsDBResult.reduce((acc, row) => {
     const { courseId, checkpointId, completedAt, bookmarkedAt, note } = row;

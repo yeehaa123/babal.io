@@ -24,11 +24,19 @@ export function processCourseResults(result: {
         description: description ? description : undefined
       }
 
+      if (row.Socials) {
+        let { alias, ...rawSocials } = row.Socials;
+
+        const socialPairs = Object.entries(rawSocials).filter(pair => {
+          return pair[1]
+        })
+
+        const socials = Object.fromEntries(socialPairs);
+
+        curator = { alias, socials }
+      }
+
       if (!entry) {
-        if (row.Socials) {
-          let { alias, ...socials } = curator;
-          curator = { alias, ...socials }
-        }
 
         acc.set(courseId, {
           ...course,

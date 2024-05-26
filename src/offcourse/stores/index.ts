@@ -50,5 +50,5 @@ export function useCourseCardStore({ courseId }: CourseStoreProps) {
   const role = determineRole({ course, learnRecord, authData });
   const affordances = determineAffordances(role);
 
-  return { course, learnRecord, checkpoint, cardState, affordances, actions }
+  return { course, authData, learnRecord, checkpoint, cardState, affordances, actions }
 }

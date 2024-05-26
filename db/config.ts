@@ -44,8 +44,10 @@ const People = defineTable({
 
 const Socials = defineTable({
   columns: {
-    alias: column.text({ references: () => People.columns.alias }),
-    linkedin: column.text({ optional: true })
+    alias: column.text({ primaryKey: true, references: () => People.columns.alias }),
+    linkedin: column.text({ optional: true }),
+    github: column.text({ optional: true }),
+    instagram: column.text({ optional: true })
   }
 })
 

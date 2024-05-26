@@ -50,6 +50,8 @@ export async function fetchLearnData({ courseIds }:
     });
     const data = await response.json();
     return data.learnRecords;
+  } else {
+    return [];
   }
 }
 

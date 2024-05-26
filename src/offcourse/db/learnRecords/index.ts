@@ -1,6 +1,6 @@
 import type { Course, Curator } from "@/offcourse/types";
 import {
-  getLearnRecordByUserNameAndCourseIds,
+  getLearnRecordsByUserNameAndCourseIds,
   getLearnRecordByUserNameAndCourseId
 } from "./queries";
 
@@ -18,5 +18,5 @@ type LearnRecordsQueryParams = {
 }
 
 export function getLearnRecords({ userName, courseIds }: LearnRecordsQueryParams) {
-  return getLearnRecordByUserNameAndCourseIds({ userName, courseIds });
+  return getLearnRecordsByUserNameAndCourseIds({ userName, courseIds });
 }
