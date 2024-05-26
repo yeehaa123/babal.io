@@ -15,7 +15,7 @@ import {
 
 import { readDir } from "./helpers"
 import { prepCourses, prepCheckpoints, prepTags } from "./prepCourses"
-import { augmentCheckpoints } from "./augmentCheckpoints"
+import { augmentCheckpoints, augmentCourses } from "./augmentCheckpoints"
 import { prepBookmarkData, prepCompletionData, prepNotesData } from "./prepLearnRecords"
 
 function prepPeople(rawPeople: Curator[]) {
@@ -33,6 +33,8 @@ export default async function() {
   const people = prepPeople(rawPeople);
   const socials = prepSocials(rawPeople);
   const courses = prepCourses(rawCourses);
+  const courseExp = await augmentCourses(courses);
+  console.log(courseExp);
   const tempCheckpoints = prepCheckpoints(courses);
 
   const checkpoints = await augmentCheckpoints(tempCheckpoints)

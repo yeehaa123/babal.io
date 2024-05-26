@@ -1,0 +1,48 @@
+{
+  "course": {
+    "courseId": "kA9LPCvp4E8mYP_8ePdOm",
+    "goal": "Engineer breakthroughs",
+    "summary": "This course helps learners engineer breakthroughs by leveraging their personal strengths, embracing weaknesses, conducting SWOT analyses, and formulating critical asks. Understanding personal strengths allows individuals to maximize their impact. Embracing weaknesses fosters improvement. Performing SWOT analyses identifies opportunities and threats. Formulating critical asks ensures individuals receive targeted assistance in key areas, leading to impactful outcomes.",
+    "habitat": "/cases/engineering-breakthrough-moments",
+    "description": "This course helps learners engineer breakthroughs by leveraging personal strengths, embracing weaknesses, performing SWOT analyses, and formulating critical asks. Understanding strengths maximizes impact, weaknesses foster improvement, and critical asks ensure targeted assistance for impactful outcomes.",
+    "curator": "yeehaa",
+    "checkpoints": [
+      {
+        "task": "Discover your personal strengths",
+        "tags": [
+          "skills"
+        ],
+        "href": "https://80000hours.org/articles/personal-strengths/",
+        "summary": "The article provides a structured approach to identify personal strengths by assessing skills, interests, and values. It discusses methods such as self-reflection, feedback from others, and formal assessments to help individuals pinpoint their unique capabilities that can be leveraged for greater impact.",
+        "description": "Identify strengths through self-reflection, feedback, and assessments to leverage capabilities for greater impact."
+      },
+      {
+        "task": "Embrace your weaknesses",
+        "tags": [
+          "growth"
+        ],
+        "href": "https://maven.com/articles/identifying-greatest-weakness",
+        "summary": "This article guides individuals in understanding and embracing their weaknesses by promoting self-awareness and providing strategies to improve. It emphasizes accepting imperfections and using weaknesses as a foundation for growth, ultimately turning them into strengths.",
+        "description": "Understand and embrace weaknesses to foster growth and turn them into strengths."
+      },
+      {
+        "task": "Do a SWOT analysis of your startup",
+        "tags": [
+          "swot"
+        ],
+        "href": "https://fullscale.io/blog/swot-analysis-for-startups/",
+        "summary": "The resource explains how to perform a SWOT analysis to identify strengths, weaknesses, opportunities, and threats in a startup. It provides a detailed, step-by-step guide to help individuals gather insights, prioritize actions, and develop strategic plans to address business challenges and leverage opportunities.",
+        "description": "Perform a SWOT analysis to identify strengths, weaknesses, opportunities, and threats in your startup."
+      },
+      {
+        "task": "Formulate your critical ask",
+        "tags": [
+          "ask"
+        ],
+        "href": "https://www.42workspace.com/guide/superconnectors-in-rotterdam/",
+        "summary": "The guide explains how to formulate a critical ask by clearly defining your needs, identifying the right people, and communicating effectively. It includes tips on building and leveraging networks to get the necessary support, ensuring you receive the right help at the right time.",
+        "description": "Formulate a critical ask by defining needs, identifying the right people, and communicating effectively."
+      }
+    ]
+  }
+}

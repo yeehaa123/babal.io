@@ -1,0 +1,75 @@
+{
+  "course": {
+    "courseId": "_tPaB2kY_z41gMnvD2CO0",
+    "goal": "Disrupt Education",
+    "summary": "This course is designed to help you disrupt education by guiding you through a series of actionable steps. By discovering your strengths, embracing your weaknesses, conducting a SWOT analysis, formulating critical asks, and learning from thought leaders, you will be equipped to make profound changes in the educational field.",
+    "habitat": null,
+    "description": "This course provides actionable steps to disrupt education. Discover strengths, embrace weaknesses, conduct SWOT analysis, formulate asks, and learn from thought leaders to drive change.",
+    "curator": "haayee",
+    "checkpoints": [
+      {
+        "task": "Discover your personal strengths",
+        "tags": [
+          "self",
+          "growth",
+          "skills"
+        ],
+        "href": "https://80000hours.org/articles/personal-strengths/",
+        "summary": "This article offers a structured approach to identifying your key strengths using self-reflection exercises and external feedback. It provides practical steps to recognize and develop your natural talents, enabling better decision-making in your professional journey.",
+        "description": "Identifying your key strengths through self-reflection exercises and feedback to better navigate your professional journey."
+      },
+      {
+        "task": "Embrace your weaknesses",
+        "tags": [
+          "self",
+          "growth",
+          "skills"
+        ],
+        "href": "https://maven.com/articles/identifying-greatest-weakness",
+        "summary": "This article discusses methods to recognize and accept your weaknesses, framing them as opportunities for growth. By understanding your limitations, you gain a clearer perspective on areas for improvement and can strategically focus on turning these weaknesses into strengths or compensating for them effectively.",
+        "description": "Recognize and accept your weaknesses, and use them as opportunities for growth and improvement."
+      },
+      {
+        "task": "Do a SWOT analysis of your startup",
+        "tags": [
+          "swot",
+          "startup"
+        ],
+        "href": "https://fullscale.io/blog/swot-analysis-for-startups/",
+        "summary": "The article provides a detailed guide on conducting a SWOT analysis (Strengths, Weaknesses, Opportunities, Threats) for startups. It explains how to systematically evaluate internal and external factors to make informed strategic decisions and optimize business growth.",
+        "description": "Conduct a SWOT analysis to evaluate strengths, weaknesses, opportunities, and threats for informed strategic decisions."
+      },
+      {
+        "task": "Formulate your critical ask",
+        "tags": [
+          "ask",
+          "pitch",
+          "plan"
+        ],
+        "href": "https://www.42workspace.com/guide/superconnectors-in-rotterdam/",
+        "summary": "This guide helps you determine what you need most for your startup and how to effectively communicate this in a 'critical ask.' It emphasizes clarity, specificity, and confidence in your request to mobilize resources and support from connections and networks.",
+        "description": "Determine and communicate your critical ask with clarity and confidence to mobilize support and resources."
+      },
+      {
+        "task": "Meet The Grahams",
+        "tags": [
+          "video",
+          "story"
+        ],
+        "href": "https://www.youtube.com/watch?v=2QiFl9Dc7D0",
+        "summary": "This video tells the story of a couple’s experience in the Silicon Valley tech scene, offering insights into personal development, networking, and resilience. It’s an inspiring narrative that highlights the importance of persistence and adaptability in achieving success.",
+        "description": "Personal development, networking, and resilience insights from a couple’s Silicon Valley tech experience."
+      },
+      {
+        "task": "Simple Made Easy",
+        "tags": [
+          "design",
+          "code"
+        ],
+        "href": "https://www.youtube.com/watch?v=SxdOUGdseq4",
+        "summary": "Rich Hickey’s talk emphasizes the importance of simplicity in software design and problem-solving. It challenges conventional thinking and encourages a focus on creating simple, easy-to-maintain systems, which can be applied broadly to educational innovation and technology solutions.",
+        "description": "Emphasizes simplicity in design and problem-solving for better innovation and technology solutions."
+      }
+    ]
+  }
+}
